@@ -476,4 +476,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,python,flask,visualstudiocode,node
 . e n v  
+ . c o n f i g . p y  
  
