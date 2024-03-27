@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = "hello"
 scope = 'user-top-read'
 cache_handler = FlaskSessionCacheHandler(session)
-sp_oauth = SpotifyOAuth(
+sp_oauth = SpotifyOAuth (
     client_id=client_id, 
     client_secret=client_secret, 
     redirect_uri=redirect_uri, 
@@ -18,7 +18,7 @@ sp_oauth = SpotifyOAuth(
     show_dialog = True
 )
 
-sp = Spotify(auth_manager=sp_oauth)
+sp = Spotify(auth_manager=sp_oauth) 
 
 
 @app.route('/')
