@@ -2,6 +2,15 @@
 {% block title %}Generate template{% endblock %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+            <div class="text-center">
+                <h1 class="fw-bold">{{msg}}</h1>
+            </div>
+            {% endfor %}    
+            {% endif %}
+{% endwith %}
 <div class="container m-5">
     <div class="col-md-10 mx-auto col-lg-5">
         <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="generate_playlist" action="#" method="post">

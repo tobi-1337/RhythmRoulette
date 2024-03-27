@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, session, redirect, request
+from flask import Flask, render_template, url_for, session, redirect, request, flash
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth 
 from spotipy.cache_handler import FlaskSessionCacheHandler
@@ -41,6 +41,7 @@ def login():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)
+    flash(f"Du är redan inloggad!")
     return redirect(url_for('get_top_artists'))
 
 
@@ -52,6 +53,7 @@ from the Spotify authorization page.
 def callback():
     sp_oauth.get_access_token(request.args['code'])
     session['logged_in'] = True
+    flash(f"Du är inloggad!")
     return redirect(url_for('get_top_artists'))
 
 
@@ -82,15 +84,19 @@ def generate_playlist():
             playlist_name = request.form['playlist_name']
             playlist_description = request.form['playlist_description']
             sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
-            
+            flash(f"Spellista skapad!")
             return redirect(url_for('home'))
-        else: 
+        else:
             return render_template('generate_playlist.html')
         
 '''The logout page is used to clear the Flask session.'''
 @app.route('/logout')
 def logout():
-    session.clear()
+    if 'is_logged_in' in session:
+        flash(f"Du är utloggad!")
+    else:
+        flash(f"Du är inte inloggad!")
+    session.clear()   
     return redirect(url_for('home'))
 
 
