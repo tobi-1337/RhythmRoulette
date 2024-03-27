@@ -28,6 +28,7 @@ sp = Spotify(auth_manager=sp_oauth) #This variable lets us connect to the author
 '''Home page for the website'''
 @app.route('/')
 def home():
+    
     return render_template('index.html')
 
 
@@ -88,7 +89,27 @@ def generate_playlist():
             return redirect(url_for('home'))
         else:
             return render_template('generate_playlist.html')
-        
+
+
+@app.route('/recommendations', methods=["GET", "POST"])
+def recommendations():
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+            recco_list = sp.recommendation_genre_seeds()
+            if request.method == "POST":
+                genre_seeds = request.form['genres']
+                recco_limit = request.form['recco_limit']
+                print(genre_seeds)
+                print(recco_limit)
+                '''reccos = sp.recommendations(seed_genres=genre_seeds, limit=recco_limit, market="SE")
+                for track in reccos['tracks']:
+                    song_name = track['name']
+                    for artist in track['artists']:
+                        artist_names = artist['name']
+                        print(f"Artist: {artist_names} Låt: {song_name}")'''
+            return render_template('recommendations.html', recco_list=recco_list)
+
+
+
 '''The logout page is used to clear the Flask session.'''
 @app.route('/logout')
 def logout():
@@ -98,6 +119,8 @@ def logout():
         flash(f"Du är inte inloggad!")
     session.clear()   
     return redirect(url_for('home'))
+
+
 
 
 '''Makes sure that the program is run from this file and not from anywhere else.'''
