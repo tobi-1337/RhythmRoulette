@@ -7,7 +7,7 @@ from config import client_id, client_secret, redirect_uri
 
 app = Flask(__name__) #This variable is used to run the program
 app.config['SECRET_KEY'] = "hello" #Secret key is needed when you use sessions in Flask
-scope = 'user-top-read' #The scope defines which information from the Spotify account we get access to
+scope = 'user-top-read playlist-modify-public playlist-modify-private' #The scope defines which information from the Spotify account we get access to
 cache_handler = FlaskSessionCacheHandler(session) #cache_handler allows us to store the Spotify Token in Flask session
 
 '''
@@ -51,6 +51,7 @@ from the Spotify authorization page.
 @app.route('/callback')
 def callback():
     sp_oauth.get_access_token(request.args['code'])
+    session['logged_in'] = True
     return redirect(url_for('get_top_artists'))
 
 
@@ -72,6 +73,20 @@ def get_top_artists():
     return render_template('top-artists.html', artists=artists)
     
 
+@app.route('/generate-playlist', methods=["GET", "POST"])
+def generate_playlist():
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+        if request.method == "POST":
+            current_user = sp.me()
+            user_id = current_user['id']
+            playlist_name = request.form['playlist_name']
+            playlist_description = request.form['playlist_description']
+            sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
+            
+            return redirect(url_for('home'))
+        else: 
+            return render_template('generate_playlist.html')
+        
 '''The logout page is used to clear the Flask session.'''
 @app.route('/logout')
 def logout():

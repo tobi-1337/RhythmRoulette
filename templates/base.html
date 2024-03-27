@@ -22,10 +22,16 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login">Logga in</a>
+                    {% if 'logged_in' in session %}
+                        <a class="nav-link" href="user">Användare</a>
+                    {% else %}
+                        <a class="btn btn-success" href="login">Logga in</a>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="user">Användare</a>
+                    {% if 'logged_in' in session %}
+                        <a class="nav-link" href="generate-playlist">Skapa spellista!</a>
+                    {% endif %}
                 </li>
                 <li class="nav-item dropdown">
                     <a id="labbar" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
@@ -36,15 +42,9 @@
                         <li><a class="dropdown-item" href="" target="blank"></a></li>
                     </ul>
             </ul>
-
-            {% if 'got_mail' in session %}
-            <a href="logout" class="btn btn-danger"> Logga ut</a>
+            {% if 'logged_in' in session %}
+                <a href="logout" class="btn btn-danger"> Logga ut</a>
             {% endif %}
-
-
-            <form class="form-inline my-2 my-md-0">
-                <input class="form-control" type="text" placeholder="Search">
-            </form>
         </div>
         </div>
     </nav>
