@@ -51,7 +51,11 @@ def get_top_artists():
 
     return render_template('top-artists.html', artists=artists)
     
-    
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)
