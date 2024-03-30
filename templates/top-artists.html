@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Home Page{% endblock %}
+
 {% block content %}
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+            <div class="text-center">
+                <h1 class="fw-bold">{{msg}}</h1>
+            </div>
+            {% endfor %}    
+            {% endif %}
+{% endwith %}
 {%for artist in artists %}
     <p>{{artist['name']}}</p>
 {%endfor%}

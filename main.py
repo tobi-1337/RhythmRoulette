@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, session, redirect, request
+from flask import Flask, render_template, url_for, session, redirect, request, flash
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth 
 from spotipy.cache_handler import FlaskSessionCacheHandler
@@ -7,7 +7,7 @@ from config import client_id, client_secret, redirect_uri
 
 app = Flask(__name__) #This variable is used to run the program
 app.config['SECRET_KEY'] = "hello" #Secret key is needed when you use sessions in Flask
-scope = 'user-top-read' #The scope defines which information from the Spotify account we get access to
+scope = 'user-top-read playlist-modify-public playlist-modify-private' #The scope defines which information from the Spotify account we get access to
 cache_handler = FlaskSessionCacheHandler(session) #cache_handler allows us to store the Spotify Token in Flask session
 
 '''
@@ -28,6 +28,7 @@ sp = Spotify(auth_manager=sp_oauth) #This variable lets us connect to the author
 '''Home page for the website'''
 @app.route('/')
 def home():
+    
     return render_template('index.html')
 
 
@@ -41,6 +42,7 @@ def login():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)
+    flash(f"Du är redan inloggad!")
     return redirect(url_for('get_top_artists'))
 
 
@@ -51,6 +53,8 @@ from the Spotify authorization page.
 @app.route('/callback')
 def callback():
     sp_oauth.get_access_token(request.args['code'])
+    session['logged_in'] = True
+    flash(f"Du är inloggad!")
     return redirect(url_for('get_top_artists'))
 
 
@@ -72,11 +76,51 @@ def get_top_artists():
     return render_template('top-artists.html', artists=artists)
     
 
+@app.route('/generate-playlist', methods=["GET", "POST"])
+def generate_playlist():
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+        if request.method == "POST":
+            current_user = sp.me()
+            user_id = current_user['id']
+            playlist_name = request.form['playlist_name']
+            playlist_description = request.form['playlist_description']
+            sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
+            flash(f"Spellista skapad!")
+            return redirect(url_for('home'))
+        else:
+            return render_template('generate_playlist.html')
+
+
+@app.route('/recommendations', methods=["GET", "POST"])
+def recommendations():
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+            recco_list = sp.recommendation_genre_seeds()
+            if request.method == "POST":
+                genre_seeds = request.form['genres']
+                recco_limit = request.form['recco_limit']
+                print(genre_seeds)
+                print(recco_limit)
+                '''reccos = sp.recommendations(seed_genres=genre_seeds, limit=recco_limit, market="SE")
+                for track in reccos['tracks']:
+                    song_name = track['name']
+                    for artist in track['artists']:
+                        artist_names = artist['name']
+                        print(f"Artist: {artist_names} Låt: {song_name}")'''
+            return render_template('recommendations.html', recco_list=recco_list)
+
+
+
 '''The logout page is used to clear the Flask session.'''
 @app.route('/logout')
 def logout():
-    session.clear()
+    if 'is_logged_in' in session:
+        flash(f"Du är utloggad!")
+    else:
+        flash(f"Du är inte inloggad!")
+    session.clear()   
     return redirect(url_for('home'))
+
+
 
 
 '''Makes sure that the program is run from this file and not from anywhere else.'''
