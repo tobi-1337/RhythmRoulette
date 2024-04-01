@@ -1,0 +1,71 @@
+body {
+  background: black; /* fallback color if gradients are not supported */
+  background: linear-gradient(to bottom, #000000, #2e2e2e); 
+  font-family: "Josefin Sans", sans-serif;
+  position: relative;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: #0f0e0ece;
+  color: #cfcfcf;
+  width: 500px;
+  margin-top: 5%;
+  margin: auto;
+  position: relative;
+  display: flex; /* Använd flexbox */
+  flex-direction: column; /* Placera element under varandra */
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  padding: 15px;
+  margin: 0px 0 22px 0;
+  border: none;
+  background: #ffffff;
+  width: 90%; /* Fyller ut förälderelementets bredd */
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #daf6ec;
+  outline: none;
+}
+
+
+/* Set a style for the submit/register button */
+.registerbtn {
+  background-color: #00b87b;
+  color: rgb(32, 30, 30);
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: rgb(216, 216, 216);
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #242121;
+  text-align: center;
+  color: #f1f1f1;
+}
+
+.signin a {
+  background-color: #242121;
+  text-align: center;
+  color: #f1f1f1;
+}
