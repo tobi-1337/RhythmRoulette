@@ -2,17 +2,19 @@
 {% block title %}Home Page{% endblock %}
 
 {% block content %}
-{% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for msg in messages %}
-            <div class="text-center">
-                <h1 class="fw-bold">{{msg}}</h1>
-            </div>
-            {% endfor %}    
-            {% endif %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+        <div class="text-center">
+            <h1 class="fw-bold">{{msg}}</h1>
+        </div>
+        {% endfor %}    
+        {% endif %}
 {% endwith %}
-{%for artist in artists %}
-    <p>{{artist['name']}}</p>
+<h1 class="display-2 text-center text-white fw-bold">Här är dina toppartister!</h1>
+{% for artist in artists %}
+<p class="lead text-white text-center">{{ loop.index0 + 1 }}. {{artist['name']}}</p>
 {%endfor%}
+
 
 {% endblock %}

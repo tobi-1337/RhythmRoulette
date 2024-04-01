@@ -7,14 +7,14 @@
         <div class="background-video">
             <div class="video-wrapper">
                 <video loop muted autoplay playsinline poster="URL/TO/poster.jpg">
-                    <source src="hero.mp4" type="video/mp4">
+                    <source src="{{ url_for('static', filename='hero.mp4')}}" type="video/mp4">
                 </video>
             </div>
         </div>
         <div class="hero">
             <h1>Rhythm Roulette</h1>
             <p>En webbplats med fokus på musik</p>
-            <a href="signup.html" class="btn">Registrera dig för att få helhetsupplevelsen!</a>
+            <a href="signup.html" class=" nav_link btn-primary">Registrera dig för att få helhetsupplevelsen!</a>
         </div>
     </header>
     <section class="container">
