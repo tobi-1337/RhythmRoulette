@@ -1,62 +1,45 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="sv">
-
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Roulette</title>
+    <link rel="about" href="#">
+    <link rel="about" href="signup.html">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="shortcut icon" type="logotype" href="roulette.png">
     <script src="{{ url_for('static', filename='script.js')}}"></script>
-    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Anton&family=Antonio:wght@100..700&family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Gabarito:wght@400..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Tilt+Warp&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Rhythm Roulette</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-            aria-controls="#navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    {% if 'logged_in' in session %}
-                        <a class="nav-link" href="recommendations">Rekommendationer</a>
-                    {% else %}
-                        <a class="btn btn-success" href="login">Logga in</a>
-                    {% endif %}
-                </li>
-                <li class="nav-item">
-                    {% if 'logged_in' in session %}
-                        <a class="nav-link" href="generate-playlist">Skapa spellista!</a>
-                    {% endif %}
-                </li>
-                <li class="nav-item dropdown">
-                    <a id="labbar" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Länkar
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="" target="blank"></a></li>
-                    </ul>
-            </ul>
-            {% if 'logged_in' in session %}
-                <a href="logout" class="btn btn-danger"> Logga ut</a>
-            {% endif %}
-        </div>
+    <div class="grid-container">
+    <nav>
+        <div class="navbar">
+            <a href="/" class="w-icon">Rhythm Roulette</a>
+            <p>Ett projektarbete på Malmö Universitet</p>
+            <ul>
+                {% if 'logged_in' in session %}
+                    <li><a  href="generate-playlist">Skapa spellista!</a></li>
+                    <li> | </li>
+                    <li><a  href="recommendations">Rekommendationer</a></li>
+                    <li> | </li>   
+                    <li><a href="logout" class="btn btn-danger"> Logga ut</a></li>
+                {% else %}
+                    <li><a href="signup.html">Registrera dig</a></li>
+                    <li><a href="login">Logga in</a></li>
+                {% endif %}
+        </ul>
         </div>
     </nav>
-    {% block content %}
-    
-    {% endblock %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-</body>
 
+    {% block content %}
+
+    {% endblock %}
+
+    <footer>
+        <p>&copy; 2024 Rhythm Roulette Website. All rights reserved. <a href="about.html">Om oss</a></p>
+    </footer>
+    </div>
+</body>
 </html>
