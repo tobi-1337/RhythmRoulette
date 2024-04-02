@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, session, redirect, request, flash
+from flask import Flask, render_template, url_for, session, redirect, request, flash, jsonify
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth 
 from spotipy.cache_handler import FlaskSessionCacheHandler
@@ -95,17 +95,14 @@ def recommendations():
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
             recco_list = sp.recommendation_genre_seeds()
             if request.method == "POST":
-                genre_seeds = request.form['genres']
-                recco_limit = request.form['recco_limit']
+                data = request.json
+                genre_seeds = data.get('genres')
+                recco_limit = data.get('recco_limit')
                 print(genre_seeds)
                 print(recco_limit)
-                '''reccos = sp.recommendations(seed_genres=genre_seeds, limit=recco_limit, market="SE")
-                for track in reccos['tracks']:
-                    song_name = track['name']
-                    for artist in track['artists']:
-                        artist_names = artist['name']
-                        print(f"Artist: {artist_names} Låt: {song_name}")'''
-            return render_template('recommendations.html', recco_list=recco_list)
+                return jsonify({"message": "Rekommendationer skapade"}), 200
+            else:
+                return render_template('recommendations.html', recco_list=recco_list)
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -128,3 +125,12 @@ def logout():
 '''Makes sure that the program is run from this file and not from anywhere else.'''
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+'''reccos = sp.recommendations(seed_genres=genre_seeds, limit=recco_limit, market="SE")
+                for track in reccos['tracks']:
+                    song_name = track['name']
+                    for artist in track['artists']:
+                        artist_names = artist['name']
+                        print(f"Artist: {artist_names} Låt: {song_name}")'''
