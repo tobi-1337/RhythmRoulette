@@ -32,13 +32,14 @@ def home():
     return render_template('index.html')
 
 
-'''
-If the user is not already authorized, they will be redirected to the 
-Spotify authorization URL. If they are already authorized they will be redirected
-to 'top-artists'.
-'''
+
 @app.route('/login')
 def login():
+    '''
+    If the user is not already authorized, they will be redirected to the 
+    Spotify authorization URL. If they are already authorized they will be redirected
+    to 'top-artists'.
+    '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)
@@ -46,24 +47,26 @@ def login():
     return redirect(url_for('get_top_artists'))
 
 
-'''
-The callback page is where the user gets redirected to 
-from the Spotify authorization page.
-'''
+
 @app.route('/callback')
 def callback():
+    '''
+    The callback page is where the user gets redirected to 
+    from the Spotify authorization page.
+    '''
     sp_oauth.get_access_token(request.args['code'])
     session['logged_in'] = True
     flash(f"Du är inloggad!")
     return redirect(url_for('get_top_artists'))
 
 
-'''
-If the user is authorized they will see their top artists written out on the page.
-If not, they will be redirected to the Spotify authorization page.
-'''
+
 @app.route('/top-artists')
 def get_top_artists():
+    '''
+    If the user is authorized they will see their top artists written out on the page.
+    If not, they will be redirected to the Spotify authorization page.
+    '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)
@@ -83,7 +86,6 @@ def generate_playlist():
             playlist_name = request.form['playlist_name']
             playlist_description = request.form['playlist_description']
             playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
-            flash(f"Spellista skapad!")
             playlist_id = playlist['id']
             session['playlist_id'] = playlist_id
             return redirect(url_for('recommendations'))
@@ -103,15 +105,9 @@ def recommendations():
                 else:
                     genre_seeds = request.form['genres']
                     recco_limit = request.form['recco_limit']
-                print(genre_seeds)
-                print(recco_limit)
+
                 reccos = sp.recommendations(seed_genres=genre_seeds, limit=recco_limit, market="SE")
-                for track in reccos['tracks']:
-                    song_name = track['name']
-                    
-                    for artist in track['artists']:
-                        artist_names = artist['name']
-                        print(f"Artist: {artist_names} Låt: {song_name}")
+
                 if 'playlist_id' in session:
                     playlist_id = session['playlist_id']
                     track_list = []
@@ -129,9 +125,10 @@ def signup():
     return render_template("signup.html")
 
 
-'''The logout page is used to clear the Flask session.'''
+
 @app.route('/logout')
 def logout():
+    '''The logout page is used to clear the Flask session.'''
     if 'is_logged_in' in session:
         flash(f"Du är utloggad!")
     else:
