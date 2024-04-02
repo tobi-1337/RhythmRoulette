@@ -71,7 +71,6 @@ def get_top_artists():
     top_artists = sp.current_user_top_artists()
     artists = top_artists['items']
     nr = 0
-
     return render_template('top-artists.html', artists=artists, nr=nr)
     
 
@@ -83,9 +82,11 @@ def generate_playlist():
             user_id = current_user['id']
             playlist_name = request.form['playlist_name']
             playlist_description = request.form['playlist_description']
-            sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
+            playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
             flash(f"Spellista skapad!")
-            return redirect(url_for('home'))
+            playlist_id = playlist['id']
+            session['playlist_id'] = playlist_id
+            return redirect(url_for('recommendations'))
         else:
             return render_template('generate_playlist.html')
 
@@ -95,12 +96,31 @@ def recommendations():
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
             recco_list = sp.recommendation_genre_seeds()
             if request.method == "POST":
-                data = request.json
-                genre_seeds = data.get('genres')
-                recco_limit = data.get('recco_limit')
+                if request.is_json:
+                    data = request.json
+                    genre_seeds = data.get('genres')
+                    recco_limit = data.get('recco_limit')
+                else:
+                    genre_seeds = request.form['genres']
+                    recco_limit = request.form['recco_limit']
                 print(genre_seeds)
                 print(recco_limit)
-                return jsonify({"message": "Rekommendationer skapade"}), 200
+                reccos = sp.recommendations(seed_genres=genre_seeds, limit=recco_limit, market="SE")
+                for track in reccos['tracks']:
+                    song_name = track['name']
+                    
+                    for artist in track['artists']:
+                        artist_names = artist['name']
+                        print(f"Artist: {artist_names} Låt: {song_name}")
+                if 'playlist_id' in session:
+                    playlist_id = session['playlist_id']
+                    track_list = []
+                    
+                    for track in reccos['tracks']:
+                        song_uri = track['uri']
+                        track_list.append(song_uri)
+                    sp.playlist_add_items(playlist_id, track_list, position=None)
+                return jsonify({"message": "Spellista skapad!"}), 200
             else:
                 return render_template('recommendations.html', recco_list=recco_list)
 
@@ -128,9 +148,3 @@ if __name__ == '__main__':
 
 
 
-'''reccos = sp.recommendations(seed_genres=genre_seeds, limit=recco_limit, market="SE")
-                for track in reccos['tracks']:
-                    song_name = track['name']
-                    for artist in track['artists']:
-                        artist_names = artist['name']
-                        print(f"Artist: {artist_names} Låt: {song_name}")'''

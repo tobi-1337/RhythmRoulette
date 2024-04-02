@@ -17,24 +17,24 @@ $(document).ready(function() {
     });
 
 
-    $('#save_value').click(function() {
+    $('#save_value').click(function(event) {
         event.preventDefault();
-        // Samla in de valda genrerna
+        
         var selectedGenres = [];
         $('.genre-checkbox:checked').each(function() {
             selectedGenres.push($(this).val());
         });
     
-        // Skicka valda värden till Python med AJAX
+        
         $.ajax({
             url: '/recommendations',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ genres: selectedGenres, recco_limit: $('#recco_limit').val() }),
             success: function(response) {
-                // Behandla svaret från Python
-                alert(response.message); // Visa ett meddelande för användaren
-                window.location.href = '/'; // Omdirigera användaren till startsidan
+                
+                alert(response.message); 
+                window.location.href = '/'; 
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
