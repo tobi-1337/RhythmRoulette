@@ -70,10 +70,9 @@ def get_top_artists():
 
     top_artists = sp.current_user_top_artists()
     artists = top_artists['items']
-    for artist in artists:
-        print(artist['name'])
+    nr = 0
 
-    return render_template('top-artists.html', artists=artists)
+    return render_template('top-artists.html', artists=artists, nr=nr)
     
 
 @app.route('/generate-playlist', methods=["GET", "POST"])
@@ -108,6 +107,9 @@ def recommendations():
                         print(f"Artist: {artist_names} Låt: {song_name}")'''
             return render_template('recommendations.html', recco_list=recco_list)
 
+@app.route('/signup', methods=["GET", "POST"])
+def signup():
+    return render_template("signup.html")
 
 
 '''The logout page is used to clear the Flask session.'''

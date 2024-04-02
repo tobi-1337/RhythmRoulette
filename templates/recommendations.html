@@ -1,17 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Recommendations{% endblock %}
 {% block content %}
-<h1 class="text-center lead">
-    Generera en spellista!
-</h1>
 
-<div class="container m-5">
-    <div class="col-md-10 mx-auto col-lg-5">
-        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="reccos" action="#" method="post">
+<div class="container m-5 d-flex">
+    <div class="col-md-10 mx-auto col-lg-5 ">
+        <form class="p-4 p-md-5 border rounded-3 bg-secondary " id="reccos" action="#" method="post">
         <div class="form-floating mb-3">
             <p class="lead text-secondary fw-bold text-center">Välj genres!</p>
-            <div class="mb-3">
-                <p>Välj upp till 5 genres:</p>
+            <div>
+                <h1 class="display-5 text-center text-white">Generera en spellista!</h1>
+                <p class="lead text-white">Välj upp till 5 genres:</p>
                 {% for recco in recco_list['genres'] %}
                 <div class="form-check form-switch">
                     <input type="checkbox" class="form-check-input mb-3 genre-checkbox proanalysecheck" id="{{ recco }}" name="genres" value="{{ recco }}"> 

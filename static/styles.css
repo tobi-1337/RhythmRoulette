@@ -1,0 +1,207 @@
+body {
+    font-family: "Josefin Sans", sans-serif;
+    background: linear-gradient(to bottom, #000000, #2e2e2e); 
+    position: relative;
+    margin-bottom: 20px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.grid-container{
+    display:grid;
+    grid-template-columns:auto;
+    grid-template-areas: 
+    'navbar'
+    'header'
+    'container'
+    'footer';
+    overflow:visible;
+}
+
+/* här börjar 'navbar' */
+.navbar {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 10px;
+    margin-left: 10px;
+    
+}
+
+.w-icon{
+    z-index: 1;
+    font-family: "Gabarito";
+    color: #00755e; 
+    font-size: 2rem;
+    text-decoration: none;
+}
+.nav_link {
+    transition: all 0.3s;
+}
+.nav_link:hover {
+    text-shadow: 1px 1px rgb(255, 255, 255);
+    border-radius: 10px;
+    background-color:rgba(66, 66, 65, 0.144);
+    box-shadow: 2px 2px 10px white; 
+    font-size: 110%;
+}
+.navbar p {
+    position: absolute;
+    z-index: 1;
+    top: 60%; 
+    color:#000000;
+    font-size: 13px;
+}
+
+.navbar ul {
+    z-index: 1;
+    list-style: none;
+    display: flex;
+}
+
+.navbar ul li {
+    z-index: 1;
+    margin-left: 20px;
+    color: #dedede;
+}
+
+.navbar ul li a {
+    color: #dedede;
+    text-decoration: none;
+}
+
+/* Här är bakgrundsbild (video/herobild) */
+.background-video {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden; /* Se till att videon inte spill över utanför ramen */
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%; /* Videowrappern tar upp hela förälderelementets bredd */
+    height: 770px; /* Ange den önskade höjden för videon */
+}
+
+.video-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Sätt videons bredd till 100% av videowrappern */
+    height: 100%; /* Sätt videons höjd till 100% av videowrappern */
+    object-fit: cover; /* Se till att videon täcker hela videowrappern utan att förvränga proportionerna */
+}
+
+.header {
+    height: 800px;
+    position:static;
+}
+
+/* Här börjar sektion 'hero' */
+.hero { 
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2; 
+    margin: auto;
+    top: 150px;
+    padding: 50px;
+    text-align: center;
+    background-color: #ffffff71;
+    max-width: 700px;
+    height: 400px;
+    border-radius: 15px;
+}
+
+.hero h1 {
+    font-family: "Gabarito";
+    font-size: 4.0rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.hero a {
+    position: relative;
+    z-index: 2; 
+    text-decoration: none;
+    color:#fff;
+    background-color: #00755e; 
+    border-radius: 10px;
+    padding: 10px;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Gör att innehållet kan ombrytas på flera rader */
+    justify-content: space-between; /* Justera utrymmet mellan elementen */
+}
+
+/* Styling for the article */
+.card {
+    width: 380px;
+    padding: 0px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.card-body{
+    background-color: #dedede;
+    width: 380px;
+}
+
+/* Styling for the article title */
+.card-title {
+    text-align: center;
+    color: #020202;
+    background-color: #60a26f;
+    width: 380px;
+    height: 40px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+
+
+.btn-primary{
+    text-decoration: none;
+    text-align: center;
+    background-color: #00755e;
+    transition: all 0.3s;
+}
+.btn-primary:hover {
+    border-radius: 10px;
+    background-color: #00755e;
+}
+/* Styling for the article content */
+.article-content {
+    color: #666;
+    line-height: 1.6;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 30px 0;
+    background-color: #333;
+    color: #fff;
+}
+
+footer a {
+    position: absolute;
+    right: 20px;
+    text-decoration: none;
+    color: #a49f9f;
+}
