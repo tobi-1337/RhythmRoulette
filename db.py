@@ -1,11 +1,11 @@
 import psycopg2
+from config import db_password, host, database, user, port
 
-
-host = "pgserver.mau.se"
-database = "rhythm_roulette"
-user = "ao7002"
-password = "ovah95n4"
-port = "5432" 
+host = host
+database = database
+user = user
+password = db_password
+port = port
 
 try: 
     conn = psycopg2.connect(
