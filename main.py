@@ -25,10 +25,10 @@ sp_oauth = SpotifyOAuth (
 sp = Spotify(auth_manager=sp_oauth) #This variable lets us connect to the authorized Spotify user
 
 
-'''Home page for the website'''
+
 @app.route('/')
 def home():
-    
+    '''Home page for the website'''
     return render_template('index.html')
 
 
