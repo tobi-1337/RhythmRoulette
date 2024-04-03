@@ -3,6 +3,7 @@ from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth 
 from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
+import db
 
 
 app = Flask(__name__) #This variable is used to run the program
