@@ -2,7 +2,7 @@ import psycopg2
 
 
 host = "pgserver.mau.se"
-database = "let_online_store"
+database = "rhythm_roulette"
 user = "ao7002"
 password = "ovah95n4"
 port = "5432" 
@@ -15,7 +15,7 @@ try:
     password=password,
     port=port  
     )
-    
+
     cur = conn.cursor()
     
 except psycopg2.Error as error: 
