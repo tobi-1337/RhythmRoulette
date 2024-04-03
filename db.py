@@ -1,10 +1,10 @@
 import psycopg2
-from config import db_password, host, database, user, port
+from config import password, host, database, user, port
 
 host = host
 database = database
 user = user
-password = db_password
+password = password
 port = port
 
 try: 
