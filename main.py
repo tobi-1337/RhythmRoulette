@@ -98,9 +98,10 @@ def generate_playlist():
 @app.route('/playlist', methods=["GET", "POST"])
 def get_playlist():
     playlist_uri = session.get('playlist_uri')
+    get_playlist_name = session.get('playlist_name')
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         if playlist_uri:
-            return render_template("playlist.html", playlist_uri=playlist_uri)  # Pass the playlist URL to the template
+            return render_template("playlist.html", playlist_uri=playlist_uri, get_playlist_name=get_playlist_name)  # Pass the playlist URL to the template
         else:
             return "Playlist URL not found in session."
 
