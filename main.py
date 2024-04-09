@@ -88,17 +88,19 @@ def generate_playlist():
             playlist_description = request.form['playlist_description']
             playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
             playlist_id = playlist['id']
+            playlist_uri = playlist['uri']
             session['playlist_id'] = playlist_id
+            session['playlist_uri'] = playlist_uri
             return redirect(url_for('recommendations'))
         else:
             return render_template('generate_playlist.html')
 
 @app.route('/playlist', methods=["GET", "POST"])
 def get_playlist():
-    playlist_url = session.get['playlist_id']
+    playlist_uri = session.get('playlist_uri')
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        if playlist_url:
-            return render_template("playlist.html", playlist_url=playlist_url)  # Pass the playlist URL to the template
+        if playlist_uri:
+            return render_template("playlist.html", playlist_uri=playlist_uri)  # Pass the playlist URL to the template
         else:
             return "Playlist URL not found in session."
 
