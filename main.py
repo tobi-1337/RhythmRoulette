@@ -57,7 +57,8 @@ def callback():
     '''
     sp_oauth.get_access_token(request.args['code'])
     session['logged_in'] = True
-    flash(f"Du är inloggad!")
+    current_user_info = sp.me()
+    flash(f"Välkommen {current_user_info['display_name']}, \n Du är inloggad!")
     return redirect(url_for('get_top_artists'))
 
 
