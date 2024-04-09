@@ -10,6 +10,11 @@
         </div>
         {% endfor %}    
         {% endif %}
+        {% if user_image_url %}
+    <img src="{{ user_image_url }}" id="user_image"alt="User Image">
+    {% else %}
+    <p>No image available.</p>
+    {% endif %}
 {% endwith %}
 <h1 class="display-2 text-center text-white fw-bold">Här är dina toppartister!</h1>
 {% for artist in artists %}
