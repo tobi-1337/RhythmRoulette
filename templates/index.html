@@ -14,7 +14,11 @@
         <div class="hero">
             <h1>Rhythm Roulette</h1>
             <p>En webbplats med fokus på musik</p>
-            <a href="signup" class=" nav_link btn-primary">Registrera dig för att få helhetsupplevelsen!</a>
+            {% include 'modal_template.html' %}
+            <!--<button class="btn btn-success rounded-pill px-3 nav_link btn-primary" type="button" data-toggle="modal" data-target="staticBackdrop" id="staticBackdrop">Registrera dig!</button>-->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Registrera dig!
+              </button>
         </div>
     </header>
     <section class="container">
@@ -28,4 +32,6 @@
         </div>
     </section>
 
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}
