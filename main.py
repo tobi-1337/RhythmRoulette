@@ -10,7 +10,7 @@ app = Flask(__name__) #This variable is used to run the program
 app.config['SECRET_KEY'] = "hello" #Secret key is needed when you use sessions in Flask
 scope = 'user-top-read playlist-modify-public playlist-modify-private' #The scope defines which information from the Spotify account we get access to
 cache_handler = FlaskSessionCacheHandler(session) #cache_handler allows us to store the Spotify Token in Flask session
-
+db = db # This variable is used for connection to the database.
 '''
 sp_oauth is used to authorize the Spotify user. They get prompted to accept or decline
 the terms of service defined in our scope. 
@@ -25,6 +25,21 @@ sp_oauth = SpotifyOAuth (
 )
 sp = Spotify(auth_manager=sp_oauth) #This variable lets us connect to the authorized Spotify user
 
+def register_user():
+    '''
+    The function checks if the user is already registered in our database. 
+    If it is not, registers them.
+    '''
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+        current_user = sp.me()
+        user_id = current_user['id']
+        registered_user = db.check_user_in_db(user_id)
+        if not registered_user:
+            db.register_user(user_id)
+        session['logged_in'] = True
+        flash(f"Du är inloggad!")
+        return redirect(url_for('get_top_artists'))
+            
 
 
 @app.route('/')
@@ -56,9 +71,7 @@ def callback():
     from the Spotify authorization page.
     '''
     sp_oauth.get_access_token(request.args['code'])
-    session['logged_in'] = True
-    flash(f"Du är inloggad!")
-    return redirect(url_for('get_top_artists'))
+    return register_user()
 
 
 
@@ -80,6 +93,13 @@ def get_top_artists():
 
 @app.route('/generate-playlist', methods=["GET", "POST"])
 def generate_playlist():
+    '''
+    If the user reaches this page with the use of GET method the
+    function will create and empty Spotify playlist using the name and
+    description provided by the user through the HTML form. If POST method was
+    used, which it will be granted the form was filled, it will return the url for 
+    recommendations.
+    '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         if request.method == "POST":
             current_user = sp.me()
@@ -96,6 +116,14 @@ def generate_playlist():
 
 @app.route('/recommendations', methods=["GET", "POST"])
 def recommendations():
+    '''
+    If the user reaches this page using the GET method they will be
+    presented with a list of genres to choose from, as well as a slider. When clicking
+    the button at the bottom of the form they will generate as many songs they wanted
+    generated from the genres they chose. If the POST method was used, they will be presented with
+    a pop up notifying them that their playlist was made, then redirected to the home page.
+    For the POST method the function is using JavaScript for storing the genres chosen and handling the redirection.
+    '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
             recco_list = sp.recommendation_genre_seeds()
             if request.method == "POST":
