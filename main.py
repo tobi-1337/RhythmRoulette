@@ -149,7 +149,7 @@ def search():
                 years = data.get('decades')
                 search_limit = data.get('search_limit')
                 print(f"Years: {years}")
-                print(f" Search lmit: {search_limit}")
+                print(f" Search limit: {search_limit}")
             else:
                 years = request.form.get('decades')
                 search_limit = request.form.get('search_limit')
@@ -166,16 +166,14 @@ def search():
                 combined_search = ' '.join(search_terms)
                 print("Search query:", combined_search)
                 searches = sp.search(q= combined_search, type='track', market="SE")
-                '''for decade in years:
-                    search_term = f"{decade}s"  
-                    searches = sp.search(q=f'year:{search_term}', type='track', limit=recco_limit, market="SE")'''
+                for decade in years:
+                    searches = sp.search(q=f'year:{combined_search}', type='track', limit=search_limit, market="SE")
                 print("Search results:", searches)
                 
 
-                for track in searches['tracks']:
+                for track in searches['tracks']['items']:
                     print(f"Print datatype i felsökningssyfte: ", type(track))
-                    print("Track URI:",track['uri'])
-                    print (track_list)
+                    track_list.append(track['uri'])
 
                 sp.playlist_add_items(playlist_id, track_list, position=None)
 

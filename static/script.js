@@ -28,11 +28,6 @@ $(document).ready(function () {
         }
     });
 
-    $('#save_value').click(function (event) {
-        event.preventDefault();
-        // Do something with selectedGenres if needed
-    });
-
     $('#search_value').click(function (event) {
         event.preventDefault();
         if (selectedGenres.length > 0) {
@@ -68,43 +63,3 @@ $(document).ready(function () {
         }
     });
 });
-
-        $('#search_value').click(function (event) {
-            event.preventDefault();
-
-            var searchedGenres = [];
-            $('.search-checkbox:checked').each(function () {
-                searchedGenres.push($(this).val());
-            });
-        });
-            if (selectedGenres > 0) {
-                $.ajax({
-                    url: '/recommendations',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ genres: selectedGenres, recco_limit: $('#recco_limit').val() }),
-                    success: function (response) {
-                        alert(response.message);
-                        window.location.href = '/';
-                    },
-                    error: function (xhr, status, error) {
-                    }
-                });
-            } else if (searchedGenres > 0) {
-                        $.ajax({
-                        url: '/search',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify({ genres: searchedGenres, search_limit: $('#search_limit').val() }),
-                        success: function (searchResponse) {
-                            alert(response.message);
-                            window.location.href = '/';
-                        },
-                        error: function (xhr, status, error) {
-                    
-                        }
-                    
-                    });
-                }
-            
-        });
