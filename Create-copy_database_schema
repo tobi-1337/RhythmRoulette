@@ -1,0 +1,52 @@
+CREATE TABLE a_user(
+	s_id VARCHAR(30),
+	r_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	);
+	
+INSERT INTO a_user
+VALUES ('test');
+
+ALTER TABLE a_user
+ADD PRIMARY KEY (s_id);
+
+Sambandstabell
+CREATE TABLE friends_with(
+	user_one VARCHAR(30),
+	user_two VARCHAR(30),
+	f_date DATE DEFAULT CURRENT_DATE,
+	PRIMARY KEY (user_one, user_two),
+	FOREIGN KEY (user_one) REFERENCES a_user(s_id) ON DELETE CASCADE,
+	FOREIGN KEY (user_two) REFERENCES a_user(s_id) ON DELETE CASCADE
+);
+
+CREATE TABLE playlist(
+	pl_id VARCHAR(40) PRIMARY KEY,
+	pl_url VARCHAR(60),
+	user_id VARCHAR(30),
+	FOREIGN KEY (user_id) REFERENCES a_user(s_id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE comment_user(
+	c_id SERIAL PRIMARY KEY,
+	user_one VARCHAR(30),
+	user_two VARCHAR (30),
+	u_comment VARCHAR (500),
+	c_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (user_one) REFERENCES a_user(s_id),
+	FOREIGN KEY (user_two) REFERENCES a_user (s_id)
+);
+
+
+CREATE TABLE comment_playlist(
+	c_id SERIAL PRIMARY KEY,
+	user_id VARCHAR(30),
+	pl_id VARCHAR(40),
+	pl_comment VARCHAR(500),
+	c_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (user_id)  REFERENCES a_user(s_id) ON DELETE CASCADE,
+	FOREIGN KEY (pl_id) REFERENCES playlist(pl_id)	ON DELETE CASCADE
+);
+
+
+
