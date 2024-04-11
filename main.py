@@ -39,10 +39,10 @@ def register_user():
         if not registered_user:
             db.register_user(user_id)
             
-        current_user_img_url = current_user['images'][0]['url'] if current_user['images'] else None
+        
         session['logged_in'] = True
         flash(f"Välkommen {current_user['display_name']}, \n Du är inloggad!")
-        return redirect(url_for('get_top_artists', user_image_url=current_user_img_url))
+        return redirect(url_for('get_top_artists'))
 
         
     
@@ -89,11 +89,13 @@ def get_top_artists():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)
+    current_user = sp.me()
     user_image_url = request.args.get('user_image_url')
     top_artists = sp.current_user_top_artists()
     artists = top_artists['items']
     nr = 0
-    return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url)
+    current_user_img_url = current_user['images'][0]['url'] if current_user['images'] else None
+    return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=current_user_img_url)
     
 
 @app.route('/generate-playlist', methods=["GET", "POST"])
