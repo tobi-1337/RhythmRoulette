@@ -4,43 +4,71 @@ $(document).ready(function () {
 
     $('.genre-checkbox').change(function () {
         var checkedGenres = $('.genre-checkbox:checked');
-
-        if (checkedGenres.length > 5) {
-            alert("Du kan endast välja upp till 5 genrer.");
-            $(this).prop('checked', false);
-            return;
-        }
-
         selectedGenres = [];
         checkedGenres.each(function () {
             selectedGenres.push($(this).val());
         });
+        if (checkedGenres.length > 5) {
+            alert("You can only choose up to 5 genres.");
+            $(this).prop('checked', false);
+            return;
+        }
     });
 
     $('.search-checkbox').change(function () {
         var checkedGenres = $('.search-checkbox:checked');
-
-        if (checkedGenres.length > 3) {
-            alert("Du kan endast välja upp till 3 årtionden.");
-            $(this).prop('checked', false);
-            return;
-        }
-
         searchedGenres = [];
         checkedGenres.each(function () {
             searchedGenres.push($(this).val());
         });
+        if (checkedGenres.length > 3) {
+            alert("You can only choose up to 3 decades.");
+            $(this).prop('checked', false);
+            return;
+        }
     });
-
 
     $('#save_value').click(function (event) {
         event.preventDefault();
-
-        var selectedGenres = [];
-        $('.genre-checkbox:checked').each(function () {
-            selectedGenres.push($(this).val());
-        });
+        // Do something with selectedGenres if needed
     });
+
+    $('#search_value').click(function (event) {
+        event.preventDefault();
+        if (selectedGenres.length > 0) {
+            $.ajax({
+                url: '/recommendations',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ genres: selectedGenres, recco_limit: $('#recco_limit').val() }),
+                success: function (response) {
+                    alert(response.message);
+                    window.location.href = '/';
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                }
+            });
+        } else if (searchedGenres.length > 0) {
+            $.ajax({
+                url: '/search',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ decades: searchedGenres, search_limit: $('#search_limit').val() }),
+                success: function (searchResponse) {
+                    alert(searchResponse.message);
+                    window.location.href = '/';
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                }
+            });
+        } else {
+            alert("Please select at least one genre or decade.");
+        }
+    });
+});
+
         $('#search_value').click(function (event) {
             event.preventDefault();
 

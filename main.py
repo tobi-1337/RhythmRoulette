@@ -137,17 +137,19 @@ def generate_playlist_year():
         
 @app.route('/search', methods=["GET", "POST"])
 def search():
-
+    
+    print("Search route accessed")
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         decades = ['50s', '60s', '70s', '80s', '90s', '00s']   
 
         if request.method == "POST":
+            print("Received a POST request")
             if request.is_json:
                 data = request.json
                 years = data.get('decades')
                 search_limit = data.get('search_limit')
-                print(years)
-                print(search_limit)
+                print(f"Years: {years}")
+                print(f" Search lmit: {search_limit}")
             else:
                 years = request.form.get('decades')
                 search_limit = request.form.get('search_limit')
@@ -157,19 +159,23 @@ def search():
             
             if 'playlist_id' in session:
                 playlist_id = session['playlist_id']
+                print(f"Playlist id: {playlist_id}")
                 track_list = []  
 
                 search_terms = [f"{decade}" for decade in years]
                 combined_search = ' '.join(search_terms)
+                print("Search query:", combined_search)
                 searches = sp.search(q= combined_search, type='track', market="SE")
                 '''for decade in years:
                     search_term = f"{decade}s"  
                     searches = sp.search(q=f'year:{search_term}', type='track', limit=recco_limit, market="SE")'''
-
+                print("Search results:", searches)
+                
 
                 for track in searches['tracks']:
-                    print(track['uri'])
-                    
+                    print(f"Print datatype i felsökningssyfte: ", type(track))
+                    print("Track URI:",track['uri'])
+                    print (track_list)
 
                 sp.playlist_add_items(playlist_id, track_list, position=None)
 
