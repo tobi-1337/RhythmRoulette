@@ -48,7 +48,7 @@ $(document).ready(function () {
             $('.search-checkbox:checked').each(function () {
                 searchedGenres.push($(this).val());
             });
-
+        });
             if (selectedGenres > 0) {
                 $.ajax({
                     url: '/recommendations',
@@ -78,5 +78,5 @@ $(document).ready(function () {
                     
                     });
                 }
-            });
+            
         });
