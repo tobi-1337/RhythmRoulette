@@ -93,7 +93,6 @@ def generate_playlist():
         else:
             return render_template('generate_playlist.html')
 
-
 @app.route('/recommendations', methods=["GET", "POST"])
 def recommendations():
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
@@ -120,6 +119,64 @@ def recommendations():
                 return jsonify({"message": "Spellista skapad!"}), 200
             else:
                 return render_template('recommendations.html', recco_list=recco_list)
+
+@app.route('/generate-playlist-year', methods=["GET", "POST"])
+def generate_playlist_year():
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+        if request.method == "POST":
+            current_user = sp.me()
+            user_id = current_user['id']
+            playlist_name = request.form['playlist_name']
+            playlist_description = request.form['playlist_description']
+            playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
+            playlist_id = playlist['id']
+            session['playlist_id'] = playlist_id
+            return redirect(url_for('search'))
+        else:
+            return render_template('generate-playlist-year.html') 
+        
+@app.route('/search', methods=["GET", "POST"])
+def search():
+
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+        decades = ['50s', '60s', '70s', '80s', '90s', '00s']   
+
+        if request.method == "POST":
+            if request.is_json:
+                data = request.json
+                years = data.get('decades')
+                recco_limit = data.get('recco_limit')
+                
+            else:
+                years = request.form.get('decades')
+                recco_limit = request.form.get('recco_limit')
+     
+            #search = sp.search(year=years, limit=recco_limit, market="SE")
+
+            if 'playlist_id' in session:
+                playlist_id = session['playlist_id']
+                track_list = []  
+
+                search_terms = [f"{decade}" for decade in years]
+                combined_search = ' '.join(search_terms)
+                searches = sp.search(q= combined_search, type='track', limit=recco_limit, market="SE")
+
+                '''for decade in years:
+                    search_term = f"{decade}s"  
+                    searches = sp.search(q=f'year:{search_term}', type='track', limit=recco_limit, market="SE")'''
+
+
+                for track in searches['tracks']:
+                    song_uri = track['uri']
+                    track_list.append(song_uri)
+
+                sp.playlist_add_items(playlist_id, track_list, position=None)
+
+            return jsonify({"message": "Spellista skapad!"}), 200
+        
+        else:
+            return render_template('search.html', decades=decades)
+
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
