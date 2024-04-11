@@ -145,30 +145,31 @@ def search():
             if request.is_json:
                 data = request.json
                 years = data.get('decades')
-                recco_limit = data.get('recco_limit')
-                
+                search_limit = data.get('search_limit')
+                print(years)
+                print(search_limit)
             else:
                 years = request.form.get('decades')
-                recco_limit = request.form.get('recco_limit')
-     
+                search_limit = request.form.get('search_limit')
+                
             #search = sp.search(year=years, limit=recco_limit, market="SE")
-
+            
+            
             if 'playlist_id' in session:
                 playlist_id = session['playlist_id']
                 track_list = []  
 
                 search_terms = [f"{decade}" for decade in years]
                 combined_search = ' '.join(search_terms)
-                searches = sp.search(q= combined_search, type='track', limit=recco_limit, market="SE")
-
+                searches = sp.search(q= combined_search, type='track', market="SE")
                 '''for decade in years:
                     search_term = f"{decade}s"  
                     searches = sp.search(q=f'year:{search_term}', type='track', limit=recco_limit, market="SE")'''
 
 
                 for track in searches['tracks']:
-                    song_uri = track['uri']
-                    track_list.append(song_uri)
+                    print(track['uri'])
+                    
 
                 sp.playlist_add_items(playlist_id, track_list, position=None)
 
