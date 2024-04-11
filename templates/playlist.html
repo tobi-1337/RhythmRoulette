@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Get playlist{% endblock %}
+
+{% block content %}
+    <h1 class="display-2 text-center text-white fw-bold">Dina spellistor</h1>
+    <div>
+        <li><a class="nav_link" href={{playlist_uri}}>{{playlist_named}}</a></li>
+    </div>
+{% endblock %}

@@ -6,6 +6,8 @@ from config import client_id, client_secret, redirect_uri
 import db
 
 
+
+
 app = Flask(__name__) #This variable is used to run the program
 app.config['SECRET_KEY'] = "hello" #Secret key is needed when you use sessions in Flask
 scope = 'user-top-read playlist-modify-public playlist-modify-private' #The scope defines which information from the Spotify account we get access to
@@ -48,12 +50,10 @@ def register_user():
     return redirect(url_for('get_top_artists',))
             
 
-
 @app.route('/')
 def home():
     '''Home page for the website'''
     return render_template('index.html')
-
 
 
 @app.route('/login')
@@ -70,7 +70,6 @@ def login():
     return redirect(url_for('get_top_artists'))
 
 
-
 @app.route('/callback')
 def callback():
     '''
@@ -79,7 +78,6 @@ def callback():
     '''
     sp_oauth.get_access_token(request.args['code'])
     return register_user()
-
 
 
 @app.route('/top-artists')
@@ -115,11 +113,24 @@ def generate_playlist():
             playlist_description = request.form['playlist_description']
             playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
             playlist_id = playlist['id']
+            playlist_uri = playlist['uri']
+            playlist_named = playlist['name']
+            session['playlist_uri'] = playlist_uri  
             session['playlist_id'] = playlist_id
+            session['playlist_named'] = playlist_named  
             return redirect(url_for('recommendations'))
         else:
             return render_template('generate_playlist.html')
 
+@app.route('/playlist', methods=["GET", "POST"])
+def get_playlist():
+    playlist_uri = session.get('playlist_uri')
+    playlist_named = session.get('playlist_named')
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+        if playlist_uri:
+            return render_template("playlist.html", playlist_uri=playlist_uri, playlist_named=playlist_named)
+        else:
+            return "Playlists not found."
 
 @app.route('/recommendations', methods=["GET", "POST"])
 def recommendations():
@@ -156,10 +167,11 @@ def recommendations():
             else:
                 return render_template('recommendations.html', recco_list=recco_list)
 
+
+
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     return render_template("signup.html")
-
 
 
 @app.route('/logout')
@@ -171,8 +183,6 @@ def logout():
         flash(f"Du är inte inloggad!")
     session.clear()   
     return redirect(url_for('home'))
-
-
 
 
 '''Makes sure that the program is run from this file and not from anywhere else.'''
