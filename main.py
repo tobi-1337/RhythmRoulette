@@ -49,12 +49,13 @@ def register_user():
     '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         user_id = get_user_info('username')
+        display_name = get_user_info('display_name')
         registered_user = db.check_user_in_db(user_id)
         if not registered_user:
             db.register_user(user_id)
 
         session['logged_in'] = True
-        flash(f"Välkommen {user_id}, \n Du är inloggad!")
+        flash(f"Välkommen {display_name}, \n Du är inloggad!")
         return redirect(url_for('get_top_artists'))
     
     return redirect(url_for('get_top_artists',))
