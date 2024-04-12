@@ -103,14 +103,14 @@ def callback():
 
 
 @app.route('/profile-page')
-def profile_page(username):
+def profile_page():
     user_image_url = get_user_info('img')
     top_artists = sp.current_user_top_artists()
     artists = top_artists['items']
     nr = 0
     display_name = get_user_info('display_name')
     username = get_user_info('username')
-    return redirect(url_for('user_profile', username=username, user_image_url = user_image_url, artists=artists, nr=nr, display_name=display_name ))
+    return redirect(url_for('user_profile', username=username))
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():
@@ -132,9 +132,10 @@ def user_profile(username):
     user = user_info(username)
     print(user['id'])
     username = user['id']
+    current_user = get_user_info('username')
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
-    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url)
+    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user)
 
 @app.route('/profile-settings')
 def profile_settings():
