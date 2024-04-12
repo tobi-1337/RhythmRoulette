@@ -23,7 +23,7 @@ def check_user_in_db(user_id):
     if len(existing_user) == 0:
         return False
     else:
-        return True
+        return existing_user
 
 
 def register_user(user_id):

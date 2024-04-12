@@ -27,6 +27,18 @@ sp_oauth = SpotifyOAuth (
 )
 sp = Spotify(auth_manager=sp_oauth) #This variable lets us connect to the authorized Spotify user
 
+
+@app.route('/test')
+def user_info(user):
+        """ Gets basic profile information about a Spotify User
+
+            Parameters:
+                - user - the id of the usr
+        """
+        return sp._get('users/' + user)
+
+
+
 def get_user_info(info):
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         current_user = sp.me()
@@ -100,6 +112,14 @@ def profile_page():
     display_name = get_user_info('display_name')
     username = get_user_info('username')
     return render_template('profile_page.html', user_image_url = user_image_url, artists=artists, nr=nr, display_name=display_name, username=username  )
+
+@app.route('/<username>')
+def user_profile(username):
+    user = user_info('i..')
+    username = user['id']
+    display_name = user['display_name']
+    user_image_url = user['images'][0]['url'] if user['images'] else None
+    return redirect(url_for('profile_page', username=username, display_name=display_name, user_image_url=user_image_url))
 
 @app.route('/profile-settings')
 def profile_settings():
@@ -232,6 +252,5 @@ def logout():
 '''Makes sure that the program is run from this file and not from anywhere else.'''
 if __name__ == '__main__':
     app.run(debug=True)
-
 
 
