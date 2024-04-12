@@ -27,25 +27,35 @@ sp_oauth = SpotifyOAuth (
 )
 sp = Spotify(auth_manager=sp_oauth) #This variable lets us connect to the authorized Spotify user
 
+def get_user_info(info):
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+        current_user = sp.me()
+        if info == 'me':
+            return current_user
+        
+        elif info == 'username':
+            return current_user['id']
+        
+        elif info == 'img':
+            return current_user['images'][0]['url'] if current_user['images'] else None
+        
+        elif info == 'display_name':
+            return current_user['display_name']
+
 def register_user():
     '''
     The function checks if the user is already registered in our database. 
     If it is not, registers them.
     '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        current_user = sp.me()
-        user_id = current_user['id']
+        user_id = get_user_info('username')
         registered_user = db.check_user_in_db(user_id)
         if not registered_user:
             db.register_user(user_id)
-            
-        
-        session['logged_in'] = True
-        flash(f"Välkommen {current_user['display_name']}, \n Du är inloggad!")
-        return redirect(url_for('get_top_artists'))
 
-        
-    
+        session['logged_in'] = True
+        flash(f"Välkommen {user_id}, \n Du är inloggad!")
+        return redirect(url_for('get_top_artists'))
     
     return redirect(url_for('get_top_artists',))
             
@@ -80,6 +90,32 @@ def callback():
     return register_user()
 
 
+@app.route('/profile-page')
+def profile_page():
+    current_user_img_url = get_user_info('img')
+    top_artists = sp.current_user_top_artists()
+    artists = top_artists['items']
+    nr = 0
+    display_name = get_user_info('display_name')
+    username = get_user_info('username')
+    return render_template('profile_page.html', user_image_url = current_user_img_url, artists=artists, nr=nr, display_name=display_name, username=username  )
+
+@app.route('/profile-settings')
+def profile_settings():
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return render_template('profile_settings.html')
+
+@app.route('/delete-profile', methods=["POST"])
+def delete_profile():
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+        user_id = get_user_info('username')
+        registered_user = db.check_user_in_db(user_id)
+
+        if registered_user:
+            db.delete_user(user_id)
+            session.clear()
+            return redirect(url_for('home'))
+        
 @app.route('/top-artists')
 def get_top_artists():
     '''
@@ -89,12 +125,10 @@ def get_top_artists():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)
-    current_user = sp.me()
-    user_image_url = request.args.get('user_image_url')
     top_artists = sp.current_user_top_artists()
     artists = top_artists['items']
     nr = 0
-    current_user_img_url = current_user['images'][0]['url'] if current_user['images'] else None
+    current_user_img_url = get_user_info('img')
     return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=current_user_img_url)
     
 
@@ -109,8 +143,7 @@ def generate_playlist():
     '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         if request.method == "POST":
-            current_user = sp.me()
-            user_id = current_user['id']
+            user_id = get_user_info('username')
             playlist_name = request.form['playlist_name']
             playlist_description = request.form['playlist_description']
             playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)

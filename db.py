@@ -38,6 +38,14 @@ def register_user(user_id):
     )
     conn.commit()
 
+def delete_user(user_id):
+
+    cur.execute(
+                '''
+                DELETE FROM a_user
+                WHERE s_id = %s
+                ''', (user_id,)
+    )
 
 try: 
     conn = psycopg2.connect(
