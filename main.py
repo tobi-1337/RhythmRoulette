@@ -92,18 +92,21 @@ def callback():
 
 @app.route('/profile-page')
 def profile_page():
-    current_user_img_url = get_user_info('img')
+    user_image_url = get_user_info('img')
     top_artists = sp.current_user_top_artists()
     artists = top_artists['items']
     nr = 0
     display_name = get_user_info('display_name')
     username = get_user_info('username')
-    return render_template('profile_page.html', user_image_url = current_user_img_url, artists=artists, nr=nr, display_name=display_name, username=username  )
+    return render_template('profile_page.html', user_image_url = user_image_url, artists=artists, nr=nr, display_name=display_name, username=username  )
 
 @app.route('/profile-settings')
 def profile_settings():
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return render_template('profile_settings.html')
+        display_name = get_user_info('display_name')
+        username = get_user_info('username')
+        user_image_url = get_user_info('img')
+        return render_template('profile_settings.html', display_name=display_name, username=username, user_image_url=user_image_url)
 
 @app.route('/delete-profile', methods=["POST"])
 def delete_profile():
@@ -126,10 +129,12 @@ def get_top_artists():
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)
     top_artists = sp.current_user_top_artists()
+    username = get_user_info('username')
+    display_name = get_user_info('display_name')
     artists = top_artists['items']
     nr = 0
-    current_user_img_url = get_user_info('img')
-    return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=current_user_img_url)
+    user_image_url = get_user_info('img')
+    return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
     
 
 @app.route('/generate-playlist', methods=["GET", "POST"])

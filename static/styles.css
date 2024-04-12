@@ -230,5 +230,8 @@ footer a {
     background-color: var(--bs-backdrop-bg);
 }
 
+.hidden-form {
+    display: inline;
+}
 
 

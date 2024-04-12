@@ -46,6 +46,7 @@ def delete_user(user_id):
                 WHERE s_id = %s
                 ''', (user_id,)
     )
+    conn.commit()
 
 try: 
     conn = psycopg2.connect(
