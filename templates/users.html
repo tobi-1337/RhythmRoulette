@@ -9,7 +9,7 @@
         <h1>Sökresultat:</h1>
         {% for name in search_name %}
             <ul>
-            <li><a href="profile-page/{{name}}" class="lead">{{name}}</a></li>
+            <li><a href="profile-page/{{name[0]}}" class="lead">{{name[0]}}</a></li>
             </ul>
         {% endfor %}
     {% endif %}
