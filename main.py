@@ -167,11 +167,14 @@ def generate_playlist():
 def get_playlist():
     playlist_uri = session.get('playlist_uri')
     playlist_named = session.get('playlist_named')
+    username = get_user_info('username')
+    display_name = get_user_info('display_name')
+    user_image_url= get_user_info('img')
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         if playlist_uri:
-            return render_template("playlist.html", playlist_uri=playlist_uri, playlist_named=playlist_named)
+            return render_template("playlist.html", playlist_uri=playlist_uri, playlist_named=playlist_named, username=username, display_name=display_name, user_image_url=user_image_url)
         else:
-            return "Playlists not found."
+            return render_template("playlist.html", username=username, display_name=display_name, user_image_url=user_image_url)
 
 @app.route('/recommendations', methods=["GET", "POST"])
 def recommendations():
