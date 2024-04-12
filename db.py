@@ -25,7 +25,14 @@ def check_user_in_db(user_id):
     else:
         return existing_user
 
-
+def search_users(search_value):
+    cur.execute(
+                '''
+                SELECT s_id FROM a_user
+                WHERE s_id LIKE %s
+                ''', ('%' + search_value + '%',) 
+    )
+    return cur.fetchall()
 def register_user(user_id):
     '''
     Registers a user to the database.

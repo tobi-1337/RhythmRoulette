@@ -27,8 +27,6 @@ sp_oauth = SpotifyOAuth (
 )
 sp = Spotify(auth_manager=sp_oauth) #This variable lets us connect to the authorized Spotify user
 
-
-@app.route('/test')
 def user_info(user):
         """ Gets basic profile information about a Spotify User
 
@@ -36,6 +34,7 @@ def user_info(user):
                 - user - the id of the usr
         """
         return sp._get('users/' + user)
+        
 
 
 
@@ -104,22 +103,38 @@ def callback():
 
 
 @app.route('/profile-page')
-def profile_page():
+def profile_page(username):
     user_image_url = get_user_info('img')
     top_artists = sp.current_user_top_artists()
     artists = top_artists['items']
     nr = 0
     display_name = get_user_info('display_name')
     username = get_user_info('username')
-    return render_template('profile_page.html', user_image_url = user_image_url, artists=artists, nr=nr, display_name=display_name, username=username  )
+    return redirect(url_for('user_profile', username=username, user_image_url = user_image_url, artists=artists, nr=nr, display_name=display_name ))
 
-@app.route('/<username>')
+@app.route('/users', methods=['GET', 'POST'])
+def users():
+    if request.method == 'POST':
+        username = request.form['search_user']
+        search_name = db.search_users(username)
+        if len(search_name) > 0:
+            return render_template('users.html', username=username, search_name=search_name)
+        else: 
+            return render_template('users.html', username=username, search_name=False)
+    else:
+        return render_template('search_for_users.html')
+
+@app.route('/profile-page/<username>')
 def user_profile(username):
-    user = user_info('i..')
+    search_name = db.check_user_in_db(username)
+    if not search_name:
+        return render_template('index.html')
+    user = user_info(username)
+    print(user['id'])
     username = user['id']
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
-    return redirect(url_for('profile_page', username=username, display_name=display_name, user_image_url=user_image_url))
+    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url)
 
 @app.route('/profile-settings')
 def profile_settings():
