@@ -39,6 +39,20 @@ def register_user(user_id):
     conn.commit()
 
 
+def add_playlist(pl_id,pl_url,user_id):
+    '''
+    Saves the playlist to the database
+    '''
+    cur.execute(
+    '''
+    INSERT INTO playlist(pl_id, pl_url, user_id)
+    VALUES (%s, %s, %s)
+    ''',(pl_id, pl_url, user_id)
+    )
+
+    conn.commit()
+
+
 try: 
     conn = psycopg2.connect(
     host=host,
