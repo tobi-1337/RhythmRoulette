@@ -4,21 +4,23 @@
 
 <div class="container m-5 d-flex">
     <div class="col-md-10 mx-auto col-lg-5 ">
-        <form class="p-4 p-md-5 border rounded-3 bg-secondary " id="reccos" action="#" method="post">
+        <form class="p-4 p-md-5 border rounded-3 bg-secondary " id="searches" action="#" method="post">
         <div class="form-floating mb-3">
-            <p class="lead text-secondary fw-bold text-center">Välj genres!</p>
+            <p class="lead text-secondary fw-bold text-center">Välj Årtal!</p>
             <div>
                 <h1 class="display-5 text-center text-white">Generera en spellista!</h1>
-                <p class="lead text-white">Välj upp till 5 genres:</p>
-                {% for recco in recco_list['genres'] %}
+                <p class="lead text-white">Kryssa i de årtal du vill ha i din spellista:</p>
+
+                {% for decade in decades %}
                 <div class="form-check form-switch">
-                    <input type="checkbox" class="form-check-input mb-3 genre-checkbox proanalysecheck" id="{{ recco }}" name="genres" value="{{ recco }}"> 
-                    <label for="{{ recco }}" class="lead fw-bold mb-2">{{ recco }}</label><br>
+                    <input type="checkbox" class="form-check-input mb-3 search-checkbox proanalysecheck" id="{{ decade }}" name="decades" value="{{ decade }}"> 
+                    <label for="{{ decade }}" class="lead fw-bold mb-2">{{ decade }}</label><br>
                 </div>
                 {% endfor %}
+
                 <div>
                     <p class="display-7">Hur många låtar vill du generera?</p>
-                    <input type="range" name="recco_limit" id="recco_limit" value="24" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
+                    <input type="range" name="search_limit" id="search_limit" value="24" min="1" max="50" oninput="this.nextElementSibling.value = this.value">
                     <output>24</output>
                 </div>
             </div>
@@ -28,6 +30,5 @@
         </form>
     </div>
 </div>  
-
 
 {% endblock %}
