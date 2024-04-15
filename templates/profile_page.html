@@ -45,17 +45,17 @@
         </nav>
         <div class="container" id="profile_page">
             <div class="row">
-                <div class="col-4 mt-2">
+                <div class="col-8 mt-2">
                     <img src="{{ user_image_url }}" id="user_image"alt="User Image">
                     <p class="lead text-white">{{username}}</p>
                     <p class="text-white">Namn: </p>
                     <p class="lead text-white">{{display_name}}</p>
                     {% if current_user == username %}
-                        <a href="{{url_for('profile_settings')}}">Inställningar</a>
+                    <a class="btn btn-primary" href="{{url_for('profile_settings')}}">Inställningar</a>
                     {% endif %}
                 </div>
         
-                <div class="col text-center">
+                <div class="col-4 text-center">
                     {% block content %}
 
                     {% endblock %}
