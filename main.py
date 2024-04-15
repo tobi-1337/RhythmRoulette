@@ -104,11 +104,6 @@ def callback():
 
 @app.route('/profile-page')
 def profile_page():
-    user_image_url = get_user_info('img')
-    top_artists = sp.current_user_top_artists()
-    artists = top_artists['items']
-    nr = 0
-    display_name = get_user_info('display_name')
     username = get_user_info('username')
     return redirect(url_for('user_profile', username=username))
 
