@@ -11,9 +11,21 @@
                 </video>
             </div>
         </div>
+        
         <div class="hero">
             <h1>Rhythm Roulette</h1>
             <p>En webbplats med fokus på musik</p>
+            <div>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <div class="text-center">
+                                <h1 class="fw-bold lead">{{msg}}</h1>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                </div>
             {% include 'modal_template.html' %}
             <!--<button class="btn btn-success rounded-pill px-3 nav_link btn-primary" type="button" data-toggle="modal" data-target="staticBackdrop" id="staticBackdrop">Registrera dig!</button>-->
         

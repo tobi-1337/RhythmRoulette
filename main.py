@@ -68,8 +68,10 @@ def register_user():
         session['logged_in'] = True
         flash(f"Välkommen {display_name}, \n Du är inloggad!")
         return redirect(url_for('get_top_artists'))
+    else:
+        flash(f"Du måste godkänna Spotifys villkor för att logga in!")
+        return redirect(url_for('home'))
     
-    return redirect(url_for('get_top_artists',))
             
 
 @app.route('/')
@@ -98,8 +100,12 @@ def callback():
     The callback page is where the user gets redirected to 
     from the Spotify authorization page.
     '''
-    sp_oauth.get_access_token(request.args['code'])
-    return register_user()
+    try:
+        sp_oauth.get_access_token(request.args['code'])
+        return register_user()
+    except:
+        flash(f"Du måste godkänna villkoren!")
+        return redirect(url_for('home'))
 
 
 @app.route('/profile-page')
