@@ -27,14 +27,17 @@
                 <p>Ett projektarbete på Malmö Universitet</p>
                 <ul>
                     {% if 'logged_in' in session %}
-                    <li><a class="nav_link" href="top-artists">Dina toppartister!</a></li>
+                    <li><a class="nav_link" href="{{url_for('users')}}">Sök på användare!</a></li>
+                    <li><a class="nav_link" href="{{url_for('profile_page')}}">Din profil</a></li>
+                    <li><a class="nav_link" href="{{url_for('get_top_artists')}}">Dina toppartister!</a></li>
+                    <li><a class="nav_link" href="{{url_for('get_playlist')}}">Spellistor</a></li>
                     <li> | </li>
-                    <li><a class="nav_link" href="generate-playlist">Skapa spellista!</a></li>
+                    <li><a class="nav_link" href="{{url_for('generate_playlist')}}">Skapa spellista!</a></li>
                     <li> | </li>
-                    <li><a class="nav_link" href="logout" class="btn btn-danger"> Logga ut</a></li>
+                    <li><a class="nav_link" href="{{url_for('logout')}}" class="btn btn-danger"> Logga ut</a></li>
                     {% else %}
-                    <li><a class="nav_link" href="signup">Registrera dig</a></li>
-                    <li><a class="nav_link" href="login">Logga in</a></li>
+                    <li><a class="nav_link" href="{{url_for('signup')}}">Registrera dig</a></li>
+                    <li><a class="nav_link" href="{{url_for('login')}}">Logga in</a></li>
                     {% endif %}
                 </ul>
             </div>
