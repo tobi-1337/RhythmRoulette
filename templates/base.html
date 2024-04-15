@@ -33,7 +33,9 @@
                     <li><a class="nav_link" href="{{url_for('get_top_artists')}}">Dina toppartister!</a></li>
                     <li><a class="nav_link" href="{{url_for('get_playlist')}}">Spellistor</a></li>
                     <li> | </li>
-                    <li><a class="nav_link" href="{{url_for('generate_playlist')}}">Skapa spellista!</a></li>
+                    <li><a class="nav_link" href="{{url_for('generate_playlist')}}">Skapa spellista med genres!</a></li>
+                    <li> | </li>
+                    <li><a class="nav_link" href="{{url_for('generate_playlist_year')}}">Skapa spellista med årtal!</a></li>
                     <li> | </li>
                     <li><a class="nav_link" href="{{url_for('logout')}}" class="btn btn-danger"> Logga ut</a></li>
                     {% else %}
