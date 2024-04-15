@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% block title %}Home Page{% endblock %}
+{% extends "profile_page.html" %}
+{% block title %}Top Artists{% endblock %}
 
 {% block content %}
     {% with messages = get_flashed_messages() %}
@@ -8,18 +8,11 @@
         <div class="text-center">
             <h1 class="fw-bold">{{msg}}</h1>
         </div>
-        {% endfor %}    
-        {% endif %}
-        {% if user_image_url %}
-    <img src="{{ user_image_url }}" id="user_image"alt="User Image">
-    {% else %}
-    <p>No image available.</p>
+        {% endfor %}
     {% endif %}
-{% endwith %}
-<h1 class="display-2 text-center text-white fw-bold">Här är dina toppartister!</h1>
-{% for artist in artists %}
-<p class="lead text-white text-center">{{ loop.index0 + 1 }}. {{artist['name']}}</p>
-{%endfor%}
-
-
+        <h1 class="text-center text-white fw-bold">Här är dina toppartister!</h1>
+        {% for artist in artists %}
+            <p class="lead text-white text-center">{{ loop.index0 + 1 }}. {{artist['name']}}</p>
+        {%endfor%}
+    {% endwith %}
 {% endblock %}

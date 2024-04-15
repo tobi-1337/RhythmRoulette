@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="search_user" action="users" method="post">
+    <input type="text" id="search_user" name="search_user">
+    <button class="btn btn-primary" type="submit" value="submit">Sök!</button>
+</form>
+{% endblock %}

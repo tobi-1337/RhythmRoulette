@@ -23,9 +23,16 @@ def check_user_in_db(user_id):
     if len(existing_user) == 0:
         return False
     else:
-        return True
+        return existing_user
 
-
+def search_users(search_value):
+    cur.execute(
+                '''
+                SELECT s_id FROM a_user
+                WHERE s_id LIKE %s
+                ''', ('%' + search_value + '%',) 
+    )
+    return cur.fetchall()
 def register_user(user_id):
     '''
     Registers a user to the database.
@@ -38,6 +45,15 @@ def register_user(user_id):
     )
     conn.commit()
 
+def delete_user(user_id):
+
+    cur.execute(
+                '''
+                DELETE FROM a_user
+                WHERE s_id = %s
+                ''', (user_id,)
+    )
+    conn.commit()
 
 def add_playlist(pl_id,pl_url,user_id):
     '''

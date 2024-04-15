@@ -1,0 +1,31 @@
+{% extends "profile_page.html" %}
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+    
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteBackdrop">Radera kontot</button>
+    
+    <div id="modal-div">
+        <div class="modal fade" id="deleteBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteBackdropLabel" aria-hidden="true" data>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteBackdropLabel">Titta hit!</h1>
+              </div>
+              <div class="modal-body">
+                <p class="lead">När du raderar kontot kommer datan försvinna från den här hemsidan. Spellistor du skapat ligger fortfarande kvar på ditt Spotifykonto.</p>
+                <p class="fw-bold">Är du säker på att du vill lämna oss?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Nej jag stannar!</button>
+                <form method="post" action="delete-profile" class="hidden-form">
+                    <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+                    <button type="submit" name="submit_param" value="submit_value" class="btn btn-danger">Japp jag har fått nog</button>
+                </form>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}
