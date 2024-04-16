@@ -9,6 +9,8 @@
     <link rel="about" href="signup.html">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="shortcut icon" type="logotype" href="roulette.png">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="static/script.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +25,8 @@
 <body class="bg-dark bg-gradient">
     <div class="grid-container">
         <nav>
-            <div class="navbar">
+            
+            <div class="navbar dropdown">
                 <a href="/" class="w-icon">Rhythm Roulette</a>
                 <p>Ett projektarbete på Malmö Universitet</p>
                 <ul>
@@ -33,9 +36,13 @@
                     <li><a class="nav_link" href="{{url_for('get_top_artists')}}">Dina toppartister!</a></li>
                     <li><a class="nav_link" href="{{url_for('get_playlist')}}">Spellistor</a></li>
                     <li> | </li>
-                    <li><a class="nav_link" href="{{url_for('generate_playlist')}}">Skapa spellista med genres!</a></li>
-                    <li> | </li>
-                    <li><a class="nav_link" href="{{url_for('generate_playlist_year')}}">Skapa spellista med årtal!</a></li>
+                    <div class="dropdown">
+                        <button onclick="dropdownFunction()" class="dropdown_btn">Generera spellista</button>
+                        <div class="dropdown_content" id="myDropdown">
+                            <a href="{{url_for('generate_playlist')}}">Baserat på genres</a>
+                            <a href="{{url_for('generate_playlist_year')}}">Baserat på årtal</a>
+                        </div>
+                    </div>
                     <li> | </li>
                     <li><a class="nav_link" href="{{url_for('logout')}}" class="btn btn-danger"> Logga ut</a></li>
                     {% else %}
