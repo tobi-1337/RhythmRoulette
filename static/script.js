@@ -59,7 +59,7 @@ $(document).ready(function () {
                 }
             });
         } else {
-            alert("Please select at least one genre or decade.");
+            alert("Du måste välja minst en genre!");
         }
     });
 });
