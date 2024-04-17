@@ -67,7 +67,7 @@ def register_user():
 
         session['logged_in'] = True
         flash(f"Välkommen {display_name}, \n Du är inloggad!")
-        return redirect(url_for('get_top_artists'))
+        return redirect(url_for('home'))
     else:
         flash(f"Du måste godkänna Spotifys villkor för att logga in!")
         return redirect(url_for('home'))
