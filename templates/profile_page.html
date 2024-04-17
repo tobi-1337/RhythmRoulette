@@ -13,7 +13,7 @@
     <script src="static/script.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link
         href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Anton&family=Antonio:wght@100..700&family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Gabarito:wght@400..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Tilt+Warp&display=swap"
         rel="stylesheet">
@@ -46,7 +46,7 @@
         <div class="container" id="profile_page">
             <div class="row">
                 <div class="col-8 mt-2">
-                    <img src="{{ user_image_url }}" id="user_image"alt="User Image">
+                    <img src="{{ user_image_url }}" id="user_image" alt="User Image">
                     <p class="lead text-white">{{username}}</p>
                     <p class="text-white">Namn: </p>
                     <p class="lead text-white">{{display_name}}</p>
@@ -54,7 +54,7 @@
                     <a class="btn btn-primary" href="{{url_for('profile_settings')}}">Inställningar</a>
                     {% endif %}
                 </div>
-        
+
                 <div class="col-4 text-center">
                     {% block content %}
 
@@ -62,15 +62,15 @@
                 </div>
             </div>
         </div>
-        
+
 
         <footer>
             <p>&copy; 2024 Rhythm Roulette Website. All rights reserved. <a href="about.html">Om oss</a></p>
         </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-		crossorigin="anonymous"></script>
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
