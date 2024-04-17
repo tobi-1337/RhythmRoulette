@@ -189,10 +189,15 @@ def generate_playlist():
             user_id = get_user_info('username')
             playlist_name = request.form['playlist_name']
             playlist_description = request.form['playlist_description']
-            playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
+            if len(playlist_name) > 0:
+                playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
+            else:
+                flash(f'Du måste ange ett namn på spellistan!')
+                return render_template('generate_playlist.html')
             playlist_id = playlist['id']
             playlist_uri = playlist['uri']
             playlist_named = playlist['name']
+            db.add_playlist(playlist_id, playlist_uri, user_id)
             session['playlist_uri'] = playlist_uri  
             session['playlist_id'] = playlist_id
             session['playlist_named'] = playlist_named  
