@@ -68,6 +68,17 @@ def add_playlist(pl_id,pl_url,user_id):
 
     conn.commit()
 
+def check_playlist(user_id):
+    '''
+    checks which user is connected to the saved playlist
+    '''
+
+    cur.execute(
+    '''
+    SELECT pl_id FROM playlist 
+    WHERE user_id = %s
+    ''',(user_id)
+    )
 
 try: 
     conn = psycopg2.connect(

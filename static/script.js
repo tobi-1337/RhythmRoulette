@@ -14,7 +14,7 @@ $(document).ready(function () {
             return;
         }
     });
-
+    
     $('.search-checkbox').change(function () {
         var checkedGenres = $('.search-checkbox:checked');
         searchedGenres = [];
@@ -59,7 +59,7 @@ $(document).ready(function () {
                 }
             });
         } else {
-            alert("Please select at least one genre or decade.");
+            alert("Du måste välja minst en genre!");
         }
     });
 });
@@ -71,3 +71,23 @@ const myInput = document.getElementById('myInput')
 myModal.addEventListener('shown.bs.modal', () => {
   myInput.focus()
 })
+
+//Följande är en funktion för dropdown-meny vi inte använder.
+/*
+    function dropdownFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+    
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown_btn')) {
+            var dropdowns = document.getElementsByClassName("dropdown_content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+    */

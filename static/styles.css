@@ -25,15 +25,14 @@ body {
     position: relative;
     justify-content: space-between;
     align-items: center;
-    margin-right: 10px;
-    margin-left: 10px;
-    
+    z-index: 2;
+    background-color: #ececec; 
 }
 
 .w-icon{
     z-index: 1;
     font-family: "Gabarito";
-    color: #00755e; 
+    color: #1b1c1c; 
     font-size: 2rem;
     text-decoration: none;
 }
@@ -67,11 +66,11 @@ body {
 .navbar ul li {
     z-index: 1;
     margin-left: 20px;
-    color: #dedede;
+    color: #070707;
 }
 
 .navbar ul li a {
-    color: #dedede;
+    color: #070707;
     text-decoration: none;
 }
 

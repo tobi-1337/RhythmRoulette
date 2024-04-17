@@ -9,6 +9,7 @@
     <link rel="about" href="signup.html">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="shortcut icon" type="logotype" href="roulette.png">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="static/script.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,11 +24,21 @@
 <body class="bg-dark bg-gradient">
     <div class="grid-container">
         <nav>
-            <div class="navbar">
+            
+            <div class="navbar dropdown">
                 <a href="/" class="w-icon">Rhythm Roulette</a>
                 <p>Ett projektarbete på Malmö Universitet</p>
                 <ul>
                     {% if 'logged_in' in session %}
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Skapa spellista
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="{{url_for('generate_playlist')}}">Baserat på genres</a>
+                            <a href="{{url_for('generate_playlist_year')}}">Baserat på årtal</a>
+                        </div>
+                    </div>
                     <li><a class="nav_link" href="{{url_for('users')}}">Sök på användare!</a></li>
                     <li><a class="nav_link" href="{{url_for('profile_page')}}">Din profil</a></li>
                     <li><a class="nav_link" href="{{url_for('get_top_artists')}}">Dina toppartister!</a></li>
@@ -35,8 +46,7 @@
                     <li> | </li>
                     <li><a class="nav_link" href="{{url_for('generate_playlist')}}">Skapa spellista med genres!</a></li>
                     <li> | </li>
-                    <li><a class="nav_link" href="{{url_for('generate_playlist_year')}}">Skapa spellista med årtal!</a>
-                    </li>
+                    <li><a class="nav_link" href="{{url_for('generate_playlist_year')}}">Skapa spellista med årtal!</a></li>
                     <li> | </li>
                     <li><a class="nav_link" href="{{url_for('logout')}}" class="btn btn-danger"> Logga ut</a></li>
                     {% else %}
@@ -50,7 +60,7 @@
         {% block content %}
 
         {% endblock %}
-
+        
         <footer>
             <p>&copy; 2024 Rhythm Roulette Website. All rights reserved. <a href="about.html">Om oss</a></p>
         </footer>
