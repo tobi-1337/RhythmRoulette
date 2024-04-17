@@ -24,16 +24,11 @@
 <body class="bg-dark bg-gradient">
     <div class="grid-container">
         <nav>
-            
-            <div class="navbar dropdown">
+            <div class="navbar">
                 <a href="/" class="w-icon">Rhythm Roulette</a>
                 <p>Ett projektarbete på Malmö Universitet</p>
                 <ul>
                     {% if 'logged_in' in session %}
-                    <li><a class="nav_link" href="{{url_for('users')}}">Sök på användare!</a></li>
-                    <li><a class="nav_link" href="{{url_for('profile_page')}}">Din profil</a></li>
-                    <li><a class="nav_link" href="{{url_for('get_top_artists')}}">Dina toppartister!</a></li>
-                    <li><a class="nav_link" href="{{url_for('get_playlist')}}">Spellistor</a></li>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dropdown button
@@ -43,6 +38,10 @@
                             <a href="{{url_for('generate_playlist_year')}}">Baserat på årtal</a>
                         </div>
                     </div>
+                    <li><a class="nav_link" href="{{url_for('users')}}">Sök på användare!</a></li>
+                    <li><a class="nav_link" href="{{url_for('profile_page')}}">Din profil</a></li>
+                    <li><a class="nav_link" href="{{url_for('get_top_artists')}}">Dina toppartister!</a></li>
+                    <li><a class="nav_link" href="{{url_for('get_playlist')}}">Spellistor</a></li>
                     <li> | </li>
                     <li><a class="nav_link" href="{{url_for('logout')}}" class="btn btn-danger"> Logga ut</a></li>
                     {% else %}
