@@ -210,11 +210,7 @@ def generate_playlist():
 @app.route('/playlist', methods=['GET', 'POST'])
 def get_playlist():
     username = get_user_info('username')
-    playlist_id_list = db.check_playlist(username)
-    for p in playlist_id_list:
-       playlist =  sp.playlist(p)
-    print(playlist)
-    playlist_uri = db.get('playlist_uri')
+    playlist_uri = session.get('playlist_uri')
     playlist_named = session.get('playlist_named')
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
@@ -342,3 +338,12 @@ def logout():
 ''' Makes sure that the program is run from this file and not from anywhere else.'''
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+'''
+playlist_id_list = db.check_playlist(username)
+    for p in playlist_id_list:
+        playlist =  sp.playlist(p)
+    print(playlist)
+
+'''
