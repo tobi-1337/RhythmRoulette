@@ -77,8 +77,10 @@ def check_playlist(user_id):
     '''
     SELECT pl_id FROM playlist 
     WHERE user_id = %s
-    ''',(user_id)
+    ''',(user_id,)
     )
+
+    return cur.fetchall()
 
 try: 
     conn = psycopg2.connect(

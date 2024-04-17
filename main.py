@@ -207,9 +207,13 @@ def generate_playlist():
 
 @app.route('/playlist', methods=["GET", "POST"])
 def get_playlist():
-    playlist_uri = session.get('playlist_uri')
-    playlist_named = session.get('playlist_named')
     username = get_user_info('username')
+    playlist_id_list = db.check_playlist(username)
+    for p in playlist_id_list:
+       playlist =  sp.playlist(p)
+    print(playlist)
+    playlist_uri = db.get('playlist_uri')
+    playlist_named = session.get('playlist_named')
     display_name = get_user_info('display_name')
     user_image_url= get_user_info('img')
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
