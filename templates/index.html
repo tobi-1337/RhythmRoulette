@@ -3,53 +3,54 @@
 
 {% block content %}
 
-    <header class="header">
-        <div class="background-video">
-            <div class="video-wrapper">
-                <video loop muted autoplay playsinline poster="URL/TO/poster.jpg">
-                    <source src="{{ url_for('static', filename='pictures/hero.mp4')}}" type="video/mp4">
-                </video>
-            </div>
+<header class="header">
+    <div class="background-video">
+        <div class="video-wrapper">
+            <video loop muted autoplay playsinline poster="URL/TO/poster.jpg">
+                <source src="{{ url_for('static', filename='pictures/hero.mp4')}}" type="video/mp4">
+            </video>
         </div>
-        
-        <div class="hero">
-            <h1>Rhythm Roulette</h1>
-            <p>En webbplats med fokus på musik</p>
-            <div>
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for msg in messages %}
-                            <div class="text-center">
-                                <h1 class="fw-bold lead">{{msg}}</h1>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                </div>
-            {% include 'modal_template.html' %}
-            <!--<button class="btn btn-success rounded-pill px-3 nav_link btn-primary" type="button" data-toggle="modal" data-target="staticBackdrop" id="staticBackdrop">Registrera dig!</button>-->
-        
-            <!--OBSOBSOBS! Denna buttton ska trigga modalen! -->
-            {% if 'logged_in' not in session %}
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> 
-                Registrera dig!
-            </button>
-            {% else %}
-                <a href="top-artists">Din profil!</a>
-            
+    </div>
+
+    <div class="hero">
+        <h1>Rhythm Roulette</h1>
+        <p>En webbplats med fokus på musik</p>
+        <div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="text-center">
+                <h1 class="fw-bold lead">{{msg}}</h1>
+            </div>
+            {% endfor %}
             {% endif %}
+            {% endwith %}
         </div>
-    </header>
-    <section class="container">
-        <div class="card" style="width: 18rem;">
-            
-            <div class="card-body">
+        {% include 'modal_template.html' %}
+        <!--<button class="btn btn-success rounded-pill px-3 nav_link btn-primary" type="button" data-toggle="modal" data-target="staticBackdrop" id="staticBackdrop">Registrera dig!</button>-->
+
+        <!--OBSOBSOBS! Denna buttton ska trigga modalen! -->
+        {% if 'logged_in' not in session %}
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Registrera dig!
+        </button>
+        {% else %}
+        <a href="top-artists">Din profil!</a>
+
+        {% endif %}
+    </div>
+</header>
+<section class="container">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
             <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p></p>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
             <a href="#" class="btn-primary">Go somewhere</a>
-            </div>
         </div>
-    </section>
+    </div>
+</section>
 
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>

@@ -2,14 +2,16 @@
 {% block title %}Get playlist{% endblock %}
 
 {% block content %}
-    <div class="text-center">
-        
-        {% if 'playlist_uri' in session %}
-        <h1 class="display-4 text-white fw-bold">Dina spellistor</h1>
+<div class="text-center">
+    {% if 'playlist_uri' in session %}
+    <h1 class="display-4 text-white fw-bold">Dina spellistor</h1>
+    <ol>
         <li><a class="nav_link" href={{playlist_uri}}>{{playlist_named}}</a></li>
-        {% else %}
-        <h1 class="display-4 text-white fw-bold">Du har inga spellistor än!</h1>
-        <a class="btn btn-success" href='generate-playlist'>Skapa din första spellista!</a>
-        {% endif %}
-    </div>    
+        <li><a class="nav_link" href=#>{{playlist_named}}</a></li>
+    </ol>
+    {% else %}
+    <h1 class="display-4 text-white fw-bold">Du har inga spellistor än!</h1>
+    <a class="btn btn-success" href='generate-playlist'>Skapa din första spellista!</a>
+    {% endif %}
+</div>
 {% endblock %}

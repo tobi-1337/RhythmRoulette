@@ -5,15 +5,17 @@ from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
 import db
 
-
-
-
-app = Flask(__name__) #This variable is used to run the program
-app.config['SECRET_KEY'] = "hello" #Secret key is needed when you use sessions in Flask
-scope = 'user-top-read playlist-modify-public playlist-modify-private' #The scope defines which information from the Spotify account we get access to
-cache_handler = FlaskSessionCacheHandler(session) #cache_handler allows us to store the Spotify Token in Flask session
-db = db # This variable is used for connection to the database.
-'''
+# This variable is used to run the program
+app = Flask(__name__) 
+# Secret key is needed when you use sessions in Flask
+app.config['SECRET_KEY'] = "hello" 
+# The scope defines which information from the Spotify account we get access to
+scope = 'user-top-read playlist-modify-public playlist-modify-private'
+# cache_handler allows us to store the Spotify Token in Flask session
+cache_handler = FlaskSessionCacheHandler(session) 
+# This variable is used for connection to the database.
+db = db 
+''' 
 sp_oauth is used to authorize the Spotify user. They get prompted to accept or decline
 the terms of service defined in our scope. 
 '''
@@ -25,17 +27,18 @@ sp_oauth = SpotifyOAuth (
     scope=scope,
     show_dialog = True
 )
-sp = Spotify(auth_manager=sp_oauth) #This variable lets us connect to the authorized Spotify user
+# This variable lets us connect to the authorized Spotify user
+sp = Spotify(auth_manager=sp_oauth) 
+
 
 def user_info(user):
-        """ Gets basic profile information about a Spotify User
+        ''' 
+        Gets basic profile information about a Spotify User
 
-            Parameters:
-                - user - the id of the usr
-        """
+        Parameters:
+            - user - the id of the usr
+        '''
         return sp._get('users/' + user)
-        
-
 
 
 def get_user_info(info):
@@ -43,15 +46,13 @@ def get_user_info(info):
         current_user = sp.me()
         if info == 'me':
             return current_user
-        
         elif info == 'username':
             return current_user['id']
-        
         elif info == 'img':
             return current_user['images'][0]['url'] if current_user['images'] else None
-        
         elif info == 'display_name':
             return current_user['display_name']
+
 
 def register_user():
     '''
@@ -64,19 +65,17 @@ def register_user():
         registered_user = db.check_user_in_db(user_id)
         if not registered_user:
             db.register_user(user_id)
-
         session['logged_in'] = True
         flash(f"Välkommen {display_name}, \n Du är inloggad!")
         return redirect(url_for('get_top_artists'))
     else:
         flash(f"Du måste godkänna Spotifys villkor för att logga in!")
         return redirect(url_for('home'))
+        
     
-            
-
 @app.route('/')
 def home():
-    '''Home page for the website'''
+    ''' Home page for the website.'''
     return render_template('index.html')
 
 
@@ -96,10 +95,7 @@ def login():
 
 @app.route('/callback')
 def callback():
-    '''
-    The callback page is where the user gets redirected to 
-    from the Spotify authorization page.
-    '''
+    ''' The callback page is where the user gets redirected to from the Spotify authorization page. '''
     try:
         sp_oauth.get_access_token(request.args['code'])
         return register_user()
@@ -113,6 +109,7 @@ def profile_page():
     username = get_user_info('username')
     return redirect(url_for('user_profile', username=username))
 
+
 @app.route('/users', methods=['GET', 'POST'])
 def users():
     if request.method == 'POST':
@@ -124,6 +121,7 @@ def users():
             return render_template('users.html', username=username, search_name=False)
     else:
         return render_template('search_for_users.html')
+
 
 @app.route('/profile-page/<username>')
 def user_profile(username):
@@ -137,6 +135,7 @@ def user_profile(username):
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
     return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user)
+    
 
 @app.route('/profile-settings')
 def profile_settings():
@@ -146,7 +145,8 @@ def profile_settings():
         user_image_url = get_user_info('img')
         return render_template('profile_settings.html', display_name=display_name, username=username, user_image_url=user_image_url)
 
-@app.route('/delete-profile', methods=["POST"])
+
+@app.route('/delete-profile', methods=['POST'])
 def delete_profile():
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         user_id = get_user_info('username')
@@ -156,6 +156,7 @@ def delete_profile():
             db.delete_user(user_id)
             session.clear()
             return redirect(url_for('home'))
+
         
 @app.route('/top-artists')
 def get_top_artists():
@@ -175,7 +176,7 @@ def get_top_artists():
     return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
     
 
-@app.route('/generate-playlist', methods=["GET", "POST"])
+@app.route('/generate-playlist', methods=['GET', 'POST'])
 def generate_playlist():
     '''
     If the user reaches this page with the use of GET method the
@@ -185,7 +186,7 @@ def generate_playlist():
     recommendations.
     '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        if request.method == "POST":
+        if request.method == 'POST':
             user_id = get_user_info('username')
             playlist_name = request.form['playlist_name']
             playlist_description = request.form['playlist_description']
@@ -200,20 +201,22 @@ def generate_playlist():
         else:
             return render_template('generate_playlist.html')
 
-@app.route('/playlist', methods=["GET", "POST"])
+
+@app.route('/playlist', methods=['GET', 'POST'])
 def get_playlist():
     playlist_uri = session.get('playlist_uri')
     playlist_named = session.get('playlist_named')
     username = get_user_info('username')
     display_name = get_user_info('display_name')
-    user_image_url= get_user_info('img')
+    user_image_url = get_user_info('img')
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         if playlist_uri:
-            return render_template("playlist.html", playlist_uri=playlist_uri, playlist_named=playlist_named, username=username, display_name=display_name, user_image_url=user_image_url)
+            return render_template('playlist.html', playlist_uri=playlist_uri, playlist_named=playlist_named, username=username, display_name=display_name, user_image_url=user_image_url)
         else:
-            return render_template("playlist.html", username=username, display_name=display_name, user_image_url=user_image_url)
+            return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url)
 
-@app.route('/recommendations', methods=["GET", "POST"])
+
+@app.route('/recommendations', methods=['GET', 'POST'])
 def recommendations():
     '''
     If the user reaches this page using the GET method they will be
@@ -225,7 +228,7 @@ def recommendations():
     '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
             recco_list = sp.recommendation_genre_seeds()
-            if request.method == "POST":
+            if request.method == 'POST':
                 if request.is_json:
                     data = request.json
                     genre_seeds = data.get('genres')
@@ -234,7 +237,8 @@ def recommendations():
                     genre_seeds = request.form['genres']
                     recco_limit = request.form['recco_limit']
 
-                reccos = sp.recommendations(seed_genres=genre_seeds, limit=recco_limit, market="SE")
+                reccos = sp.recommendations(seed_genres=genre_seeds, 
+                                            limit=recco_limit, market='SE')
 
                 if 'playlist_id' in session:
                     playlist_id = session['playlist_id']
@@ -248,10 +252,11 @@ def recommendations():
             else:
                 return render_template('recommendations.html', recco_list=recco_list)
 
-@app.route('/generate-playlist-year', methods=["GET", "POST"])
+
+@app.route('/generate-playlist-year', methods=['GET', 'POST'])
 def generate_playlist_year():
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        if request.method == "POST":
+        if request.method == 'POST':
             current_user = sp.me()
             user_id = current_user['id']
             playlist_name = request.form['playlist_name']
@@ -262,15 +267,15 @@ def generate_playlist_year():
             return redirect(url_for('search'))
         else:
             return render_template('generate-playlist-year.html') 
+            
         
-@app.route('/search', methods=["GET", "POST"])
+@app.route('/search', methods=['GET', 'POST'])
 def search():
-    
     print("Search route accessed")
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         decades = ['50s', '60s', '70s', '80s', '90s', '00s']   
 
-        if request.method == "POST":
+        if request.method == 'POST':
             print("Received a POST request")
             if request.is_json:
                 data = request.json
@@ -281,10 +286,8 @@ def search():
             else:
                 years = request.form.get('decades')
                 search_limit = request.form.get('search_limit')
-                
-            #search = sp.search(year=years, limit=recco_limit, market="SE")
-            
-            
+                    
+                        
             if 'playlist_id' in session:
                 playlist_id = session['playlist_id']
                 print(f"Playlist id: {playlist_id}")
@@ -293,9 +296,9 @@ def search():
                 search_terms = [f"{decade}" for decade in years]
                 combined_search = ' '.join(search_terms)
                 print("Search query:", combined_search)
-                searches = sp.search(q= combined_search, type='track', market="SE")
+                searches = sp.search(q= combined_search, type='track', market='SE')
                 for decade in years:
-                    searches = sp.search(q=f'year:{combined_search}', type='track', limit=search_limit, market="SE")
+                    searches = sp.search(q=f'year:{combined_search}', type='track', limit=search_limit, market='SE')
                 print("Search results:", searches)
                 
 
@@ -311,14 +314,14 @@ def search():
             return render_template('search.html', decades=decades)
 
 
-@app.route('/signup', methods=["GET", "POST"])
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template("signup.html")
+    return render_template('signup.html')
 
 
 @app.route('/logout')
 def logout():
-    '''The logout page is used to clear the Flask session.'''
+    ''' The logout page is used to clear the Flask session. '''
     if 'is_logged_in' in session:
         flash(f"Du är utloggad!")
     else:
@@ -327,8 +330,6 @@ def logout():
     return redirect(url_for('home'))
 
 
-'''Makes sure that the program is run from this file and not from anywhere else.'''
+''' Makes sure that the program is run from this file and not from anywhere else.'''
 if __name__ == '__main__':
     app.run(debug=True)
-
-
