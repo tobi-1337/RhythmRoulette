@@ -32,16 +32,25 @@ sp = Spotify(auth_manager=sp_oauth)
 
 
 def user_info(user):
-        ''' 
-        Gets basic profile information about a Spotify User
+    ''' 
+    Gets basic profile information about a Spotify User
 
-        Parameters:
-            - user - the id of the usr
-        '''
-        return sp._get('users/' + user)
+    Parameters:
+        - user: the id of the usr
+    '''
+    return sp._get('users/' + user)
 
 
 def get_user_info(info):
+    ''' 
+    Retrieve user information from Spotify based on the requested info.
+
+    Parameters:
+        - info (str): The type of information to retrieve. 
+
+    Returns:
+        - Various types: Depending on the 'info' parameter, returns different types of user information.
+    '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         current_user = sp.me()
         if info == 'me':
@@ -75,7 +84,7 @@ def register_user():
     
 @app.route('/')
 def home():
-    ''' Home page for the website.'''
+    ''' Home page for the website. '''
     return render_template('index.html')
 
 
@@ -106,12 +115,22 @@ def callback():
 
 @app.route('/profile-page')
 def profile_page():
+    ''' Redirects the user to their profile page. '''
     username = get_user_info('username')
     return redirect(url_for('user_profile', username=username))
 
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():
+    '''
+    Handle requests to the '/users' route. 
+    GET method: renders the 'search_for_users.html' template
+    POST method: 
+        - Retrieves the username from the form data.
+        - Searches the database for users matching the provided username.
+        - Renders the 'users.html' template with search results if found, 
+          or with an indication of no results if not found.
+    '''
     if request.method == 'POST':
         username = request.form['search_user']
         search_name = db.search_users(username)
@@ -125,6 +144,16 @@ def users():
 
 @app.route('/profile-page/<username>')
 def user_profile(username):
+    '''
+    Render the profile page for a specific user.
+    Retrieves information about the specified user and renders their profile page.
+
+    Parameters:
+        - username (str): The username of the user whose profile page is to be rendered.
+    
+    Returns:
+        - The profile page template with the user's information.
+    '''
     search_name = db.check_user_in_db(username)
     if not search_name:
         return render_template('index.html')
@@ -139,6 +168,7 @@ def user_profile(username):
 
 @app.route('/profile-settings')
 def profile_settings():
+    ''' Retrieves the current user's display name, username, and profile image URL. '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         display_name = get_user_info('display_name')
         username = get_user_info('username')
@@ -148,6 +178,12 @@ def profile_settings():
 
 @app.route('/delete-profile', methods=['POST'])
 def delete_profile():
+    '''
+    Deletes the user's profile if they are authenticated.
+
+    If the user's token is validated, their profile is deleted from the database
+    and their session is cleared. Then, the user is redirected to the home page.
+    '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         user_id = get_user_info('username')
         registered_user = db.check_user_in_db(user_id)
@@ -209,6 +245,10 @@ def generate_playlist():
 
 @app.route('/playlist', methods=['GET', 'POST'])
 def get_playlist():
+    '''
+    Retrieves the user's information and playlist details,
+    and renders the playlist page template with this information.
+    '''
     username = get_user_info('username')
     playlist_uri = session.get('playlist_uri')
     playlist_named = session.get('playlist_named')
@@ -260,6 +300,13 @@ def recommendations():
 
 @app.route('/generate-playlist-year', methods=['GET', 'POST'])
 def generate_playlist_year():
+    '''
+    If the user reaches this page with the use of GET method the
+    function will create and empty Spotify playlist using the name and
+    description provided by the user through the HTML form. If POST method was
+    used, which it will be granted the form was filled, it will return the url for 
+    recommendations.
+    '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         if request.method == 'POST':
             current_user = sp.me()
@@ -276,6 +323,14 @@ def generate_playlist_year():
         
 @app.route('/search', methods=['GET', 'POST'])
 def search():
+    '''
+    If the user reaches this page using the GET method they will be
+    presented with a list of decade to choose from, as well as a slider. When clicking
+    the button at the bottom of the form they will generate as many songs they wanted
+    generated from the decades they chose. If the POST method was used, they will be presented with
+    a pop up notifying them that their playlist was made, then redirected to the home page.
+    For the POST method the function is using JavaScript for storing the decades chosen and handling the redirection.
+    '''
     print("Search route accessed")
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         decades = ['50s', '60s', '70s', '80s', '90s', '00s']   
@@ -321,6 +376,7 @@ def search():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    ''' Renders the signup page. '''
     return render_template('signup.html')
 
 
@@ -335,7 +391,7 @@ def logout():
     return redirect(url_for('home'))
 
 
-''' Makes sure that the program is run from this file and not from anywhere else.'''
+''' Makes sure that the program is run from this file and not from anywhere else. '''
 if __name__ == '__main__':
     app.run(debug=True)
 
