@@ -333,45 +333,44 @@ def search():
     '''
     print("Search route accessed")
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        decades = ['50s', '60s', '70s', '80s', '90s', '00s']   
+        decades_ranges = {'50s': '1950-1959', '60s': '1960-1969', '70s': '1970-1979', '80s': '1980-1989',
+                          '90s': '1990-1999', '00s': '2000-2009', '10s': '2010-2020'}  
 
         if request.method == 'POST':
             print("Received a POST request")
             if request.is_json:
                 data = request.json
-                years = data.get('decades')
+                decades = data.get('decades')
                 search_limit = data.get('search_limit')
-                print(f"Years: {years}")
-                print(f" Search limit: {search_limit}")
+                print(f"Decades: {decades}")
+                print(f"Search limit: {search_limit}")
             else:
-                years = request.form.get('decades')
+                decades = request.form.getlist('decades')
                 search_limit = request.form.get('search_limit')
-                    
-                        
+
             if 'playlist_id' in session:
                 playlist_id = session['playlist_id']
                 print(f"Playlist id: {playlist_id}")
                 track_list = []  
 
-                search_terms = [f"{decade}" for decade in years]
+                search_terms = [decades_ranges[decade] for decade in decades]
                 combined_search = ' '.join(search_terms)
                 print("Search query:", combined_search)
-                searches = sp.search(q= combined_search, type='track', market='SE')
-                for decade in years:
-                    searches = sp.search(q=f'year:{combined_search}', type='track', limit=search_limit, market='SE')
-                print("Search results:", searches)
                 
+                for decade in decades:
+                    searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
+                    print("Search results:", searches)
 
-                for track in searches['tracks']['items']:
-                    print(f"Print datatype i felsökningssyfte: ", type(track))
-                    track_list.append(track['uri'])
+                    for track in searches['tracks']['items']:
+                        print(f"Print datatype for debugging: ", type(track))
+                        track_list.append(track['uri'])
 
                 sp.playlist_add_items(playlist_id, track_list, position=None)
 
             return jsonify({"message": "Spellista skapad!"}), 200
         
         else:
-            return render_template('search.html', decades=decades)
+            return render_template('search.html', decades=decades_ranges.keys())
 
 
 @app.route('/signup', methods=['GET', 'POST'])
