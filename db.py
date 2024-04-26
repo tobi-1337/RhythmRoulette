@@ -82,6 +82,14 @@ def check_playlist(user_id):
 
     return cur.fetchall()
 
+def delete_playlist(user_id):
+    cur.execute(
+        ''' 
+        DELETE FROM playlists 
+        WHERE pl_id = %s 
+        ''', (user_id,)
+    )
+    conn.commit()
 try: 
     conn = psycopg2.connect(
     host=host,
