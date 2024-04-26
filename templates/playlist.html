@@ -2,6 +2,15 @@
 {% block title %}Get playlist{% endblock %}
 
 {% block content %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+        <div class="text-center">
+            <h1 class="fw-bold">{{msg}}</h1>
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
 <div class="text-center">
     {% if playlist %}
     <h1 class="display-4 text-white fw-bold">Dina spellistor</h1>
