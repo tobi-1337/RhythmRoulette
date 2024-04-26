@@ -82,12 +82,12 @@ def check_playlist(user_id):
 
     return cur.fetchall()
 
-def delete_playlist(user_id):
+def delete_playlist(pl_id):
     cur.execute(
         ''' 
-        DELETE FROM playlists 
+        DELETE FROM playlist
         WHERE pl_id = %s 
-        ''', (user_id,)
+        ''', (pl_id,)
     )
     conn.commit()
 try: 

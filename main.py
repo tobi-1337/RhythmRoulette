@@ -253,22 +253,52 @@ def get_playlist():
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
     user_playlists = db.check_playlist(username)
-    playlists = {"name":[], 'uri':[]}
+    playlists = {"name":[], 'id':[]}
     for playlist in user_playlists:
         for pl in playlist:
             playlist_info = sp.playlist(pl)
             playlist_name = playlist_info['name']
             playlist_uri = playlist_info['uri']
             playlists['name'].append(playlist_name)
-            playlists['uri'].append(playlist_uri)
-    for name in playlists['uri']:
+            playlists['id'].append(pl)
+    for name in playlists['id']:
         print(name)
-    zipped_playlists = zip(playlists['name'], playlists['uri'])
+    zipped_playlists = zip(playlists['name'], playlists['id'])
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         if len(user_playlists) > 0:
             return render_template('playlist.html', playlist = True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url)
         else:
             return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url)
+
+@app.route('/playlist/<pl_id>')
+def playlist_page(pl_id):
+    username = get_user_info('username')
+    display_name = get_user_info('display_name')
+    user_image_url = get_user_info('img')
+    playlist_tracks = sp.playlist_tracks(pl_id)
+    print(pl_id)
+    playlist_info = sp.playlist(pl_id)
+    playlist_uri = playlist_info['uri']
+    playlist_name = playlist_info['name']
+    playlist_items = playlist_tracks['items']
+    for track in playlist_tracks['items']:
+        track_name = track['track']['name']
+        artist_name = track['track']['artists'][0]['name']
+        album_name = track['track']['album']['name']
+        album_img = track['track']['album']['images'][0]['url']
+        
+        
+
+        print(f" Img: {album_img} Track: {track_name} Artist: {artist_name} Album: {album_name}")
+
+    return render_template('playlist_page.html', playlist_uri=playlist_uri, album_img=album_img, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url)
+
+@app.route('/delete-playlist/<pl_id>')
+def delete_playlist(pl_id):
+    sp.current_user_unfollow_playlist(pl_id)
+    db.delete_playlist(pl_id)
+    return redirect(url_for('get_playlist'))
+
 
 
 @app.route('/recommendations', methods=['GET', 'POST'])

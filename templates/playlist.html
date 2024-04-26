@@ -6,8 +6,8 @@
     {% if playlist %}
     <h1 class="display-4 text-white fw-bold">Dina spellistor</h1>
     <ol>
-        {% for name, uri in playlists %}
-        <li><a class="nav_link" href="{{ uri }}">{{ name }}</a></li>
+        {% for name, id in playlists %}
+        <li><a class="nav_link" href="playlist/{{id}}">{{ name }}</a></li>
         {% endfor %}
     </ol>
     {% else %}

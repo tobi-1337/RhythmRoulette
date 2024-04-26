@@ -1,0 +1,37 @@
+{% extends "profile_page.html" %}
+{% block title %}Get playlist{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">
+        {{playlist_name}}
+    </h1>
+    <a href="{{playlist_uri}}">Öppna i Spotify!</a>
+    <a href="delete-playlist/{{pl_id}}">Radera spellistan!</a>
+    <li><a href="profile-page/{{name[0]}}" class="lead">{{name[0]}}</a></li>
+    <div class="container">
+        <div class="row">
+            {% for playlist in playlist_items %}
+            
+            <div>
+                <img src="{{playlist['track']['album']['images'][0]['url']}}">
+            </div>
+            <div class="col-4">
+                <p class="text-white">Artist: {{playlist['track']['artists'][0]['name']}}  </p>
+            </div>
+
+            <div class="col-4">
+                <p class="text-white">Track: {{playlist['track']['name']}} </p>
+            </div>
+
+            <div class="col-4">
+                <p class="text-white">Album:{{playlist['track']['album']['name']}} </p>
+            </div>
+            
+            
+        {% endfor %}
+        </div>
+        
+    </div>
+        
+
+{% endblock %}
