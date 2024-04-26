@@ -3,10 +3,12 @@
 
 {% block content %}
 <div class="text-center">
-    {% if 'playlist_uri' in session %}
+    {% if playlist %}
     <h1 class="display-4 text-white fw-bold">Dina spellistor</h1>
     <ol>
-        <li><a class="nav_link" href={{playlist_uri}}>{{playlist_named}}</a></li>
+        {% for name, uri in playlists %}
+        <li><a class="nav_link" href="{{ uri }}">{{ name }}</a></li>
+        {% endfor %}
     </ol>
     {% else %}
     <h1 class="display-4 text-white fw-bold">Du har inga spellistor än!</h1>

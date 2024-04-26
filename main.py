@@ -129,7 +129,7 @@ def users():
         - Retrieves the username from the form data.
         - Searches the database for users matching the provided username.
         - Renders the 'users.html' template with search results if found, 
-          or with an indication of no results if not found.
+        or with an indication of no results if not found.
     '''
     if request.method == 'POST':
         username = request.form['search_user']
@@ -250,13 +250,23 @@ def get_playlist():
     and renders the playlist page template with this information.
     '''
     username = get_user_info('username')
-    playlist_uri = session.get('playlist_uri')
-    playlist_named = session.get('playlist_named')
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
+    user_playlists = db.check_playlist(username)
+    playlists = {"name":[], 'uri':[]}
+    for playlist in user_playlists:
+        for pl in playlist:
+            playlist_info = sp.playlist(pl)
+            playlist_name = playlist_info['name']
+            playlist_uri = playlist_info['uri']
+            playlists['name'].append(playlist_name)
+            playlists['uri'].append(playlist_uri)
+    for name in playlists['uri']:
+        print(name)
+    zipped_playlists = zip(playlists['name'], playlists['uri'])
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        if playlist_uri:
-            return render_template('playlist.html', playlist_uri=playlist_uri, playlist_named=playlist_named, username=username, display_name=display_name, user_image_url=user_image_url)
+        if len(user_playlists) > 0:
+            return render_template('playlist.html', playlist = True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url)
         else:
             return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url)
 
@@ -394,12 +404,3 @@ def logout():
 ''' Makes sure that the program is run from this file and not from anywhere else. '''
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-'''
-playlist_id_list = db.check_playlist(username)
-    for p in playlist_id_list:
-        playlist =  sp.playlist(p)
-    print(playlist)
-
-'''
