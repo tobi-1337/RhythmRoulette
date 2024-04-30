@@ -6,21 +6,29 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    height: 800px;
 }
 
-.grid-container{
+.new-grid-container {
     display:grid;
-    grid-template-columns:auto;
-    grid-template-areas: 
-    'navbar'
-    'header'
+    height: 100%;
+    grid-template-areas:
+    'nav'
     'container'
-    'footer';
-    overflow:visible;
+    'footer'
 }
-
+.index-grid-container {
+    display:grid;
+    grid-template-columns: auto;
+    grid-template-areas:
+    'index-container index-container index-space'
+}
+.block-content-container {
+    grid-area: container;
+}
 /* här börjar 'navbar' */
 .navbar {
+    grid-area: nav;
     display: flex;
     position: relative;
     justify-content: space-between;
@@ -100,7 +108,6 @@ body {
 }
 
 .header {
-    height: 800px;
     position:static;
 }
 
@@ -194,7 +201,7 @@ body {
 }
 
 footer {
-    position: relative;
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
