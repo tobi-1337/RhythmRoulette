@@ -35,7 +35,7 @@
             
                 {% if 'logged_in' in session %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role ="button" data-bs-toggle="dropdown" aria-expanded="false">Skapa spellista här!</a>
+                    <a class="nav-link dropdown-toggle text-white" href="#" role ="button" data-bs-toggle="dropdown" aria-expanded="false">Skapa spellista här!</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{url_for('generate_playlist')}}">Baserat på genres</a></li>
                         <li><a class="dropdown-item" href="{{url_for('generate_playlist_year')}}">Baserat på årtal</a></li>
@@ -43,24 +43,20 @@
                     </ul>
                 </li>
                     <li class="nav-item">
-                    <a class="nav_link" href="{{url_for('users')}}">Sök på användare!</a></li>
-                    <li class="nav-item"><a class="nav_link" href="{{url_for('profile_page')}}">Din profil</a></li>
-                    <li class="nav-item"><a class="nav_link" href="{{url_for('get_top_artists')}}">Dina toppartister!</a></li>
-                    <li class="nav-item"><a class="nav_link" href="{{url_for('get_playlist')}}">Spellistor</a></li>
-                    <li class="nav-item">#</a></li>
-                    <li class="nav-item"><a class="nav_link" href="{{url_for('logout')}}" class="btn btn-danger"> Logga ut</a></li>
+                    <a class="nav_link text-white" href="{{url_for('users')}}">Sök på användare!</a></li>
+                    <li class="nav-item"><a class="nav_link text-white" href="{{url_for('profile_page')}}">Din profil</a></li>
+                    <li class="nav-item"><a class="nav_link text-white" href="{{url_for('get_top_artists')}}">Dina toppartister!</a></li>
+                    <li class="nav-item"><a class="nav_link text-white" href="{{url_for('get_playlist')}}">Spellistor</a></li>
+                    <li class="nav-item"><a class="nav_link text-white" href="{{url_for('logout')}}" class="btn btn-danger"> Logga ut</a></li>
                     {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{url_for('signup')}}">Registrera dig!</a>
-                    </li>
-                    <li class="nav-item"><a class="nav_link" href="{{url_for('signup')}}">Registrera dig</a></li>
-                    <li class ="nav-item"><a class="nav_link" href="{{url_for('login')}}">Logga in</a></li>
+                    <li class="nav-item"><a class="nav_link text-white" href="{{url_for('signup')}}">Registrera dig</a></li>
+                    <li class ="nav-item"><a class="nav_link text-white" href="{{url_for('login')}}">Logga in</a></li>
                     {% endif %}
             </ul>
         
         </div>
+        </nav> 
         </div>
-    </nav>      
 
 
 

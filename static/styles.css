@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    height: 800px;
+    height: 1200px;
 }
 
 .new-grid-container {
@@ -95,7 +95,7 @@ body {
 .video-wrapper {
     position: relative;
     width: 100%; /* Videowrappern tar upp hela förälderelementets bredd */
-    height: 770px; /* Ange den önskade höjden för videon */
+    height: 80%; /* Ange den önskade höjden för videon */
 }
 
 .video-wrapper video {
@@ -212,7 +212,7 @@ footer {
 }
 
 footer a {
-    position: absolute;
+    position: static;
     right: 20px;
     text-decoration: none;
     color: #a49f9f;
