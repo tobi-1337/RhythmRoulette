@@ -89,6 +89,17 @@ def delete_playlist(pl_id):
         WHERE pl_id = %s 
         ''', (pl_id,)
     )
+
+def save_user_bio(user_id, bio_text):
+    ''' Adds a user biopraph of maximum 500 words into the database or update if one already exist'''
+    cur.execute(
+        '''
+        INSERT INTO user_bio(user_id user_bio)
+        VALUES  (%s, %s) 
+        ON DUPLICATE KEY UPDATE user_bio = VALUES (user_bio)
+        ''', (user_id, bio_text)
+    ) 
+
     conn.commit()
 try: 
     conn = psycopg2.connect(
