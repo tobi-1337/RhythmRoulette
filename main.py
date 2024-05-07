@@ -191,6 +191,7 @@ def delete_profile():
         if registered_user:
             db.delete_user(user_id)
             session.clear()
+            flash(f"Du har raderat ditt konto! ")
             return redirect(url_for('home'))
 
         

@@ -9,7 +9,7 @@ $(document).ready(function () {
             selectedGenres.push($(this).val());
         });
         if (checkedGenres.length > 5) {
-            alert("You can only choose up to 5 genres.");
+            alert("Du kan max välja 5 genres.");
             $(this).prop('checked', false);
             return;
         }
@@ -22,7 +22,7 @@ $(document).ready(function () {
             searchedGenres.push($(this).val());
         });
         if (checkedGenres.length > 3) {
-            alert("You can only choose up to 3 decades.");
+            alert("Du kan max välja 3 årtal.");
             $(this).prop('checked', false);
             return;
         }
@@ -59,7 +59,7 @@ $(document).ready(function () {
                 }
             });
         } else {
-            alert("Du måste välja minst en genre!");
+            alert("Du måste välja minst en genre/årtal!");
         }
     });
 });
