@@ -287,17 +287,9 @@ def playlist_page(pl_id):
     playlist_uri = playlist_info['uri']
     playlist_name = playlist_info['name']
     playlist_items = playlist_tracks['items']
-    for track in playlist_tracks['items']:
-        track_name = track['track']['name']
-        artist_name = track['track']['artists'][0]['name']
-        album_name = track['track']['album']['name']
-        album_img = track['track']['album']['images'][0]['url']
-        
-        
 
-        print(f" Img: {album_img} Track: {track_name} Artist: {artist_name} Album: {album_name}")
     try:
-        return render_template('playlist_page.html', playlist_uri=playlist_uri, album_img=album_img, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url)
+        return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url)
     except:
         flash(f"Spellistan du försöker öppna är tom/existerar inte! Den raderas från databasen.")
         db.delete_playlist(pl_id)

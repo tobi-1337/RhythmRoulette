@@ -234,3 +234,9 @@ footer a {
 .hidden-form {
     display: inline;
 }
+
+.album-img{
+    width: 50%;
+    border-radius: 25%;
+    margin: auto;
+}

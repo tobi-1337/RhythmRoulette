@@ -10,10 +10,6 @@
     <div class="container">
         <div class="row">
             {% for playlist in playlist_items %}
-            
-            <div>
-                <img src="{{playlist['track']['album']['images'][0]['url']}}">
-            </div>
             <div class="col-4">
                 <p class="text-white">Artist: {{playlist['track']['artists'][0]['name']}}  </p>
             </div>
@@ -24,6 +20,9 @@
 
             <div class="col-4">
                 <p class="text-white">Album:{{playlist['track']['album']['name']}} </p>
+            </div>
+            <div class="mb-5">
+                <img class="album-img" src="{{playlist['track']['album']['images'][0]['url']}}">
             </div>
             
             
