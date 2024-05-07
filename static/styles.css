@@ -22,7 +22,7 @@ body {
 /* här börjar 'navbar' */
 .navbar {
     display: flex;
-    position: relative;
+    position: sticky;
     justify-content: space-between;
     align-items: center;
     z-index: 2;
@@ -239,4 +239,28 @@ footer a {
     width: 50%;
     border-radius: 25%;
     margin: auto;
+}
+
+.playlist_link {
+    display: block;
+    text-decoration: none;
+    transition: 0.3s;
+    color:#ffffff;
+    font-size: large;
+    
+}
+.playlist_link:hover {
+    font-size: 300%;
+    text-shadow: 1px 1px 10px;
+    background-color: #6fd42c;
+}
+.playlist_list {
+    background-color: #8DA47E;
+    position: relative;
+    width: 100%;
+}
+
+.playlist_container {
+    list-style-type: none;
+    padding: 0;
 }

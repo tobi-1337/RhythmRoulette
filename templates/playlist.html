@@ -14,11 +14,13 @@
 <div class="text-center">
     {% if playlist %}
     <h1 class="display-4 text-white fw-bold">Dina spellistor</h1>
-    <ol>
-        {% for name, id in playlists %}
-        <li><a class="nav_link" href="playlist/{{id}}">{{ name }}</a></li>
+        <ol class="playlist_container">
+            {% for name, id in playlists %}
+        <li class="playlist_list m-3 rounded"><a class=" playlist_link lead display-6" href="playlist/{{id}}">{{ name }}</a></li>
         {% endfor %}
-    </ol>
+        </ol>
+        
+    
     {% else %}
     <h1 class="display-4 text-white fw-bold">Du har inga spellistor än!</h1>
     <a class="btn btn-success" href='generate-playlist'>Skapa din första spellista!</a>
