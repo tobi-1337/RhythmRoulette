@@ -234,11 +234,16 @@ def generate_playlist():
             playlist_id = playlist['id']
             playlist_uri = playlist['uri']
             playlist_named = playlist['name']
+            generate_method = request.form['generate-method']
             db.add_playlist(playlist_id, playlist_uri, user_id)
             session['playlist_uri'] = playlist_uri  
             session['playlist_id'] = playlist_id
-            session['playlist_named'] = playlist_named  
-            return redirect(url_for('recommendations'))
+            session['playlist_named'] = playlist_named
+
+            if generate_method == 'genres':
+                return redirect(url_for('recommendations'))
+            elif generate_method == 'years':
+                return redirect(url_for('search'))
         else:
             return render_template('generate_playlist.html')
 
@@ -339,30 +344,6 @@ def recommendations():
             else:
                 return render_template('recommendations.html', recco_list=recco_list)
 
-
-@app.route('/generate-playlist-year', methods=['GET', 'POST'])
-def generate_playlist_year():
-    '''
-    If the user reaches this page with the use of GET method the
-    function will create and empty Spotify playlist using the name and
-    description provided by the user through the HTML form. If POST method was
-    used, which it will be granted the form was filled, it will return the url for 
-    recommendations.
-    '''
-    if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        if request.method == 'POST':
-            current_user = sp.me()
-            user_id = current_user['id']
-            playlist_name = request.form['playlist_name']
-            playlist_description = request.form['playlist_description']
-            playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
-            playlist_id = playlist['id']
-            session['playlist_id'] = playlist_id
-            return redirect(url_for('search'))
-        else:
-            return render_template('generate-playlist-year.html') 
-            
-        
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     '''
@@ -376,7 +357,7 @@ def search():
     print("Search route accessed")
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         decades_ranges = {'50s': '1950-1959', '60s': '1960-1969', '70s': '1970-1979', '80s': '1980-1989',
-                          '90s': '1990-1999', '00s': '2000-2009', '10s': '2010-2020'}  
+                        '90s': '1990-1999', '00s': '2000-2009', '10s': '2010-2020'}  
 
         if request.method == 'POST':
             print("Received a POST request")
