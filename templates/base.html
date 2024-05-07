@@ -30,15 +30,8 @@
                 <p>Ett projektarbete på Malmö Universitet</p>
                 <ul>
                     {% if 'logged_in' in session %}
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Skapa spellista
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a href="{{url_for('generate_playlist')}}">Baserat på genres</a>
-                            <a href="{{url_for('generate_playlist_year')}}">Baserat på årtal</a>
-                        </div>
-                    </div>
+                    <li><a class="nav_link" href="{{url_for('generate_playlist')}}">Skapa spellista!</a></li>
+                    <li> | </li>
                     <li><a class="nav_link" href="{{url_for('users')}}">Sök på användare!</a></li>
                     <li> | </li>
                     <li><a class="nav_link" href="{{url_for('profile_page')}}">Din profil</a></li>
