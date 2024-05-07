@@ -89,6 +89,7 @@ def delete_playlist(pl_id):
         WHERE pl_id = %s 
         ''', (pl_id,)
     )
+    conn.commit()
 
 def save_user_bio(user_id, bio_text):
     ''' Adds a user biopraph of maximum 500 words into the database or update if one already exist'''

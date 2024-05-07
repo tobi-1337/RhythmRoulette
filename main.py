@@ -299,12 +299,14 @@ def playlist_page(pl_id):
     try:
         return render_template('playlist_page.html', playlist_uri=playlist_uri, album_img=album_img, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url)
     except:
-        flash(f"Spellistan du försöker öppna är tom!")
-        return render_template('index.html')
+        flash(f"Spellistan du försöker öppna är tom/existerar inte! Den raderas från databasen.")
+        db.delete_playlist(pl_id)
+        return redirect(url_for('get_playlist'))
 @app.route('/delete-playlist/<pl_id>')
 def delete_playlist(pl_id):
     sp.current_user_unfollow_playlist(pl_id)
     db.delete_playlist(pl_id)
+    flash(f"Spellistan borttagen!")
     return redirect(url_for('get_playlist'))
 
 
