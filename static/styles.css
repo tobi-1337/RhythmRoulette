@@ -183,10 +183,12 @@ body {
     background-color: #00755e;
     transition: all 0.3s;
 }
+
 .btn-primary:hover {
     border-radius: 10px;
     background-color: #00755e;
 }
+
 /* Styling for the article content */
 .article-content {
     color: #666;
@@ -249,11 +251,13 @@ footer a {
     font-size: large;
     
 }
+
 .playlist_link:hover {
     font-size: 300%;
     text-shadow: 1px 1px 10px;
     background-color: #6fd42c;
 }
+
 .playlist_list {
     background-color: #8DA47E;
     position: relative;
