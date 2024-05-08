@@ -9,6 +9,10 @@ body {
     height: 1200px;
 }
 
+#landing-page {
+    background-color: white;
+}
+
 .new-grid-container {
     display:grid;
     height: 100%;
