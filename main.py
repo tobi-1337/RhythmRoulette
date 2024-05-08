@@ -264,23 +264,33 @@ def get_playlist():
     username = get_user_info('username')
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
+
     user_playlists = db.check_playlist(username)
-    playlists = {"name":[], 'id':[]}
+    user_playlists_spotify = sp.user_playlists(username)
+        
+    spotify_playlist_ids = {playlist['id'] for playlist in user_playlists_spotify['items']}
+
+    for playlist_db in user_playlists:   
+        if playlist_db[0] not in spotify_playlist_ids:
+            db.delete_playlist(playlist_db[0])
+
+    playlists = {"name": [], 'id': []}
     for playlist in user_playlists:
         for pl in playlist:
-            playlist_info = sp.playlist(pl)
-            playlist_name = playlist_info['name']
-            playlist_uri = playlist_info['uri']
-            playlists['name'].append(playlist_name)
-            playlists['id'].append(pl)
-    for name in playlists['id']:
-        print(name)
+           playlist_info = sp.playlist(pl)
+           playlist_name = playlist_info['name']
+           playlist_uri = playlist_info['uri']
+           playlists['name'].append(playlist_name)
+           playlists['id'].append(pl)
+
     zipped_playlists = zip(playlists['name'], playlists['id'])
+
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        if len(user_playlists) > 0:
-            return render_template('playlist.html', playlist = True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url)
+        if len(playlists['name']) > 0:
+            return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url)
         else:
             return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url)
+
 
 @app.route('/playlist/<pl_id>')
 def playlist_page(pl_id):
