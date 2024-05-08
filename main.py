@@ -164,7 +164,13 @@ def user_profile(username):
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
     return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user)
+
+
+#@app.route('/profile-page/<username>')
+#def user_bio():
     
+    
+        
 
 @app.route('/profile-settings')
 def profile_settings():
