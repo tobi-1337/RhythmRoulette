@@ -2,46 +2,41 @@
 {% block title %}Generate template{% endblock %}
 
 {% block content %}
-{% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for msg in messages %}
-            <div class="text-center">
-                <h1 class="fw-bold text-white">{{msg}}</h1>
-            </div>
-            {% endfor %}    
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="text-center">
+                    <h1 class="fw-bold text-white">{{msg}}</h1>
+                </div>
+                {% endfor %}    
             {% endif %}
-{% endwith %}
-<div class="container m-5">
-    <div class="col-md-10 mx-auto col-lg-5">
-        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="generate_playlist" action="#" method="post">
-            <div class="form-floating mb-3">
-                <p class="lead text-secondary fw-bold text-center">Berätta om spellistan!</p>
-                <div class="mb-3">
-                    <p>Spellistans namn:</p>
-                    <input type="text" class="form-control" id="playlist_name" name="playlist_name"
-                        placeholder="My Beautiful Dark Twisted Playlist">
+    {% endwith %}
+    <div class="container m-5">
+        <div class="col-md-10 mx-auto col-lg-5">
+            <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="generate_playlist" action="#" method="post">
+                <div class="form-floating mb-3">
+                    <p class="lead text-secondary fw-bold text-center">Berätta om spellistan!</p>
+                    <div class="mb-3">
+                        <p>Spellistans namn:</p>
+                        <input type="text" class="form-control" id="playlist_name" name="playlist_name"
+                            placeholder="My Beautiful Dark Twisted Playlist">
+                    </div>
+                    <div class="mb-3">
+                        <p>Kort beskrivning:</p>
+                        <input type="text" class="form-control" id="playlist_description" name="playlist_description"
+                            placeholder="Du blir dig aldrig lik igen">
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <p>Kort beskrivning:</p>
-                    <input type="text" class="form-control" id="playlist_description" name="playlist_description"
-                        placeholder="Du blir dig aldrig lik igen">
+                <p class="lead text-center fw-bold">GENERERA BASERAT PÅ</p>
+                <div class="row">
+                    <div class="col-6">
+                        <button class="w-100 btn btn-lg btn-info fw-bold" name ='generate-method' type="submit" value="genres">Genres</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="w-100 btn btn-lg btn-info fw-bold" name ='generate-method' type="submit" value="years">Årtal</button>
+                    </div>
                 </div>
-            </div>
-            <p class="lead text-center fw-bold">GENERERA BASERAT PÅ</p>
-            <div class="row">
-                <div class="col-6">
-                    <button class="w-100 btn btn-lg btn-info fw-bold" name ='generate-method' type="submit" value="genres">Genres</button>
-                </div>
-                <div class="col-6">
-                    <button class="w-100 btn btn-lg btn-info fw-bold" name ='generate-method' type="submit" value="years">Årtal</button>
-                </div>
-                
-            
-            </div>
-                
-            <hr class="my-4">
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}
