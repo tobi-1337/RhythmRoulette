@@ -1,6 +1,6 @@
 body {
     font-family: "Josefin Sans", sans-serif;
-    background: linear-gradient(to bottom, #000000, #2e2e2e); 
+    background: linear-gradient(to bottom, #f3ddf8, #94ebdc); 
     position: relative;
     margin-bottom: 20px;
     margin: 0;
@@ -31,6 +31,11 @@ body {
     grid-area: container;
 }
 /* här börjar 'navbar' */
+
+#nav-h2 {
+    font-family: "Neonderthaw";
+    color:white;
+}
 .navbar {
     grid-area: nav;
     display: flex;
@@ -38,9 +43,14 @@ body {
     justify-content: space-between;
     align-items: center;
     z-index: 2;
-    background-color: #ececec; 
+    background-color: #f3ddf8; 
 }
 
+.grid-container{
+
+    background: rgb(255,255,255)!important;
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(149,199,194,1) 16%, rgba(247,204,173,1) 100%)!important;
+}
 .w-icon{
     z-index: 1;
     font-family: "Gabarito";
@@ -93,13 +103,17 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
+    margin:auto;
     overflow: hidden; /* Se till att videon inte spill över utanför ramen */
 }
 
 .video-wrapper {
     position: relative;
     width: 100%; /* Videowrappern tar upp hela förälderelementets bredd */
-    height: 80%; /* Ange den önskade höjden för videon */
+    height: 50%; /* Ange den önskade höjden för videon */
+    margin-top: 10%;
+
+    
 }
 
 .video-wrapper video {
@@ -109,6 +123,8 @@ body {
     width: 100%; /* Sätt videons bredd till 100% av videowrappern */
     height: 100%; /* Sätt videons höjd till 100% av videowrappern */
     object-fit: cover; /* Se till att videon täcker hela videowrappern utan att förvränga proportionerna */
+    border-radius: 5px;
+    box-shadow: 2px 4px 20px 4px rgb(250, 249, 249);
 }
 
 .header {
@@ -124,20 +140,35 @@ body {
     top: 150px;
     padding: 50px;
     text-align: center;
-    background-color: #ffffff71;
     max-width: 700px;
     height: 400px;
     border-radius: 15px;
 }
 
 .hero h1 {
-    font-family: "Gabarito";
-    font-size: 4.0rem;
+    font-family: "Neonderthaw";
+    font-size: 6.0rem;
+    background: -webkit-linear-gradient(#0aafa1,#d088df);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
+
+#reg-button {
+    color:white;
+    border-color: whitesmoke;
+} 
+
+#reg-button:hover {
+    background:linear-gradient(to left, #f3ddf8, #94ebdc)
+  }
+         
+ 
+ 
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 30px;
+    color:white;
 }
 
 .hero a {
@@ -211,7 +242,7 @@ footer {
     right: 0;
     text-align: center;
     padding: 30px 0;
-    background-color: #333;
+    background-color: #94ebdc;
     color: #fff;
 }
 

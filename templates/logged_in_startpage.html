@@ -5,12 +5,12 @@
 
     
     
-{% if 'logged_in' in session %}
-       <body id="landing-page">
-        <div class="container text-center">
+
+       <body>
+        <div class="container text-center" id="landing-page">
             <div class="row">
               <div class="col-md-auto">
-                <section> <div class="flex-shrink-0 p-3" style="width: 280px;">
+                <section> <div class="flex-shrink-0 p-3" style="width: 480px;">
                     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
                       <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
                       <span class="fs-5 fw-semibold">Välkommen!</span>
@@ -71,7 +71,7 @@
                   </div>
                 </section>
               </div>
-              <div class="col-md-auto">
+              <div class="col-lg-auto">
                 <h2>Mitten grid</h2>
               </div>
               <div class="col-md-auto">
@@ -80,7 +80,6 @@
             </div>
           </div>
 
-          {% endif %}
 
   
 
