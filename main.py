@@ -158,7 +158,6 @@ def user_profile(username):
     if not search_name:
         return render_template('index.html')
     user = user_info(username)
-    print(user['id'])
     username = user['id']
     current_user = get_user_info('username')
     display_name = user['display_name']
@@ -170,8 +169,6 @@ def user_profile(username):
 #def user_bio():
     
     
-        
-
 @app.route('/profile-settings')
 def profile_settings():
     ''' Retrieves the current user's display name, username, and profile image URL. '''
@@ -200,7 +197,7 @@ def delete_profile():
             flash(f"Du har raderat ditt konto! ")
             return redirect(url_for('home'))
 
-        
+
 @app.route('/top-artists')
 def get_top_artists():
     '''
@@ -218,6 +215,7 @@ def get_top_artists():
     user_image_url = get_user_info('img')
     return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
     
+
 
 @app.route('/generate-playlist', methods=['GET', 'POST'])
 def generate_playlist():
@@ -260,35 +258,48 @@ def get_playlist():
     '''
     Retrieves the user's information and playlist details,
     and renders the playlist page template with this information.
+    If a playlist doesn't exist on Spotify it will be deleted from the database.
     '''
     username = get_user_info('username')
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
+
     user_playlists = db.check_playlist(username)
-    playlists = {"name":[], 'id':[]}
+    user_playlists_spotify = sp.user_playlists(username)
+        
+    spotify_playlist_ids = {playlist['id'] for playlist in user_playlists_spotify['items']}
+
+    for playlist_db in user_playlists:   
+        if playlist_db[0] not in spotify_playlist_ids:
+            db.delete_playlist(playlist_db[0])
+
+    playlists = {"name": [], 'id': []}
     for playlist in user_playlists:
         for pl in playlist:
             playlist_info = sp.playlist(pl)
             playlist_name = playlist_info['name']
-            playlist_uri = playlist_info['uri']
             playlists['name'].append(playlist_name)
             playlists['id'].append(pl)
-    for name in playlists['id']:
-        print(name)
+
     zipped_playlists = zip(playlists['name'], playlists['id'])
+
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        if len(user_playlists) > 0:
-            return render_template('playlist.html', playlist = True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url)
+        if len(playlists['name']) > 0:
+            return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url)
         else:
             return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url)
 
+
 @app.route('/playlist/<pl_id>')
 def playlist_page(pl_id):
+    '''
+    This function tries to open a page showing the contents of a playlist.
+    If a playlist is empty or doesn't exist, it will be deleted from the database.
+    '''
     username = get_user_info('username')
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
     playlist_tracks = sp.playlist_tracks(pl_id)
-    print(pl_id)
     playlist_info = sp.playlist(pl_id)
     playlist_uri = playlist_info['uri']
     playlist_name = playlist_info['name']
@@ -300,13 +311,21 @@ def playlist_page(pl_id):
         flash(f"Spellistan du försöker öppna är tom/existerar inte! Den raderas från databasen.")
         db.delete_playlist(pl_id)
         return redirect(url_for('get_playlist'))
+
+
 @app.route('/delete-playlist/<pl_id>')
 def delete_playlist(pl_id):
+    '''
+    Runs a function from the db.py file to delete a playlist with 
+    a given id from the database and Spotify.
+
+    Parameter: 
+        - pl_id (str) - The id of the playlist to delete
+    '''
     sp.current_user_unfollow_playlist(pl_id)
     db.delete_playlist(pl_id)
     flash(f"Spellistan borttagen!")
     return redirect(url_for('get_playlist'))
-
 
 
 @app.route('/recommendations', methods=['GET', 'POST'])
@@ -345,6 +364,7 @@ def recommendations():
             else:
                 return render_template('recommendations.html', recco_list=recco_list)
 
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     '''
@@ -355,38 +375,28 @@ def search():
     a pop up notifying them that their playlist was made, then redirected to the home page.
     For the POST method the function is using JavaScript for storing the decades chosen and handling the redirection.
     '''
-    print("Search route accessed")
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         decades_ranges = {'50s': '1950-1959', '60s': '1960-1969', '70s': '1970-1979', '80s': '1980-1989',
                         '90s': '1990-1999', '00s': '2000-2009', '10s': '2010-2020'}  
 
         if request.method == 'POST':
-            print("Received a POST request")
             if request.is_json:
                 data = request.json
                 decades = data.get('decades')
                 search_limit = data.get('search_limit')
-                print(f"Decades: {decades}")
-                print(f"Search limit: {search_limit}")
+
             else:
                 decades = request.form.getlist('decades')
                 search_limit = request.form.get('search_limit')
 
             if 'playlist_id' in session:
                 playlist_id = session['playlist_id']
-                print(f"Playlist id: {playlist_id}")
                 track_list = []  
 
-                search_terms = [decades_ranges[decade] for decade in decades]
-                combined_search = ' '.join(search_terms)
-                print("Search query:", combined_search)
-                
                 for decade in decades:
                     searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
-                    print("Search results:", searches)
 
                     for track in searches['tracks']['items']:
-                        print(f"Print datatype for debugging: ", type(track))
                         track_list.append(track['uri'])
 
                 sp.playlist_add_items(playlist_id, track_list, position=None)
