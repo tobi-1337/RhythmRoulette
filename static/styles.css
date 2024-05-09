@@ -17,43 +17,36 @@ body {
     'container'
     'footer'
 }
+
 .index-grid-container {
     display:grid;
     grid-template-columns: auto;
     grid-template-areas:
     'index-container index-container index-space'
 }
+
 .block-content-container {
     grid-area: container;
 }
-/* här börjar 'navbar' */
 
-#nav-h2 {
-    font-family: "Neonderthaw";
-    font-size: 30px;
-    color: #c48dc6;
-}
+
+/* här börjar 'navbar' */
 .navbar {
     grid-area: nav;
-    display: flex;
+    display: flex!important;
     position: relative;
+    justify-content: flex-end!important;
     justify-content: space-between;
     align-items: center;
     z-index: 2;
     background-color: #E1D1E2; 
 }
 
-.grid-container{
 
-    background: rgb(255,255,255)!important;
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(149,199,194,1) 16%, rgba(247,204,173,1) 100%)!important;
-}
-.w-icon{
-    z-index: 1;
-    font-family: "Gabarito";
-    color: #1b1c1c; 
-    font-size: 2rem;
-    text-decoration: none;
+#nav-h2 {
+    font-family: "Neonderthaw";
+    font-size: 30px;
+    color: #c48dc6;
 }
 
 .nav_link {
@@ -61,11 +54,11 @@ body {
 }
 
 .nav_link:hover {
-    text-shadow: 1px 1px rgb(255, 255, 255);
-    border-radius: 10px;
-    background-color:rgba(66, 66, 65, 0.144);
-    box-shadow: 2px 2px 10px white; 
-    font-size: 110%;
+    border-style: solid;
+    border-radius: 4px;
+    background: -webkit-linear-gradient(#d5e1ac,#e3e6a1);
+    padding: 4px;
+    font-size: 1.0rem;
 }
 
 .navbar p {
@@ -79,7 +72,7 @@ body {
 .navbar ul {
     z-index: 1;
     list-style: none;
-    
+    margin-left: auto; /* Push the content to the right */
 }
 
 .navbar ul li {
@@ -91,6 +84,11 @@ body {
 .navbar ul li a {
     color: #070707;
     text-decoration: none;
+    margin-left: 0;
+}
+
+.header {
+    position:static;
 }
 
 /* Här är bakgrundsbild (video/herobild) */
@@ -122,9 +120,6 @@ body {
     box-shadow: 2px 4px 20px 4px rgb(250, 249, 249);
 }
 
-.header {
-    position:static;
-}
 
 /* Här börjar sektion 'hero' */
 .hero { 
@@ -158,14 +153,6 @@ body {
     background: -webkit-linear-gradient(#c48dc6,#98609a)
   }
          
- 
- 
-
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    color:white;
-}
 
 .hero a {
     position: relative;
@@ -184,31 +171,6 @@ body {
     justify-content: space-between; /* Justera utrymmet mellan elementen */
 }
 
-/* Styling for the article */
-.card {
-    width: 380px;
-    padding: 0px;
-    margin: 20px;
-    border-radius: 5px;
-}
-
-.card-body{
-    background-color: #dedede;
-    width: 380px;
-}
-
-/* Styling for the article title */
-.card-title {
-    text-align: center;
-    color: #020202;
-    background-color: #60a26f;
-    width: 380px;
-    height: 40px;
-    padding: 20px;
-    box-sizing: border-box;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
 
 #profile_page {
     width: 100%;
@@ -225,11 +187,7 @@ body {
     border-radius: 10px;
     background-color: #00755e;
 }
-/* Styling for the article content */
-.article-content {
-    color: #666;
-    line-height: 1.6;
-}
+
 
 footer {
     height: 20%;
