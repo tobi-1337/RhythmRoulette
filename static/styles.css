@@ -150,11 +150,12 @@ body {
 
 #reg-button {
     color:white;
+    background-color: #c48dc6;
     border-color: whitesmoke;
 } 
 
 #reg-button:hover {
-    background:linear-gradient(to left, #f3ddf8, #94ebdc)
+    background: -webkit-linear-gradient(#c48dc6,#98609a)
   }
          
  
