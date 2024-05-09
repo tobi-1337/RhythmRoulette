@@ -72,7 +72,7 @@ body {
 .navbar ul {
     z-index: 1;
     list-style: none;
-    margin-left: auto; /* Push the content to the right */
+    margin-left: 0; /* Push the content to the right */
 }
 
 .navbar ul li {
