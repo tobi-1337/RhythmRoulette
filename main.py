@@ -412,16 +412,38 @@ def search():
 
 
 
-@app.route('/random-playlist', methods=['GET', 'POST'])
+@app.route('/random-playlist', methods=['GET'])
 def random_playlists():
     '''
 
     '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        recommendations = sp.recommendations(seed_genres=['rock'], limit=10)
-        tracks = recommendations['tracks']
-        print (tracks)
-        return render_template('logged_in_startpage.html', tracks=tracks)
+        playlists = fetch_playlists()
+        return render_template('logged_in_startpage.html', playlists=playlists)
+    else:
+        return jsonify({"error": "Token validation failed"})
+    
+def fetch_playlists():
+
+    playlists = [
+            {
+                "name": "Rock Classics",
+                "url": "https://open.spotify.com/playlist/37i9dQZF1DWXRqgorJj26U"
+            },
+            {
+                "name": "Indie Chillout",
+                "url": "https://open.spotify.com/playlist/37i9dQZF1DX6ziVCJnEm59"
+            },
+            {
+                "name": "Hip Hop Hits",
+                "url": "https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd"
+            }
+        ]
+    random.shuffle(playlists)
+    print(playlists)
+    return playlists
+
+
 
 @app.route('/signup', methods=['GET', 'POST']) # ska vi ta bort den här funktionen eftersom den ej längre används? 
 def signup():

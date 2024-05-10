@@ -68,7 +68,9 @@
               <div class="col-md-2 landing-page">
                 <h2>FÖRSLAG TILL DIG!</h2>
                 <ul>
-                  <p>{{ tracks }}</p>
+                  {% for playlist in playlists %}
+                        <li><a href="{{ playlist.url }}">{{ playlist.name }}</a></li>
+                  {% endfor %}
                  
                 </ul>
                
