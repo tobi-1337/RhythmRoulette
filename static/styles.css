@@ -34,7 +34,10 @@ body {
 
 #h2 {
     font-family: "Neonderthaw";
-    color: #c48dc6;
+    background: -webkit-linear-gradient(#eeb663,#98609a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  
 }
 
 #landing-page {
@@ -42,6 +45,7 @@ body {
     margin:auto;
     padding: 0;
     width: 100vw;
+    border-radius: 20px;
 }
 .navbar {
     grid-area: nav;
@@ -153,7 +157,7 @@ body {
 .hero h1 {
     font-family: "Neonderthaw";
     font-size: 7.0rem;
-    background: -webkit-linear-gradient(#c48dc6,#98609a);
+    background: -webkit-linear-gradient(#d3abd4,#98609a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

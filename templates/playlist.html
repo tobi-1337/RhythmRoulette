@@ -16,7 +16,7 @@
             <h1 class="display-4 text-white fw-bold">Dina spellistor</h1>
             <ol class="playlist_container">
                 {% for name, id in playlists %}
-                <li class="playlist_list m-3 rounded"><a class=" playlist_link lead display-6" href="{{ url_for('playlist', id=id) }}">{{ name }}</a></li>
+                <li class="playlist_list m-3 rounded"><a class=" playlist_link lead display-6" href="{{ url_for('playlist_page', pl_id=id) }}">{{ name }}</a></li>
                 {% endfor %}
             </ol>
         {% else %}
