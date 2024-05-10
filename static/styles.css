@@ -1,6 +1,6 @@
 body {
     font-family: "Josefin Sans", sans-serif;
-    background: #ffffff; 
+    background: -webkit-linear-gradient(#e8b1f3,#e3e6a1);
     position: relative;
     margin-bottom: 20px;
     margin: 0;
@@ -38,7 +38,7 @@ body {
 }
 
 #landing-page {
-    background-color: pink;
+    background-color: rgba(245, 233, 235, 0.445);
     margin:auto;
     padding: 0;
     width: 100vw;
