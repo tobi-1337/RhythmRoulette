@@ -47,6 +47,9 @@ h2 {
     background-color: #E1D1E2; 
 }
 
+.nav-item {
+    color: black;
+}
 
 #nav-h2 {
     font-family: "Neonderthaw";
