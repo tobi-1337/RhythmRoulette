@@ -4,6 +4,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
 import db
+import random
 
 # This variable is used to run the program
 app = Flask(__name__) 
@@ -410,7 +411,19 @@ def search():
             return render_template('search.html', decades=decades_ranges.keys())
 
 
-@app.route('/signup', methods=['GET', 'POST'])
+
+@app.route('/random-playlist', methods=['GET', 'POST'])
+def random_playlists():
+    '''
+
+    '''
+    if sp_oauth.validate_token(cache_handler.get_cached_token()):
+        recommendations = sp.recommendations(seed_genres=['rock'], limit=10)
+        tracks = recommendations['tracks']
+        print (tracks)
+        return render_template('logged_in_startpage.html', tracks=tracks)
+
+@app.route('/signup', methods=['GET', 'POST']) # ska vi ta bort den här funktionen eftersom den ej längre används? 
 def signup():
     ''' Renders the signup page. '''
     return render_template('signup.html')

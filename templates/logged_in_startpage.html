@@ -7,10 +7,11 @@
     
 
        <body>
-        <div class="container text-center" id="landing-page">
+        <div class="container text-center">
             <div class="row">
-              <div class="col-md-auto">
-                <section> <div class="flex-shrink-0 p-3" style="width: 480px;">
+              <div class="col-md-3 landing-page">
+                <section"> 
+                  <div class="p-3 border-bottom">
                     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
                       <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
                       <span class="fs-5 fw-semibold">Välkommen!</span>
@@ -20,7 +21,7 @@
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
                           Skapa spellista
                         </button>
-                        <div class="collapse show" id="home-collapse">
+                        <div class="collapse" id="home-collapse">
                           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             
                             <li><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Genre</a></li>
@@ -41,19 +42,6 @@
                           </ul>
                         </div>
                       </li>
-                     <!--- <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                          Orders
-                        </button>
-                        <div class="collapse" id="orders-collapse">
-                          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a></li>
-                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Processed</a></li>
-                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Shipped</a></li>
-                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Returned</a></li>
-                          </ul>
-                        </div>
-                      </li>-->
                       <li class="border-top my-3"></li>
                       <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
@@ -71,11 +59,19 @@
                   </div>
                 </section>
               </div>
-              <div class="col-lg-auto">
-                <h2>Mitten grid</h2>
+              <div class="col-md-5 landing-page">
+                <h2>Välkommen till Rhythm Roulette</h2>
+                <p>Här kan du generera spellistor utifrån genre och årtal.
+                  Sätt igång!
+                </p>
               </div>
-              <div class="col-md-auto">
-                <h2>höger grid</h2>
+              <div class="col-md-2 landing-page">
+                <h2>FÖRSLAG TILL DIG!</h2>
+                <ul>
+                  <p>{{ tracks }}</p>
+                 
+                </ul>
+               
               </div>
             </div>
           </div>

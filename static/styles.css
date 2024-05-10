@@ -40,10 +40,19 @@ body {
   
 }
 
-#landing-page {
+.sidebar {
+    margin:0;
+    overflow: hidden;
+    width: 30px;
+    padding:20px;
+    border-bottom-width: 1px;
+    background-color: white;
+}
+
+.landing-page {
     background-color: rgba(245, 233, 235, 0.445);
-    margin:auto;
-    padding: 0;
+    margin:20px;
+    padding: 20px;
     width: 100vw;
     border-radius: 20px;
 }
