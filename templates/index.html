@@ -2,37 +2,52 @@
 {% block title %}Home Page{% endblock %}
 
 {% block content %}
-    <header class="header">
-        <div class="background-video">
-            <div class="video-wrapper">
-                <video loop muted autoplay playsinline poster="URL/TO/poster.jpg">
-                    <source src="{{ url_for('static', filename='pictures/black&white.mp4')}}" type="video/mp4">
-                </video>
-            </div>
-        </div>  
-            <div class="hero">
-                <h1>Rhythm Roulette</h1>
-                <p>En webbplats med fokus på musik</p>
-                <div>
-                    {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            {% for msg in messages %}
-                                <div class="text-center">
-                                    <p class="fw-bold lead">{{msg}}</h1>
-                                </div>
-                            {% endfor %} 
-                        {% endif %}
-                    {% endwith %}
+
+<header class="header">
+    <div class="background-video">
+        <div class="video-wrapper">
+            <video loop muted autoplay playsinline poster="URL/TO/poster.jpg">
+                <source src="{{ url_for('static', filename='pictures/pool.mp4')}}" type="video/mp4">
+            </video>
+        </div>
+    </div>  
+        <div class="hero">
+            <h1>Rhythm Roulette</h1>
+            <p>En webbplats med fokus på musik</p>
+            <div>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <div class="text-center">
+                                <p class="fw-bold lead">{{msg}}</h1>
+                            </div>
+                        {% endfor %} 
+                    {% endif %}
+                {% endwith %}
                 </div>
-                {% include 'modal_template.html' %}
-                {% if 'logged_in' not in session %}
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> 
+            {% include 'modal_template.html' %}
+            <!--<button class="btn btn-success rounded-pill px-3 nav_link btn-primary" type="button" data-toggle="modal" data-target="staticBackdrop" id="staticBackdrop">Registrera dig!</button>-->
+        
+            <!--OBSOBSOBS! Denna buttton ska trigga modalen! -->
+            {% if 'logged_in' not in session %}
+            <div class="col-lg-6 col-xxl-4 my-5 mx-auto">
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="reg-button"> 
                         Registrera dig!
                     </button>
-                {% else %}
-                    <a href="{{url_for('profile_page')}}">Din profil</a>
-                {% endif %} 
-            </div>    
-    </header>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+                </div>
+            </div>
+            {% else %}
+            <a href="{{url_for('profile_page')}}">Din profil</a>
+            
+            {% endif %}
+            
+        </div>
+        
+    
+</header>
+
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}

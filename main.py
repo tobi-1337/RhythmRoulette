@@ -85,7 +85,10 @@ def register_user():
 @app.route('/')
 def home():
     ''' Home page for the website. '''
-    return render_template('index.html')
+    if 'logged_in' in session:
+        return render_template('logged_in_startpage.html')
+    else:
+        return render_template('index.html')
 
 
 @app.route('/login')
