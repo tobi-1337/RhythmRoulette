@@ -25,34 +25,27 @@
     </head>
 
     <body>
-        <div class="grid-container">
-            <nav class="navbar navbar-expand-md " aria-label="Fourth navbar example">
-                <div class="container-fluid">
-                <a class="navbar-brand w-icon" href="/" id="nav-h2">Rhythm Roulette</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        {% if 'logged_in' in session %}
+        
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+        <span class="fs-4"><h2>Rhythm Roulette</h2></span>
+      </a>
 
-        <div class="collapse navbar-collapse" id="navbarsExample04">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+      </ul>
+    </header>
+  </div>
+
             
-                {% if 'logged_in' in session %}
-                <!--<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role ="button" data-bs-toggle="dropdown" aria-expanded="false">Skapa spellista här!</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{url_for('generate_playlist')}}">Baserat på genres</a></li>
-                        <li><a class="dropdown-item" href="{{url_for('generate_playlist')}}">Baserat på årtal</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-                    <li class="nav-item">
-                    <a class="nav_link text-white" href="{{url_for('users')}}">Sök på användare!</a></li>
-                    <li class="nav-item"><a class="nav_link text-white" href="{{url_for('profile_page')}}">Din profil</a></li>
-                    <li class="nav-item"><a class="nav_link text-white" href="{{url_for('get_top_artists')}}">Dina toppartister!</a></li>
-                    <li class="nav-item"><a class="nav_link text-white" href="{{url_for('get_playlist')}}">Spellistor</a></li>
-                    <li class="nav-item"><a class="nav_link text-white" href="{{url_for('logout')}}" class="btn btn-danger" title ="Logga ut"><span class="material-symbols-outlined">
-                        logout
-                        </span></a></li>--->
+                
+              
                     {% else %}
                     <li class="nav-item"><a class="nav_link text-white" href="{{url_for('signup')}}">Registrera dig</a></li>
                     
@@ -60,9 +53,7 @@
                     {% endif %}
             </ul>
         
-        </div>
-        </nav> 
-        </div>
+        
 
         
 
