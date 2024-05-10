@@ -139,9 +139,8 @@ def save_user_bio(user_id, bio_text):
                 ON DUPLICATE KEY UPDATE user_bio = VALUES (user_bio)
                 ''', (user_id, bio_text)
     ) 
-
-
     conn.commit()
+    
 try: 
     conn = psycopg2.connect(
     host=host,
