@@ -1,16 +1,12 @@
 body {
     font-family: "Josefin Sans", sans-serif;
-    background: linear-gradient(to bottom, #f3ddf8, #94ebdc); 
+    background: #ffffff; 
     position: relative;
     margin-bottom: 20px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     height: 1200px;
-}
-
-#landing-page {
-    background-color: white;
 }
 
 .new-grid-container {
@@ -21,15 +17,19 @@ body {
     'container'
     'footer'
 }
+
 .index-grid-container {
     display:grid;
     grid-template-columns: auto;
     grid-template-areas:
     'index-container index-container index-space'
 }
+
 .block-content-container {
     grid-area: container;
 }
+
+
 /* här börjar 'navbar' */
 
 #nav-h2 {
@@ -38,25 +38,20 @@ body {
 }
 .navbar {
     grid-area: nav;
-    display: flex;
-    position: sticky;
+    display: flex!important;
+    position: relative;
+    justify-content: flex-end!important;
     justify-content: space-between;
     align-items: center;
     z-index: 2;
-    background-color: #f3ddf8; 
+    background-color: #E1D1E2; 
 }
 
-.grid-container{
 
-    background: rgb(255,255,255)!important;
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(149,199,194,1) 16%, rgba(247,204,173,1) 100%)!important;
-}
-.w-icon{
-    z-index: 1;
-    font-family: "Gabarito";
-    color: #1b1c1c; 
-    font-size: 2rem;
-    text-decoration: none;
+#nav-h2 {
+    font-family: "Neonderthaw";
+    font-size: 30px;
+    color: #c48dc6;
 }
 
 .nav_link {
@@ -64,11 +59,11 @@ body {
 }
 
 .nav_link:hover {
-    text-shadow: 1px 1px rgb(255, 255, 255);
-    border-radius: 10px;
-    background-color:rgba(66, 66, 65, 0.144);
-    box-shadow: 2px 2px 10px white; 
-    font-size: 110%;
+    border-style: solid;
+    border-radius: 4px;
+    background: -webkit-linear-gradient(#d5e1ac,#e3e6a1);
+    padding: 4px;
+    font-size: 1.0rem;
 }
 
 .navbar p {
@@ -82,7 +77,7 @@ body {
 .navbar ul {
     z-index: 1;
     list-style: none;
-    
+    margin-left: 0; /* Push the content to the right */
 }
 
 .navbar ul li {
@@ -94,6 +89,11 @@ body {
 .navbar ul li a {
     color: #070707;
     text-decoration: none;
+    margin-left: 0;
+}
+
+.header {
+    position:static;
 }
 
 /* Här är bakgrundsbild (video/herobild) */
@@ -110,10 +110,8 @@ body {
 .video-wrapper {
     position: relative;
     width: 100%; /* Videowrappern tar upp hela förälderelementets bredd */
-    height: 50%; /* Ange den önskade höjden för videon */
-    margin-top: 10%;
-
-    
+    height: 64%; /* Ange den önskade höjden för videon */
+    margin-top: 0%;
 }
 
 .video-wrapper video {
@@ -127,9 +125,6 @@ body {
     box-shadow: 2px 4px 20px 4px rgb(250, 249, 249);
 }
 
-.header {
-    position:static;
-}
 
 /* Här börjar sektion 'hero' */
 .hero { 
@@ -137,8 +132,8 @@ body {
     position: relative;
     z-index: 2; 
     margin: auto;
-    top: 150px;
-    padding: 50px;
+    top: 0px;
+    padding: 20px;
     text-align: center;
     max-width: 700px;
     height: 400px;
@@ -147,29 +142,22 @@ body {
 
 .hero h1 {
     font-family: "Neonderthaw";
-    font-size: 6.0rem;
-    background: -webkit-linear-gradient(#0aafa1,#d088df);
+    font-size: 7.0rem;
+    background: -webkit-linear-gradient(#c48dc6,#98609a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 #reg-button {
     color:white;
+    background-color: #c48dc6;
     border-color: whitesmoke;
 } 
 
 #reg-button:hover {
-    background:linear-gradient(to left, #f3ddf8, #94ebdc)
+    background: -webkit-linear-gradient(#c48dc6,#98609a)
   }
          
- 
- 
-
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    color:white;
-}
 
 .hero a {
     position: relative;
@@ -188,31 +176,6 @@ body {
     justify-content: space-between; /* Justera utrymmet mellan elementen */
 }
 
-/* Styling for the article */
-.card {
-    width: 380px;
-    padding: 0px;
-    margin: 20px;
-    border-radius: 5px;
-}
-
-.card-body{
-    background-color: #dedede;
-    width: 380px;
-}
-
-/* Styling for the article title */
-.card-title {
-    text-align: center;
-    color: #020202;
-    background-color: #60a26f;
-    width: 380px;
-    height: 40px;
-    padding: 20px;
-    box-sizing: border-box;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
 
 #profile_page {
     width: 100%;
@@ -231,20 +194,16 @@ body {
     background-color: #00755e;
 }
 
-/* Styling for the article content */
-.article-content {
-    color: #666;
-    line-height: 1.6;
-}
 
 footer {
+    height: 20%;
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     text-align: center;
     padding: 30px 0;
-    background-color: #94ebdc;
+    background-color: #E1D1E2;
     color: #fff;
 }
 

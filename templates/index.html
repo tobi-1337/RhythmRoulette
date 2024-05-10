@@ -7,13 +7,12 @@
     <div class="background-video">
         <div class="video-wrapper">
             <video loop muted autoplay playsinline poster="URL/TO/poster.jpg">
-                <source src="{{ url_for('static', filename='pictures/pool.mp4')}}" type="video/mp4">
+                <source src="{{ url_for('static', filename='pictures/waves3.mp4')}}" type="video/mp4">
             </video>
         </div>
     </div>  
         <div class="hero">
             <h1>Rhythm Roulette</h1>
-            <p>En webbplats med fokus på musik</p>
             <div>
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
@@ -33,17 +32,19 @@
             <div class="col-lg-6 col-xxl-4 my-5 mx-auto">
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="reg-button"> 
-                        Registrera dig!
-                    </button>
-                </div>
-            </div>
-            {% else %}
-            <a href="{{url_for('profile_page')}}">Din profil</a>
-            
-            {% endif %}
-            
+                LOGGA IN
+            </button>
         </div>
+    </div>
+        {% else %}
+        <a href="{{url_for('profile_page')}}">Din profil</a>
         
+        {% endif %}
+        
+    </div>
+
+
+</header>
     
 </header>
 
