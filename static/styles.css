@@ -263,7 +263,7 @@ footer a {
     display: block;
     text-decoration: none;
     transition: 0.3s;
-    color:#ffffff;
+    color:#d4782c;
     font-size: large;
     
 }
@@ -271,16 +271,29 @@ footer a {
 .playlist_link:hover {
     font-size: 300%;
     text-shadow: 1px 1px 10px;
-    background-color: #6fd42c;
+    background-color: #d4782c;
 }
 
 .playlist_list {
-    background-color: #8DA47E;
+    background-image: linear-gradient(to bottom right, rgb(255, 166, 0), rgb(244, 240, 245));
     position: relative;
     width: 100%;
 }
 
 .playlist_container {
     list-style-type: none;
-    padding: 0;
+    padding: 10%;
+    margin:auto;
+}
+
+.playlist-box{
+    margin:10%;
+    padding:5%;
+    background-color: rgba(255, 255, 255, 0.445);
+    border-radius: 20px;
+}
+
+#h1-playlist {
+    color: rgb(218, 138, 198);
+    font-family: 'Allura';
 }

@@ -11,9 +11,9 @@
         {% endfor %}
     {% endif %}
     {% endwith %}
-    <div class="text-center">
+    <div class="text-center playlist-box">
         {% if playlist %}
-            <h1 class="display-4 text-white fw-bold">Dina spellistor</h1>
+            <h1 id="h1-playlist">Dina spellistor</h1>
             <ol class="playlist_container">
                 {% for name, id in playlists %}
                 <li class="playlist_list m-3 rounded"><a class=" playlist_link lead display-6" href="{{ url_for('playlist_page', pl_id=id) }}">{{ name }}</a></li>
