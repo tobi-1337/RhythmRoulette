@@ -236,6 +236,8 @@ footer a {
     margin: auto;
 }
 
+/* styling for modal*/
+
 .modal-backdrop {
     --bs-backdrop-zindex: 1 !important;
     --bs-backdrop-bg: #000;
@@ -248,6 +250,20 @@ footer a {
     height: 100vh;
     background-color: var(--bs-backdrop-bg);
 }
+
+.modal-body {
+    background: linear-gradient(0deg, #cda8e1 44%, #ffffff 100%);
+    box-shadow: rgba(211, 211, 211, 0.425);
+}
+
+#modal-button{
+    color: white;
+    background-color: #98609a;
+}
+
+
+/* styling for modal ends */
+
 
 .hidden-form {
     display: inline;
