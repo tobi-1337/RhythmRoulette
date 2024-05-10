@@ -32,9 +32,16 @@ body {
 
 /* här börjar 'navbar' */
 
-h2 {
+#h2 {
     font-family: "Neonderthaw";
-    color:white;
+    color: #c48dc6;
+}
+
+#landing-page {
+    background-color: pink;
+    margin:auto;
+    padding: 0;
+    width: 100vw;
 }
 .navbar {
     grid-area: nav;
@@ -48,7 +55,7 @@ h2 {
 }
 
 .nav-link {
-    color: black!important;
+    color: #c48dc6!important;
 }
 
 #nav-h2 {
@@ -177,6 +184,7 @@ h2 {
     display: flex;
     flex-wrap: wrap; /* Gör att innehållet kan ombrytas på flera rader */
     justify-content: space-between; /* Justera utrymmet mellan elementen */
+    margin:0px;
 }
 
 
