@@ -9,7 +9,7 @@
        <body>
         <div class="container text-center">
             <div class="row">
-              <div class="col-md-3 landing-page">
+              <div class="col-md-2 landing-page">
                 <section"> 
                   <div class="p-3 border-bottom">
                     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
@@ -65,8 +65,8 @@
                   Sätt igång!
                 </p>
               </div>
-              <div class="col-md-2 landing-page">
-                <h2>FÖRSLAG TILL DIG!</h2>
+              <div class="col-md-3" >
+                <img src="https://images.pexels.com/photos/3761020/pexels-photo-3761020.jpeg?auto=compress&cs=tinysrgb&w=600" id="side-img">
                 <ul>
                   {% for playlist in playlists %}
                         <li><a href="{{ playlist.url }}">{{ playlist.name }}</a></li>

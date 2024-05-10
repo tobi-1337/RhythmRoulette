@@ -34,7 +34,7 @@ body {
 
 #h2 {
     font-family: "Neonderthaw";
-    background: -webkit-linear-gradient(#eeb663,#98609a);
+    background: -webkit-linear-gradient(#439d7e,#98609a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   
@@ -55,6 +55,17 @@ body {
     padding: 20px;
     width: 100vw;
     border-radius: 20px;
+    overflow:hidden;
+    font-family: 'alexandria';
+    color:rgb(38, 175, 146);
+    box-shadow: 3px 3px 18px 7px rgb(236, 233,233);
+}
+
+#side-img {
+    border-radius: 20px;
+    padding: 0;
+    margin:auto;
+    max-width: 100%;
 }
 .navbar {
     grid-area: nav;
@@ -69,6 +80,10 @@ body {
 
 .nav-link {
     color: #c48dc6!important;
+}
+
+.nav-link:hover {
+    opacity: 0.5;
 }
 
 #nav-h2 {
