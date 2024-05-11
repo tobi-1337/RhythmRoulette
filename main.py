@@ -163,12 +163,6 @@ def user_profile(username):
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
 
-    user_bio = db.save_user_bio(username)
-    if user_bio:
-        return render_template('profile_page.html', username=username,current_user=current_user,display_name=display_name,user_image_url=user_image_url,user_bio=user_bio)
-    else:
-        not_in_bio = "Det finns ingen biografi för denna användare ännu"
-    return render_template('profile_page.html',username=username,current_user=current_user,display_name=display_name,user_image_url=user_image_url,user_bio=not_in_bio)
 
     
 @app.route('/profile-settings')
@@ -429,3 +423,14 @@ def logout():
 ''' Makes sure that the program is run from this file and not from anywhere else. '''
 if __name__ == '__main__':
     app.run(debug=True)
+
+'''
+user_bio = db.save_user_bio(username)
+if user_bio:  
+        return render_template('profile_page.html', username=username,current_user=current_user,display_name=display_name,user_image_url=user_image_url,user_bio=user_bio)
+
+else:
+        not_in_bio = "Det finns ingen biografi för denna användare ännu"
+    return render_template('profile_page.html',username=username,current_user=current_user,display_name=display_name,user_image_url=user_image_url,user_bio=not_in_bio)
+
+'''
