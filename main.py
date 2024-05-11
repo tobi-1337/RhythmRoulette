@@ -163,7 +163,8 @@ def user_profile(username):
     current_user = get_user_info('username')
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
-    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user)
+    user_bio = db.get_user_bio(username)
+    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio)
 
 
     
@@ -249,6 +250,16 @@ def generate_playlist():
                 return redirect(url_for('search'))
         else:
             return render_template('generate_playlist.html')
+
+@app.route('/bio', methods=['GET', 'POST'])
+def write_bio():
+    if request.method == 'POST':
+        bio_text = request.form['bio']
+        user_id = get_user_info('me')
+        db.save_user_bio(user_id, bio_text)
+        return render_template('profile_page.html')
+    else: 
+        return render_template('bio_page.html')
 
 
 @app.route('/playlist', methods=['GET', 'POST'])

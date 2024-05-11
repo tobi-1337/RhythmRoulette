@@ -61,6 +61,21 @@
 
                 <div class="col-8 text-center">
                     {% block content %}
+                        
+                            <div class="row">
+                                    <div class="col">
+                                        {%if not user_bio %}
+                                        <a class="btn" href="{{url_for('write_bio')}}">bio </a>
+                                        {% else %}
+                                        <p>{{user_bio}}</p>
+                                        {% endif %}
+                                    </div>
+                                
+                                    
+                                <div class="col">
+                                    
+                                </div>
+                            </div>
 
                     {% endblock %}
                 </div>

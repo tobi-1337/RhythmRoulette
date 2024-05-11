@@ -140,7 +140,14 @@ def save_user_bio(user_id, bio_text):
                 ''', (user_id, bio_text)
     ) 
     conn.commit()
-    
+
+def get_user_bio(user_id):
+    cur.execute(
+                '''
+                SELECT * FROM user_bio
+                WHERE * user_id = %s
+                ''', (user_id, )
+    )
 try: 
     conn = psycopg2.connect(
     host=host,
