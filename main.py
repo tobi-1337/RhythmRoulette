@@ -158,10 +158,12 @@ def user_profile(username):
     if not search_name:
         return render_template('index.html')
     user = user_info(username)
+    print(user['id'])
     username = user['id']
     current_user = get_user_info('username')
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
+    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user)
 
 
     
