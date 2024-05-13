@@ -10,7 +10,7 @@
                 <source src="{{ url_for('static', filename='pictures/waves3.mp4')}}" type="video/mp4">
             </video>
         </div>
-    </div>  
+        </div>
         <div class="hero">
             <h1>Rhythm Roulette</h1>
             <div>
@@ -23,7 +23,7 @@
                         {% endfor %} 
                     {% endif %}
                 {% endwith %}
-                </div>
+            </div>
             {% include 'modal_template.html' %}
             <!--<button class="btn btn-success rounded-pill px-3 nav_link btn-primary" type="button" data-toggle="modal" data-target="staticBackdrop" id="staticBackdrop">Registrera dig!</button>-->
         
@@ -40,13 +40,70 @@
         <a href="{{url_for('profile_page')}}">Din profil</a>
         
         {% endif %}
-        
+    </div> 
     </div>
-
-
 </header>
+
+  <div class="container px-2 py-5" id="custom-cards">
     
-</header>
+
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-bg-light rounded-4 shadow-lg" style="background-image: url('https://images.pexels.com/photos/6982603/pexels-photo-6982603.jpeg?auto=compress&cs=tinysrgb&w=600');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Upptäck ett nytt sätt att skapa spellistor</h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                <img src="https://images.pexels.com/photos/6982603/pexels-photo-6982603.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+                <small>Rhythm Roulette</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
+                
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('https://images.pexels.com/photos/5077423/pexels-photo-5077423.jpeg?auto=compress&cs=tinysrgb&w=600');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Det ända du behöver för att registrera dig är ett Spotify konto</h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+                <small>Pakistan</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
+                <small>4d</small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Simpelt att logga in, prova idag! </h3>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    
+
 
 
 
