@@ -214,6 +214,7 @@ body {
     flex-wrap: wrap; /* Gör att innehållet kan ombrytas på flera rader */
     justify-content: space-between; /* Justera utrymmet mellan elementen */
     margin:0px;
+    
 }
 
 
@@ -338,3 +339,18 @@ footer a {
     color: rgb(218, 138, 198);
     font-family: 'Allura';
 }
+
+
+.gen-button {
+    color: white;
+    background-color: #8dc6b0;
+    border-color: whitesmoke;
+}
+.gen-button:hover {
+    background: -webkit-linear-gradient(#b6d8ca,#90d4be)
+  }
+
+  #generate_playlist {
+    background: -webkit-linear-gradient(#c48dc6,#90d4be);
+    box-shadow:  3px 18px 7px rgb(208 190 215);
+  }
