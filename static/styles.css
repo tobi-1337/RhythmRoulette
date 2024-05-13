@@ -1,6 +1,5 @@
 body {
     font-family: "Josefin Sans", sans-serif;
-    background: -webkit-linear-gradient(white, #E1D1E2);
     position: relative;
     
     margin: 0;
@@ -132,7 +131,7 @@ body {
 
 .header {
     position:static;
-    padding-bottom:100px ;
+    padding-bottom:150px ;
 }
 
 /* Här är bakgrundsbild (video/herobild) */
@@ -151,6 +150,7 @@ body {
     width: 100%; /* Videowrappern tar upp hela förälderelementets bredd */
     height: 64%; /* Ange den önskade höjden för videon */
     margin-top: 0%;
+    border-style: none;
 }
 
 .video-wrapper video {
