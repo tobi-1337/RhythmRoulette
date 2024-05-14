@@ -344,14 +344,21 @@ def recommendations():
     '''
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
             recco_list = sp.recommendation_genre_seeds()
+            decades_ranges = {'50s': '1950-1959', '60s': '1960-1969', '70s': '1970-1979', '80s': '1980-1989',
+                '90s': '1990-1999', '00s': '2000-2009', '10s': '2010-2020'}
+            
             if request.method == 'POST':
                 if request.is_json:
                     data = request.json
                     genre_seeds = data.get('genres')
                     recco_limit = data.get('recco_limit')
+                    decades = data.get('decades')
+                    search_limit = data.get('search_limit')
                 else:
                     genre_seeds = request.form['genres']
                     recco_limit = request.form['recco_limit']
+                    decades = request.form.getlist('decades')
+                    search_limit = request.form.get('search_limit')
 
                 reccos = sp.recommendations(seed_genres=genre_seeds, 
                                             limit=recco_limit, market='SE')
@@ -361,56 +368,33 @@ def recommendations():
                     track_list = []
                     
                     for track in reccos['tracks']:
+                        searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
                         song_uri = track['uri']
                         track_list.append(song_uri)
+                    
+                    
                     sp.playlist_add_items(playlist_id, track_list, position=None)
                 return jsonify({"message": "Spellista skapad!"}), 200
             else:
-                return render_template('recommendations.html', recco_list=recco_list)
+                return render_template('recommendations.html','search.html', recco_list=recco_list, decades=decades_ranges.keys())
 
+'''
+    if request.method == 'POST':
+        if request.is_json:
+            data = request.json
 
-@app.route('/search', methods=['GET', 'POST'])
-def search():
-    '''
-    If the user reaches this page using the GET method they will be
-    presented with a list of decade to choose from, as well as a slider. When clicking
-    the button at the bottom of the form they will generate as many songs they wanted
-    generated from the decades they chose. If the POST method was used, they will be presented with
-    a pop up notifying them that their playlist was made, then redirected to the home page.
-    For the POST method the function is using JavaScript for storing the decades chosen and handling the redirection.
-    '''
-    if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        decades_ranges = {'50s': '1950-1959', '60s': '1960-1969', '70s': '1970-1979', '80s': '1980-1989',
-                        '90s': '1990-1999', '00s': '2000-2009', '10s': '2010-2020'}  
+        if 'playlist_id' in session:
+            playlist_id = session['playlist_id']
+            track_list = []  
 
-        if request.method == 'POST':
-            if request.is_json:
-                data = request.json
-                decades = data.get('decades')
-                search_limit = data.get('search_limit')
+            for decade in decades:
+                searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
 
-            else:
-                decades = request.form.getlist('decades')
-                search_limit = request.form.get('search_limit')
+                for track in searches['tracks']['items']:
+                    track_list.append(track['uri'])
 
-            if 'playlist_id' in session:
-                playlist_id = session['playlist_id']
-                track_list = []  
-
-                for decade in decades:
-                    searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
-
-                    for track in searches['tracks']['items']:
-                        track_list.append(track['uri'])
-
-                sp.playlist_add_items(playlist_id, track_list, position=None)
-
-            return jsonify({"message": "Spellista skapad!"}), 200
-        
-        else:
-            return render_template('search.html', decades=decades_ranges.keys())
-
-
+            sp.playlist_add_items(playlist_id, track_list, position=None)
+'''
 
 @app.route('/random-playlist', methods=['GET'])
 def random_playlists():
@@ -442,7 +426,6 @@ def fetch_playlists():
     random.shuffle(playlists)
     print(playlists)
     return playlists
-
 
 
 @app.route('/signup', methods=['GET', 'POST']) # ska vi ta bort den här funktionen eftersom den ej längre används? 
