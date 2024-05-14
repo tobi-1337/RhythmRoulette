@@ -10,9 +10,9 @@
         </div>
         {% endfor %}
     {% endif %}
-        <h1 class="text-center text-white fw-bold">Här är dina toppartister!</h1>
+        <h1 class="text-center fw-bold">Här är dina toppartister!</h1>
         {% for artist in artists %}
-            <p class="lead text-white text-center">{{ loop.index0 + 1 }}. {{artist['name']}}</p>
+            <p class="lead text-center">{{ loop.index0 + 1 }}. {{artist['name']}}</p>
         {%endfor%}
     {% endwith %}
 {% endblock %}
