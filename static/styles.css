@@ -131,7 +131,7 @@ body {
 
 .header {
     position:static;
-    padding-bottom:150px ;
+    padding-bottom:250px ;
 }
 
 /* Här är bakgrundsbild (video/herobild) */
@@ -353,3 +353,5 @@ footer a {
     background: -webkit-linear-gradient(#c48dc6,#90d4be);
     box-shadow:  3px 18px 7px rgb(208 190 215);
   }
+
+ 
