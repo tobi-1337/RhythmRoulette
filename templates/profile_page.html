@@ -16,7 +16,7 @@
             
                 {% if 'logged_in' in session %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role ="button" data-bs-toggle="dropdown" aria-expanded="false">Skapa spellista här!</a>
+                    <a class="nav-link dropdown-toggle" href="#" role ="button" data-bs-toggle="dropdown" aria-expanded="false">Skapa spellista här!</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{url_for('generate_playlist')}}">Baserat på genres</a></li>
                         <li><a class="dropdown-item" href="{{url_for('generate_playlist')}}">Baserat på årtal</a></li>
@@ -43,9 +43,9 @@
             <div class="row">
                 <div class="col-4 mt-2">
                     <img src="{{ user_image_url }}" id="user_image" alt="User Image">
-                    <p class="lead text-white">{{username}}</p>
-                    <p class="text-white">Namn: </p>
-                    <p class="lead text-white">{{display_name}}</p>
+                    <p class="lead">{{username}}</p>
+                    <p class="lead">Namn: </p>
+                    <p class="lead">{{display_name}}</p>
                     {% if current_user == username %}
                     <a class="btn btn-primary" href="{{url_for('profile_settings')}}">Inställningar</a>
                     {% endif %}
