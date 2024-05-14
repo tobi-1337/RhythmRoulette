@@ -5,6 +5,8 @@ from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
 import db
 import random
+import spotipy
+
 
 # This variable is used to run the program
 app = Flask(__name__) 
@@ -88,31 +90,27 @@ def home():
     ''' Home page for the website. '''
 
     if 'logged_in' in session: 
-        print("Recommend playlist function is being executed.")
+        
         if not sp_oauth.validate_token(cache_handler.get_cached_token()):
             auth_url = sp_oauth.get_authorize_url()
             return redirect(auth_url)
-    
-        top_artists = sp.current_user_top_artists()
-        suggested_playlist = []
-
-        if top_artists and 'items' in top_artists:
-            artists = top_artists['items']
-            random_artist = random.choice(artists)
-            print (random_artist)
-
-            recommendations = sp.recommendations(seed_artists=[random_artist ['id']], limit =5)
-            print(recommendations)
-            for track in recommendations['tracks']:
-                suggested_playlist.append(track['uri'])
-                print(suggested_playlist)
-        else:
-            random_artist = None
-
-        return render_template('logged_in_startpage.html', suggested_playlist=suggested_playlist)
+        
+        recommendations = recommend_playlist()
+        return render_template('logged_in_startpage.html', recommendations=recommendations)
 
     else:
         return render_template('index.html')
+        
+def recommend_playlist():
+        
+        available_genres = sp.recommendation_genre_seeds()['genres']
+        random_genre = random.choice(available_genres)
+        recommendations = sp.recommendations(seed_genres=[random_genre], limit=5)
+        
+        for track in recommendations['tracks']:
+            print(f"Track: {track['name']} by {', '.join(artist['name'] for artist in track['artists'])}")
+
+        return recommendations
 
 
 @app.route('/login')

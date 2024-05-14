@@ -70,12 +70,12 @@
                   
                 <ul>
                   
-                  {% if suggested_playlist %}
-                  <h2> Förslag på låtar du kanske tycker om!</h2>
+                  {% if recommendations %}
+                  <h2>Förslag på låtar du kanske tycker om!</h2>
                   <ul>
-                      {% for playlist_uri in suggested_playlist %}
-                          <li><a href="{{ playlist_uri }}"> Track {{playlist_uri['artist']}} </a></li>
-                      {% endfor %}
+                    {% for track in recommendations['tracks'] %}
+                    <li><a href="#">{{ track['name'] }} by {{ track['artists'][0]['name'] }}</a></li>
+                    {% endfor %}
                   </ul>
                   {% else %}
                   <p>Inga spellistor tillgängliga...</p>
