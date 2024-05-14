@@ -86,8 +86,31 @@ def register_user():
 @app.route('/')
 def home():
     ''' Home page for the website. '''
-    if 'logged_in' in session:
-        return render_template('logged_in_startpage.html')
+
+    if 'logged_in' in session: 
+        print("Recommend playlist function is being executed.")
+        if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+            auth_url = sp_oauth.get_authorize_url()
+            return redirect(auth_url)
+    
+        top_artists = sp.current_user_top_artists()
+        suggested_playlist = []
+
+        if top_artists and 'items' in top_artists:
+            artists = top_artists['items']
+            random_artist = random.choice(artists)
+            print (random_artist)
+
+            recommendations = sp.recommendations(seed_artists=[random_artist ['id']], limit =5)
+            print(recommendations)
+            for track in recommendations['tracks']:
+                suggested_playlist.append(track['uri'])
+                print(suggested_playlist)
+        else:
+            random_artist = None
+
+        return render_template('logged_in_startpage.html', suggested_playlist=suggested_playlist)
+
     else:
         return render_template('index.html')
 
@@ -411,37 +434,7 @@ def search():
             return render_template('search.html', decades=decades_ranges.keys())
 
 
-
-@app.route('/random-playlist', methods=['GET'])
-def random_playlists():
-    '''
-
-    '''
-    if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        playlists = fetch_playlists()
-        return render_template('logged_in_startpage.html', playlists=playlists)
-    else:
-        return jsonify({"error": "Token validation failed"})
-    
-def fetch_playlists():
-
-    playlists = [
-            {
-                "name": "Rock Classics",
-                "url": "https://open.spotify.com/playlist/37i9dQZF1DWXRqgorJj26U"
-            },
-            {
-                "name": "Indie Chillout",
-                "url": "https://open.spotify.com/playlist/37i9dQZF1DX6ziVCJnEm59"
-            },
-            {
-                "name": "Hip Hop Hits",
-                "url": "https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd"
-            }
-        ]
-    random.shuffle(playlists)
-    print(playlists)
-    return playlists
+   
 
 
 
