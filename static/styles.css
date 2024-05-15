@@ -361,3 +361,31 @@ footer a {
   #down:hover {
     color:#cda8e1;
   }
+
+  #recco-tracks {
+    background-color: #59ad8f56;
+    color: white;
+    border-radius: 20px;
+    padding: 2%;
+    margin:auto;
+    
+  }
+
+.track-link {
+    text-decoration: none;
+    color:white;
+    padding:2%;
+    list-style:none!important;
+    text-decoration: none!important;
+    margin:0 !important;
+    padding-left :0 !important;
+    
+}
+.track-link:hover {
+    color: rgb(153, 212, 153);
+    opacity: 0.5;
+}
+
+
+
+  
