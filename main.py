@@ -4,6 +4,9 @@ from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
 import db
+import random
+import spotipy
+
 
 # This variable is used to run the program
 app = Flask(__name__) 
@@ -84,8 +87,39 @@ def register_user():
     
 @app.route('/')
 def home():
-    ''' Home page for the website. '''
-    return render_template('index.html')
+    ''' Home page for the website.
+        Also shows a list of 5 random tracks for inspiration '''
+
+    if 'logged_in' in session: 
+        
+        if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+            auth_url = sp_oauth.get_authorize_url()
+            return redirect(auth_url)
+        
+        recommended_tracks = recommend_playlist()
+        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks)
+
+    else:
+        return render_template('index.html')
+        
+def recommend_playlist():
+        '''
+        5 tracks selected is shown as inspiration at the landingpage.
+        First a random genre is seleced, and then 5 tracks from that genre.
+
+        '''
+        
+        available_genres = sp.recommendation_genre_seeds()['genres']
+        random_genre = random.choice(available_genres)
+        recommendations = sp.recommendations(seed_genres=[random_genre], limit=5,  market='SE')
+        
+        recommended_tracks = [{'genre': random_genre}]
+        for track in recommendations['tracks']:
+            track_uri = track ['uri']
+            track_info = f" {track['name']}, by {', ' .join(artist['name'] for artist in track ['artists'])}"
+            
+            recommended_tracks.append({'info': track_info, 'uri': track_uri})
+        return recommended_tracks
 
 
 @app.route('/login')
@@ -409,7 +443,11 @@ def search():
             return render_template('search.html', decades=decades_ranges.keys())
 
 
-@app.route('/signup', methods=['GET', 'POST'])
+   
+
+
+
+@app.route('/signup', methods=['GET', 'POST']) # ska vi ta bort den här funktionen eftersom den ej längre används? 
 def signup():
     ''' Renders the signup page. '''
     return render_template('signup.html')
