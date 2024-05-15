@@ -5,7 +5,6 @@ from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
 import db
 import random
-import spotipy
 
 
 # This variable is used to run the program
