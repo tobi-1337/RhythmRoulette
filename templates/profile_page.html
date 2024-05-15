@@ -9,44 +9,23 @@
                     <p class="lead">{{username}}</p>
                     <p class="lead">Namn: </p>
                     <p class="lead">{{display_name}}</p>
-                    {% if current_user == username %}
+                        {% if current_user == username %}
                         <a class="btn btn-secondary m-3" href="{{url_for('profile_settings')}}">Inställningar</a>
-                            
                 </div>
                 <div class="col-4">
-                    {%if user_bio %}
-                    <p>{{user_bio}}</p>
-                    {% else %}
-                    <p class="text-white">Oj, här var det tomt!</p>
-                    <a class="btn btn-primary" href="{{url_for('write_bio')}}">Skriv en bio!</a>
-                    {% endif %}
-
+                            {%if user_bio %}
+                            <p>{{user_bio}}</p>
+                            {% else %}
+                            <p>Oj, här var det tomt!</p>
+                            <a class="btn btn-primary" href="{{url_for('write_bio')}}">Skriv en bio!</a>
+                            {% endif %}
+                        {% else %}
+                            {%if user_bio %}
+                            <p>{{user_bio}}</p>
+                            {% else %}
+                            <p>Oj, här var det tomt!</p>
+                            {% endif %}
+                        {% endif %}
                 </div>
-                
-
-                <div class="col-8 text-center">
-                    {% block content %}
-                        
-                            <div class="row">
-                                    <div class="col">
-                                        {%if user_bio %}
-                                        <p>{{user_bio}}</p>
-                                        
-                                        {% else %}
-                                        <p class="text-white">Oj, här var det tomt!</p>
-                                        <a class="btn btn-primary" href="{{url_for('write_bio')}}">Skriv en bio!</a>
-                                        {% endif %}
-                                    </div>
-                                
-                                    
-                                <div class="col">
-                                    
-                                </div>
-                            </div>
-
-                    {% endblock %}
-                </div>
-                    {% endif %}    
-            </div> 
         </div>
     {% endblock %}
