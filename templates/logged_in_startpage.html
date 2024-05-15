@@ -70,11 +70,11 @@
                   
                 <ul>
                   
-                  {% if recommendations %}
+                  {% if recommended_tracks %}
                   <h2>Förslag på låtar du kanske tycker om!</h2>
                   <ul>
-                    {% for track in recommendations['tracks'] %}
-                    <li><a href="#">{{ track['name'] }} by {{ track['artists'][0]['name'] }}</a></li>
+                    {% for track in recommended_tracks%}
+                    <li><a href="{{ track.uri }}">{{ track.info }}</a></li>
                     {% endfor %}
                   </ul>
                   {% else %}

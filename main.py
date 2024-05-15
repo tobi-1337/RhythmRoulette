@@ -95,8 +95,8 @@ def home():
             auth_url = sp_oauth.get_authorize_url()
             return redirect(auth_url)
         
-        recommendations = recommend_playlist()
-        return render_template('logged_in_startpage.html', recommendations=recommendations)
+        recommended_tracks = recommend_playlist()
+        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks)
 
     else:
         return render_template('index.html')
@@ -107,10 +107,14 @@ def recommend_playlist():
         random_genre = random.choice(available_genres)
         recommendations = sp.recommendations(seed_genres=[random_genre], limit=5)
         
+        recommended_tracks = []
         for track in recommendations['tracks']:
-            print(f"Track: {track['name']} by {', '.join(artist['name'] for artist in track['artists'])}")
-
-        return recommendations
+            track_uri = track ['uri']
+            track_info = f" {track['name']}, by {', ' .join(artist['name'] for artist in track ['artists'])}"
+            
+            recommended_tracks.append({'info': track_info, 'uri': track_uri})
+            print(recommended_tracks)
+        return recommended_tracks
 
 
 @app.route('/login')
