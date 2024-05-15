@@ -134,13 +134,22 @@ def save_user_bio(user_id, bio_text):
     
     cur.execute(
                 '''
-                INSERT INTO user_bio(user_id, user_bio)
+                INSERT INTO a_user(s_id, user_bio)
                 VALUES  (%s, %s) 
-                ON DUPLICATE KEY UPDATE user_bio = VALUES (user_bio)
+                ON CONFLICT (s_id) DO UPDATE SET user_bio = EXCLUDED.user_bio
                 ''', (user_id, bio_text)
     ) 
     conn.commit()
-    
+
+def get_user_bio(user_id):
+    cur.execute(
+                '''
+                SELECT user_bio FROM a_user
+                WHERE s_id = %s
+                ''', (user_id, )
+    )
+    return cur.fetchone()[0]
+
 try: 
     conn = psycopg2.connect(
     host=host,

@@ -22,12 +22,29 @@
                     {% endif %}
 
                 </div>
-                <div class="col-4">
-                    <div>
-                        <a class="btn btn-primary m-3" href="{{url_for('get_playlist')}}">Spellistor!</a>
-                        <a class="btn btn-primary m-3" href="{{url_for('get_top_artists')}}">Dina toppartister!</a>
-                    </div>
-                    
+                
+
+                <div class="col-8 text-center">
+                    {% block content %}
+                        
+                            <div class="row">
+                                    <div class="col">
+                                        {%if user_bio %}
+                                        <p>{{user_bio}}</p>
+                                        
+                                        {% else %}
+                                        <p class="text-white">Oj, här var det tomt!</p>
+                                        <a class="btn btn-primary" href="{{url_for('write_bio')}}">Skriv en bio!</a>
+                                        {% endif %}
+                                    </div>
+                                
+                                    
+                                <div class="col">
+                                    
+                                </div>
+                            </div>
+
+                    {% endblock %}
                 </div>
                     {% endif %}    
             </div> 
