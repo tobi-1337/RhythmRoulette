@@ -48,24 +48,7 @@ body {
     background-color: white;
 }
 
-.landing-page {
-    background-color: rgba(245, 233, 235, 0.445);
-    margin:20px;
-    padding: 20px;
-    width: 100vw;
-    border-radius: 20px;
-    overflow:hidden;
-    font-family: 'alexandria';
-    color:rgb(38, 175, 146);
-    box-shadow: 3px 3px 18px 7px rgb(236, 233,233);
-}
 
-#side-img {
-    border-radius: 20px;
-    padding: 0;
-    margin:auto;
-    max-width: 100%;
-}
 .navbar {
     grid-area: nav;
     display: flex!important;
@@ -205,8 +188,26 @@ body {
     background: -webkit-linear-gradient(#c48dc6,#98609a)
   }
          
+/*Landing page */
 
+  .landing-page {
+    background-color: rgba(245, 233, 235, 0.445);
+    margin:20px;
+    padding: 20px;
+    width: 100vw;
+    border-radius: 20px;
+    overflow:hidden;
+    font-family: 'alexandria';
+    color:rgb(38, 175, 146);
+    box-shadow: 3px 3px 18px 7px rgb(236, 233,233);
+}
 
+#side-img {
+    border-radius: 20px;
+    padding: 0;
+    margin:auto;
+    max-width: 100%;
+}
 
 .container {
     display: flex;
@@ -288,7 +289,7 @@ footer a {
 
 /* styling for modal ends */
 
-
+/*Playlist styling*/
 .hidden-form {
     display: inline;
 }
@@ -303,7 +304,7 @@ footer a {
     display: block;
     text-decoration: none;
     transition: 0.3s;
-    color:#d4782c;
+    color:#ffffff;
     font-size: large;
     
 }
@@ -311,19 +312,29 @@ footer a {
 .playlist_link:hover {
     font-size: 300%;
     text-shadow: 1px 1px 10px;
-    background-color: #d4782c;
+    background-color: #9a0f93;
 }
 
 .playlist_list {
-    background-image: linear-gradient(to bottom right, rgb(255, 166, 0), rgb(244, 240, 245));
+    background-image: linear-gradient(to bottom right, rgb(249, 199, 240), rgb(244, 240, 245));
     position: relative;
     width: 100%;
 }
 
+.pl-container {
+    margin:0;
+    display: flex;
+    flex-direction: column;
+
+}
 .playlist_container {
     list-style-type: none;
-    padding: 10%;
-    margin:auto;
+    padding: 5%;
+    margin:2%;
+    
+    background: -webkit-linear-gradient(#efaff4,#873281);
+    width: 95%;
+    border-radius: 5px;
 }
 
 .playlist-box{
@@ -333,7 +344,7 @@ footer a {
     border-radius: 20px;
 }
 
-#h1-playlist {
+.h1-playlist {
     color: rgb(218, 138, 198);
     font-family: 'Allura';
     font-size: 300%;
@@ -379,11 +390,18 @@ footer a {
     text-decoration: none!important;
     margin:0 !important;
     padding-left :0 !important;
+    font-size: 1rem;
     
 }
 .track-link:hover {
     color: rgb(153, 212, 153);
     opacity: 0.5;
+}
+
+#show-playlist {
+    background-image: url(https://media.istockphoto.com/id/1397174550/sv/foto/african-man-in-vr-headset-falling-in-studio.jpg?s=2048x2048&w=is&k=20&c=3OcfIoF8bwBwePvKD7EvQCsKWoy4tKUhwcm6xlfBlqo=) !important;
+    border-radius: 20px;
+    margin:auto;
 }
 
 
