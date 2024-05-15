@@ -154,7 +154,7 @@ body {
     position: relative;
     z-index: 2; 
     margin: auto;
-    top: 0px;
+    top: 200px;
     padding-bottom: 20px;
     text-align: center;
     max-width: 700px;
@@ -237,7 +237,7 @@ body {
 
 
 footer {
-    position: fixed;
+    position: static;
     bottom: 0;
     left: 0;
     right: 0;
@@ -292,7 +292,7 @@ footer a {
 /*Playlist styling*/
 
 #pl-main {
-    background-image: linear-gradient(to bottom right, rgb(249, 199, 240), rgb(244, 240, 245));
+    background-image: linear-gradient(to bottom, rgb(255, 255, 255), rgb(249, 199, 240));
 }
 
 .hidden-form {
