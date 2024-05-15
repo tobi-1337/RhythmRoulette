@@ -87,7 +87,8 @@ def register_user():
     
 @app.route('/')
 def home():
-    ''' Home page for the website. '''
+    ''' Home page for the website.
+        Also shows a list of 5 random tracks for inspiration '''
 
     if 'logged_in' in session: 
         
@@ -102,10 +103,15 @@ def home():
         return render_template('index.html')
         
 def recommend_playlist():
+        '''
+        5 tracks selected is shown as inspiration at the landingpage.
+        First a random genre is seleced, and then 5 tracks from that genre.
+
+        '''
         
         available_genres = sp.recommendation_genre_seeds()['genres']
         random_genre = random.choice(available_genres)
-        recommendations = sp.recommendations(seed_genres=[random_genre], limit=5)
+        recommendations = sp.recommendations(seed_genres=[random_genre], limit=5,  market='SE')
         
         recommended_tracks = []
         for track in recommendations['tracks']:
@@ -113,7 +119,7 @@ def recommend_playlist():
             track_info = f" {track['name']}, by {', ' .join(artist['name'] for artist in track ['artists'])}"
             
             recommended_tracks.append({'info': track_info, 'uri': track_uri})
-            print(recommended_tracks)
+         
         return recommended_tracks
 
 
