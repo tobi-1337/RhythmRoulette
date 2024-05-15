@@ -17,6 +17,10 @@
                         <label for="{{ recco }}" class="lead fw-bold mb-2">{{ recco }}</label><br>
                     </div>
                     {% endfor %}
+                    <form class="p-4 p-md-5 border rounded-3" id="search_user" action="users" method="post">
+                        <input type="text" id="search_user" name="search_user">
+                        <button class="btn btn-primary" type="submit" value="submit">Sök!</button>
+                    </form>
                     <div>
                         <p class="display-7">Hur många låtar vill du generera?</p>
                         <input type="range" name="recco_limit" id="recco_limit" value="24" min="1" max="100"

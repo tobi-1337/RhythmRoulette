@@ -367,12 +367,16 @@ def recommendations():
                     playlist_id = session['playlist_id']
                     track_list = []
                     
-                    for track in reccos['tracks']:
-                        searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
+                    for i in reccos['tracks']:
+                        searches = sp.search(q=f'year:{decades_ranges[i]}', type='track', limit=search_limit, market='SE')
                         song_uri = track['uri']
+                        
+                        
+                        for track in searches['tracks']['items']:
+                            track_list.append(track['uri'])
+                            
                         track_list.append(song_uri)
-                    
-                    
+                                        
                     sp.playlist_add_items(playlist_id, track_list, position=None)
                 return jsonify({"message": "Spellista skapad!"}), 200
             else:
@@ -396,7 +400,7 @@ def recommendations():
             sp.playlist_add_items(playlist_id, track_list, position=None)
 '''
 
-@app.route('/random-playlist', methods=['GET'])
+@app.route('/random-playlist', methods=['GET'])#-------tabort???
 def random_playlists():
     '''
 
@@ -408,7 +412,6 @@ def random_playlists():
         return jsonify({"error": "Token validation failed"})
     
 def fetch_playlists():
-
     playlists = [
             {
                 "name": "Rock Classics",
