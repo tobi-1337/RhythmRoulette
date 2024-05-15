@@ -14,7 +14,13 @@
                             
                 </div>
                 <div class="col-4">
-                    <h1>här kan vi ha bio?</h1>
+                    {%if user_bio %}
+                    <p>{{user_bio}}</p>
+                    {% else %}
+                    <p class="text-white">Oj, här var det tomt!</p>
+                    <a class="btn btn-primary" href="{{url_for('write_bio')}}">Skriv en bio!</a>
+                    {% endif %}
+
                 </div>
                 <div class="col-4">
                     <div>
