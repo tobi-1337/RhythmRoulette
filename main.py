@@ -1,10 +1,11 @@
 from flask import Flask, render_template, url_for, session, redirect, request, flash, jsonify
 from spotipy import Spotify
-from spotipy.oauth2 import SpotifyOAuth 
+from spotipy.oauth2 import SpotifyOAuth, SpotifyOauthError 
 from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
 import db
 import random
+
 
 
 # This variable is used to run the program
@@ -139,12 +140,22 @@ def login():
 def callback():
     ''' The callback page is where the user gets redirected to from the Spotify authorization page. '''
     try:
-        sp_oauth.get_access_token(request.args['code'])
-        return register_user()
-    except:
-        flash(f"Du måste godkänna villkoren!")
+        access_token = sp_oauth.get_access_token(request.args['code'])
+        if access_token:
+            return register_user()
+        else:
+            flash(f"Du måste godkänna villkoren!")
+            return redirect(url_for('home'))
+    
+    except SpotifyOauthError as e:
+        flash('Något gick fel med vårt samarbete med Spotify. Försök igen lite senare.')
+        app.logger.error(f"Spotify OAuth error: {str(e)}")
         return redirect(url_for('home'))
-
+    except Exception as e:
+        flash("Sorry, oväntat fel!")
+        app.logger.error(f"Oväntat fel: {str(e)}")
+        return redirect(url_for('home'))
+    
 
 @app.route('/profile-page')
 def profile_page():
