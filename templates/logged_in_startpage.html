@@ -72,8 +72,9 @@
                   
                   {% if recommended_tracks %}
                   <h2>Upptäck ny musik!</h2>
-                  <ul class="track-link">
-                    {% for track in recommended_tracks%}
+                  {% for track in recommended_tracks%}
+                  <h3>{{track.genre}}</h3>
+                  <ul class="track-link">  
                     <li><a href="{{ track.uri }}"  class="track-link">{{ track.info }}</a></li>
                     {% endfor %}
                   </ul>

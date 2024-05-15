@@ -113,13 +113,12 @@ def recommend_playlist():
         random_genre = random.choice(available_genres)
         recommendations = sp.recommendations(seed_genres=[random_genre], limit=5,  market='SE')
         
-        recommended_tracks = []
+        recommended_tracks = [{'genre': random_genre}]
         for track in recommendations['tracks']:
             track_uri = track ['uri']
             track_info = f" {track['name']}, by {', ' .join(artist['name'] for artist in track ['artists'])}"
             
             recommended_tracks.append({'info': track_info, 'uri': track_uri})
-         
         return recommended_tracks
 
 
