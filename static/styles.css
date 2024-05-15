@@ -290,6 +290,11 @@ footer a {
 /* styling for modal ends */
 
 /*Playlist styling*/
+
+#pl-main {
+    background-image: linear-gradient(to bottom right, rgb(249, 199, 240), rgb(244, 240, 245));
+}
+
 .hidden-form {
     display: inline;
 }
@@ -304,7 +309,7 @@ footer a {
     display: block;
     text-decoration: none;
     transition: 0.3s;
-    color:#ffffff;
+    color: whitesmoke;
     font-size: large;
     
 }
@@ -312,11 +317,11 @@ footer a {
 .playlist_link:hover {
     font-size: 300%;
     text-shadow: 1px 1px 10px;
-    background-color: #9a0f93;
+    color:-webkit-linear-gradient(#efaff4,#873281);
 }
 
 .playlist_list {
-    background-image: linear-gradient(to bottom right, rgb(249, 199, 240), rgb(244, 240, 245));
+    
     position: relative;
     width: 100%;
 }
