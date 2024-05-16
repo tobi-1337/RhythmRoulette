@@ -3,95 +3,112 @@
 
 {% block content %}
 
-    
-    
+<body>
+	<div class="container text-center">
+		<div class="row">
+			<div class="col-md-2 landing-page">
+				<section">
+					<div class="p-3 border-bottom">
+						<a href="/"
+							class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+							<svg class="bi pe-none me-2" width="30" height="24">
+								<use xlink:href="#bootstrap" />
+							</svg>
+							<span class="fs-5 fw-semibold">Välkommen!</span>
+						</a>
+						<ul class="list-unstyled ps-0">
+							<li class="mb-1">
+								<button
+									class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+									data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+									Skapa spellista
+								</button>
+								<div class="collapse" id="home-collapse">
+									<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+										<li><a href="{{url_for('generate_playlist')}}"
+												class="link-body-emphasis d-inline-flex text-decoration-none rounded">Genre</a>
+										</li>
+										<li><a href="{{url_for('generate_playlist')}}"
+												class="link-body-emphasis d-inline-flex text-decoration-none rounded">Årtal</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li class="mb-1">
+								<button
+									class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+									data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
+									aria-expanded="false">
+									Meny
+								</button>
+								<div class="collapse" id="dashboard-collapse">
+									<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+										<li><a href="{{url_for('users')}}"
+												class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sök
+												på användare</a></li>
+										<li><a href="{{url_for('profile_page')}}"
+												class="link-body-emphasis d-inline-flex text-decoration-none rounded">Din
+												profil</a></li>
+										<li><a href="{{url_for('get_top_artists')}}"
+												class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina
+												toppartister</a></li>
+										<li><a href="{{url_for('get_playlist')}}"
+												class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina
+												spellistor</a></li>
+									</ul>
+								</div>
+							</li>
+							<li class="border-top my-3"></li>
+							<li class="mb-1">
+								<button
+									class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+									data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+									Ditt konto
+								</button>
+								<div class="collapse" id="account-collapse">
+									<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+										<li><a href="{{url_for('profile_page')}}"
+												class="link-body-emphasis d-inline-flex text-decoration-none rounded">Din
+												profil</a></li>
+										<!--  <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Settings</a></li>-->
+										<li><a href="{{url_for('logout')}}"
+												class="link-body-emphasis d-inline-flex text-decoration-none rounded">Logga
+												ut</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+					</section>
+			</div>
+			<div class="col-md-5 landing-page">
+				<h2>Välkommen till Rhythm Roulette</h2>
+				<p>Här kan du generera spellistor utifrån genre och årtal.
+					Sätt igång!
+				</p>
+				<button class="btn btn-outline-secondary gen-button" type="button" id="gen-button"><a
+						href="{{url_for('generate_playlist')}}"
+						class="link-body-emphasis d-inline-flex text-decoration-none rounded">Generera
+						spellista!</a></button>
+			</div>
+			<div class="col-md-3" id="recco-tracks">
 
-       <body>
-        <div class="container text-center">
-            <div class="row">
-              <div class="col-md-2 landing-page">
-                <section"> 
-                  <div class="p-3 border-bottom">
-                    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-                      <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-                      <span class="fs-5 fw-semibold">Välkommen!</span>
-                    </a>
-                    <ul class="list-unstyled ps-0">
-                      <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                          Skapa spellista
-                        </button>
-                        <div class="collapse" id="home-collapse">
-                          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            
-                            <li><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Genre</a></li>
-                            <li><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Årtal</a></li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                          Meny
-                        </button>
-                        <div class="collapse" id="dashboard-collapse">
-                          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{{url_for('users')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sök på användare</a></li>
-                            <li><a href="{{url_for('profile_page')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Din profil</a></li>
-                            <li><a href="{{url_for('get_top_artists')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina toppartister</a></li>
-                            <li><a href="{{url_for('get_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina spellistor</a></li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li class="border-top my-3"></li>
-                      <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                          Ditt konto
-                        </button>
-                        <div class="collapse" id="account-collapse">
-                          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{{url_for('profile_page')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Din profil</a></li>
-                          <!--  <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Settings</a></li>-->
-                            <li><a href="{{url_for('logout')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Logga ut</a></li>
-                          </ul>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </section>
-              </div>
-              <div class="col-md-5 landing-page">
-                <h2>Välkommen till Rhythm Roulette</h2>
-                <p>Här kan du generera spellistor utifrån genre och årtal.
-                  Sätt igång!
-                </p>
-                <button class="btn btn-outline-secondary gen-button" type="button" id="gen-button" ><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" >Generera spellista!</a></button>
-              </div>
-              <div class="col-md-3" id="recco-tracks" >
-                  
-                
-                  
-                  {% if recommended_tracks %}
-                  <h2>Upptäck ny musik!</h2>
-                  <h3>Genre:</h3>
-                  {% for track in recommended_tracks%}
-                  <h3>{{track.genre}}</h3>
-                  <ul class="track-link">  
-                    <li><a href="{{ track.uri }}"  class="track-link">{{ track.info }}</a></li>
-                    {% endfor %}
-                  </ul>
-                  {% else %}
-                  <p>Inga spellistor tillgängliga...</p>
-                  {% endif %}
-                
-                 
-               
-              </div>
-            </div>
-          </div>
+				{% if recommended_tracks %}
+				<h2>Upptäck ny musik!</h2>
+				<h3>Genre:</h3>
+				{% for track in recommended_tracks%}
+				<h3>{{track.genre}}</h3>
+				<ul class="track-link">
+					<li><a href="{{ track.uri }}" class="track-link">{{ track.info }}</a></li>
+					{% endfor %}
+				</ul>
+				{% else %}
+				<p>Inga spellistor tillgängliga...</p>
+				{% endif %}
 
-
-  
-
+			</div>
+		</div>
+	</div>
 </body>
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>

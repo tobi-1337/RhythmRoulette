@@ -28,15 +28,13 @@ body {
     grid-area: container;
 }
 
-
 /* här börjar 'navbar' */
 
 #h2 {
     font-family: "Neonderthaw";
-    background: -webkit-linear-gradient(#439d7e,#98609a);
+    background: -webkit-linear-gradient(#439d7e,#AAD9CD);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  
+    -webkit-text-fill-color: transparent; 
 }
 
 .sidebar {
@@ -47,7 +45,6 @@ body {
     border-bottom-width: 1px;
     background-color: white;
 }
-
 
 .navbar {
     grid-area: nav;
@@ -61,7 +58,7 @@ body {
 }
 
 .nav-link {
-    color: #c48dc6!important;
+    color: #9cd9d5!important;
 }
 
 .nav-link:hover {
@@ -147,7 +144,6 @@ body {
     box-shadow: 2px 4px 20px 4px rgb(250, 249, 249);
 }
 
-
 /* Här börjar sektion 'hero' */
 .hero { 
     box-sizing: border-box;
@@ -186,12 +182,11 @@ body {
 
 #reg-button:hover {
     background: -webkit-linear-gradient(#c48dc6,#98609a)
-  }
-         
-/*Landing page */
+}
 
-  .landing-page {
-    background-color: rgba(245, 233, 235, 0.445);
+/*Landing page */
+.landing-page {
+    background-color: #aad9cd74;
     margin:20px;
     padding: 20px;
     width: 100vw;
@@ -199,7 +194,7 @@ body {
     overflow:hidden;
     font-family: 'alexandria';
     color:rgb(38, 175, 146);
-    box-shadow: 3px 3px 18px 7px rgb(236, 233,233);
+    box-shadow: 3px 3px 18px 7px rgb(242, 240, 240);
 }
 
 #side-img {
@@ -217,7 +212,6 @@ body {
     
 }
 
-
 #profile_page {
     width: 100%;
     height: 80%;
@@ -234,7 +228,6 @@ body {
     border-radius: 10px;
     background-color: #00755e;
 }
-
 
 footer {
     position: fixed;
@@ -262,7 +255,6 @@ footer a {
 }
 
 /* styling for modal*/
-
 .modal-backdrop {
     --bs-backdrop-zindex: 1 !important;
     --bs-backdrop-bg: #000;
@@ -290,7 +282,6 @@ footer a {
 /* styling for modal ends */
 
 /*Playlist styling*/
-
 #pl-main {
     background-image: linear-gradient(to bottom right, rgb(249, 199, 240), rgb(244, 240, 245));
 }
@@ -364,29 +355,28 @@ footer a {
 }
 .gen-button:hover {
     background: -webkit-linear-gradient(#b6d8ca,#90d4be)
-  }
+}
 
-  #generate_playlist {
+#generate_playlist {
     background: -webkit-linear-gradient(#c48dc6,#90d4be);
     box-shadow:  3px 18px 7px rgb(208 190 215);
-  }
+}
 
-  #down {
+#down {
     color:rgb(97, 2, 78);
-  }
+}
 
-  #down:hover {
+#down:hover {
     color:#cda8e1;
-  }
+}
 
-  #recco-tracks {
+#recco-tracks {
     background-color: #59ad8f56;
     color: white;
     border-radius: 20px;
     padding: 2%;
     margin:auto;
-    
-  }
+}
 
 .track-link {
     text-decoration: none;
@@ -396,9 +386,9 @@ footer a {
     text-decoration: none!important;
     margin:0 !important;
     padding-left :0 !important;
-    font-size: 1rem;
-    
+    font-size: 1rem; 
 }
+
 .track-link:hover {
     color: rgb(153, 212, 153);
     opacity: 0.5;
@@ -409,7 +399,3 @@ footer a {
     border-radius: 20px;
     margin:auto;
 }
-
-
-
-  
