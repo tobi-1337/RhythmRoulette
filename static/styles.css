@@ -395,6 +395,7 @@ body {
     box-shadow: 2px 4px 20px 4px rgb(250, 249, 249);
     font-family: 'alexandria';
     border-radius: 20px;
+    color:white;
 }
 
 .form-check-input {
@@ -410,6 +411,13 @@ body {
     background-color:#d094cc!important;  
 }
 
+#searches {
+    background: rgb(201, 231, 201);
+    box-shadow: 2px 4px 20px 4px rgb(250, 249, 249);
+    font-family: 'alexandria';
+    border-radius: 20px; 
+    color:white; 
+}
 
 
 
