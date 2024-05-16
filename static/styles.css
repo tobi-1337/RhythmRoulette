@@ -1,7 +1,6 @@
 body {
     font-family: "Josefin Sans", sans-serif;
     position: relative;
-    
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -236,7 +235,7 @@ footer {
     right: 0;
     text-align: center;
     padding: 30px 0;
-    background-color: #E1D1E2;
+    background-color: #aad9cd;
     color: #fff;
 }
 
@@ -277,13 +276,11 @@ footer a {
     color: white;
     background-color: #98609a;
 }
-
-
 /* styling for modal ends */
 
 /*Playlist styling*/
 #pl-main {
-    background-image: linear-gradient(to bottom right, rgb(249, 199, 240), rgb(244, 240, 245));
+    background: linear-gradient(rgb(255, 255, 255), rgb(170,217,205));
 }
 
 .hidden-form {
@@ -300,7 +297,7 @@ footer a {
     display: block;
     text-decoration: none;
     transition: 0.3s;
-    color: whitesmoke;
+    color: rgb(197, 196, 196);
     font-size: large;
     
 }
@@ -312,24 +309,25 @@ footer a {
 }
 
 .playlist_list {
-    
     position: relative;
     width: 100%;
 }
 
 .pl-container {
-    margin-left:10%;
-    margin-right: 10%;
+    margin-left:25%;
+    margin-right: 25%;
     display: flex;
     flex-direction: column;
+    border-style: solid;
+    border-color: #aaced951;
+    border-radius: 8px;
+    background-color: rgba(245, 245, 245, 0.426);
 
 }
 .playlist_container {
     list-style-type: none;
     padding: 5%;
     margin:2%;
-    
-    background: -webkit-linear-gradient(#efaff4,#873281);
     width: 95%;
     border-radius: 5px;
 }
@@ -342,11 +340,15 @@ footer a {
 }
 
 .h1-playlist {
-    color: rgb(218, 138, 198);
+    color: #AACED9;
     font-family: 'Allura';
     font-size: 300%;
 }
 
+#h5-playlist {
+    color: #C0d8c0 !important;
+    font-family: 'Helvetica';
+}
 
 .gen-button {
     color: white;
@@ -394,8 +396,8 @@ footer a {
     opacity: 0.5;
 }
 
-#show-playlist {
+/* styling for modal ends #show-playlist {
     background-image: url(https://media.istockphoto.com/id/1397174550/sv/foto/african-man-in-vr-headset-falling-in-studio.jpg?s=2048x2048&w=is&k=20&c=3OcfIoF8bwBwePvKD7EvQCsKWoy4tKUhwcm6xlfBlqo=) !important;
     border-radius: 20px;
     margin:auto;
-}
+}*/
