@@ -383,6 +383,36 @@ body {
     margin:auto;
 }
 
+/*Generate playlist*/
+
+.reccos {
+    background: -webkit-linear-gradient(#c48dc6,#90d4be);
+    border-radius: 5px;
+}
+
+#recco-box {
+    background: rgb(201, 231, 201);
+    box-shadow: 2px 4px 20px 4px rgb(250, 249, 249);
+    font-family: 'alexandria';
+    border-radius: 20px;
+}
+
+.form-check-input {
+    background-color:#873281!important;
+    border-color: whitesmoke!important;
+}
+
+#search_value {
+    background-color:#873281!important;  
+}
+
+#search_value:hover {
+    background-color:#d094cc!important;  
+}
+
+
+
+
 
 
   
