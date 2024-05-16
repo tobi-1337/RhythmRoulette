@@ -2,9 +2,9 @@
 {% block title %}Profile page{% endblock %}
 
     {% block content %}
-        <div class="container" id="profile_page">
+        <div class="container text-center" id="profile_page">
             <div class="row">
-                <div class="col-4">
+                <div class="col-md-2">
                     <img src="{{ user_image_url }}" id="user_image" alt="User Image">
                     <p class="lead">{{username}}</p>
                     <p class="lead">Namn: </p>
@@ -12,7 +12,7 @@
                         {% if current_user == username %}
                         <a class="btn btn-secondary m-3" href="{{url_for('profile_settings')}}">Inställningar</a>
                 </div>
-                <div class="col-4">
+                <div class="col-md-5">
                             {%if user_bio %}
                             <p>{{user_bio}}</p>
                             {% else %}

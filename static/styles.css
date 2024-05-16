@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    height: 1200px;
+    
 }
 
 .new-grid-container {
@@ -209,19 +209,9 @@ body {
     max-width: 100%;
 }
 
-.container {
-    display: flex;
-    flex-wrap: wrap; /* Gör att innehållet kan ombrytas på flera rader */
-    justify-content: space-between; /* Justera utrymmet mellan elementen */
-    margin:0px;
-    
-}
 
 
-#profile_page {
-    width: 100%;
-    height: 80%;
-}
+
 
 .btn-primary{
     text-decoration: none;
@@ -236,23 +226,6 @@ body {
 }
 
 
-footer {
-    position: static;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    padding: 30px 0;
-    background-color: #E1D1E2;
-    color: #fff;
-}
-
-footer a {
-    position: static;
-    right: 20px;
-    text-decoration: none;
-    color: #a49f9f;
-}
 
 /* styling for logged in */
 #user_image {
