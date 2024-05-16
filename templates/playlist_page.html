@@ -2,6 +2,7 @@
 {% block title %}Get playlist{% endblock %}
 
 {% block content %}
+<div id="p-page-body">
     <h1 class="text-center">
         {{playlist_name}}
     </h1>
@@ -10,23 +11,20 @@
         <a class="btn btn-danger" id="delete" href="{{ url_for('delete_playlist', pl_id=pl_id) }}">Radera spellistan!</a>
     </div>
     <div class="container">
-        <div class="row">
+        <div class="row mb-5">
             {% for playlist in playlist_items %}
-                <div class="col-4">
-                    <p class="lead">Artist: {{playlist['track']['artists'][0]['name']}}  </p>
-                </div>
-
-                <div class="col-4">
-                    <p class="lead">Track: {{playlist['track']['name']}} </p>
-                </div>
-
-                <div class="col-4">
-                    <p class="lead">Album:{{playlist['track']['album']['name']}} </p>
-                </div>
-                <div class="mb-5">
-                    <img class="album-img text-center" src="{{playlist['track']['album']['images'][0]['url']}}">
+                <div class="col-12 d-flex align-items-center mb-3">
+                    <div class="col-4">
+                        <img class="album-img text-center" id="album-img" src="{{playlist['track']['album']['images'][0]['url']}}">
+                    </div>
+                    <div class="col-8 d-flex flex-column">
+                        <p class="lead">Artist: {{playlist['track']['artists'][0]['name']}}  </p>
+                        <p class="lead">Track: {{playlist['track']['name']}} </p>
+                        <p class="lead">Album:{{playlist['track']['album']['name']}} </p>
+                    </div>    
                 </div>
             {% endfor %}
         </div>
     </div>
+</div>
 {% endblock %}

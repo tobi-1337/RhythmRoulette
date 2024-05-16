@@ -235,7 +235,7 @@ footer {
     right: 0;
     text-align: center;
     padding: 30px 0;
-    background-color: #aad9cd;
+    background-color: #95c7c2;
     color: #fff;
 }
 
@@ -280,17 +280,11 @@ footer a {
 
 /*Playlist styling*/
 #pl-main {
-    background: linear-gradient(rgb(255, 255, 255), rgb(170,217,205));
+    background: linear-gradient(0deg, rgba(149,199,194,1) 0%, rgba(255,255,255,1) 100%); 
 }
 
 .hidden-form {
     display: inline;
-}
-
-.album-img{
-    width: 50%;
-    border-radius: 25%;
-    margin: auto;
 }
 
 .playlist_link {
@@ -350,8 +344,14 @@ footer a {
     font-family: 'Helvetica';
 }
 
+/* Playlist_page */
+#p-page-body {
+    background: linear-gradient(0deg, rgba(149,199,194,1) 0%, rgba(255,255,255,1) 100%); 
+}
+
 .text-center {
     font-family: 'Allura';
+    color: black;
 }
 
 #buttons {
@@ -374,6 +374,31 @@ footer a {
     border-style: solid;
     border-color: #e0924a;
 }
+
+.album-img{
+    width: 40%;
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: auto;
+    margin-right: 10px;
+    border-radius: 20%;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap; /* Tillåter rader att brytas vid behov */
+}
+
+.col-4, .col-8 {
+    padding: 0 15px; /* Justerar standard padding */
+}
+
+.col-8 {
+    display: flex;
+    flex-direction: column; /* Arrangerar texten vertikalt */
+}
+/* Playlist_page end*/
 
 .gen-button {
     color: white;
