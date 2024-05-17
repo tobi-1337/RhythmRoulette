@@ -191,11 +191,11 @@ body {
 /*Landing page */
 
   .landing-page {
-    background-color: rgba(245, 233, 235, 0.445);
+    background-color: rgb(215, 236, 235);
     margin:20px;
-    padding: 20px;
+    padding: 50px;
     width: 100vw;
-    border-radius: 20px;
+    border-radius: 5px;
     overflow:hidden;
     font-family: 'alexandria';
     color:rgb(38, 175, 146);

@@ -7,9 +7,10 @@
     
 
        <body>
-        <div class="container text-center">
+        <div class="container-fluid text-center">
             <div class="row">
-              <div class="col-md-2 landing-page">
+              <!-- sidebar börjar här-->
+              <div class="col-md-3 mr-md-3 mb-3 landing-page">
                 <section"> 
                   <div class="p-3 border-bottom">
                     
@@ -58,16 +59,20 @@
                   </div>
                 </section>
               </div>
-              <div class="col-md-5 landing-page">
+
+              <!-- Main content börjar här-->
+
+            <div class="col-md-7 ml-md-3 mb-3">
+              <div class="col-md-12 mb-5 mt-5 landing-page">
                 <h2>Välkommen till Rhythm Roulette</h2>
                 <p>Här kan du generera spellistor utifrån genre och årtal.
                   Sätt igång!
                 </p>
                 <button class="btn btn-outline-secondary gen-button" type="button" id="gen-button" ><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" >Generera spellista!</a></button>
               </div>
-              <div class="col-md-3" id="recco-tracks" >
-                  
-                
+            
+            <div class="col-md-12 mt-4 landing-page" >
+                   
                   
                   {% if recommended_tracks %}
                   <h2>Upptäck ny musik!</h2>
@@ -82,11 +87,11 @@
                   <p>Inga spellistor tillgängliga...</p>
                   {% endif %}
                 
-                 
+            </div>          
                
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
+  </div>
 
 
   
