@@ -96,8 +96,8 @@ def home():
             auth_url = sp_oauth.get_authorize_url()
             return redirect(auth_url)
         
-        #recommended_tracks = recommend_playlist()
-        return render_template('logged_in_startpage.html') #recommended_tracks=recommended_tracks)
+        recommended_tracks = recommend_playlist()
+        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks)
 
     else:
         return render_template('index.html')
