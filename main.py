@@ -86,16 +86,24 @@ def register_user():
     
 @app.route('/')
 def home():
-    ''' Home page for the website.
-        Also shows a list of 5 random tracks for inspiration '''
+    ''' 
+    Home page for the website.
+    Also shows a list of 5 random tracks for inspiration.
+    '''
 
     if 'logged_in' in session: 
         
         if not sp_oauth.validate_token(cache_handler.get_cached_token()):
             auth_url = sp_oauth.get_authorize_url()
             return redirect(auth_url)
+    
+        if 'recommended_tracks' not in session:
+
+            recommended_tracks = recommend_playlist()
+            session['recommended_tracks'] = recommended_tracks
+        else:
+            recommended_tracks = session['recommended_tracks']
         
-        recommended_tracks = recommend_playlist()
         return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks)
 
     else:
