@@ -2,27 +2,26 @@
 {% block title %}Get playlist{% endblock %}
 
 {% block content %}
-    <h1 class="text-center">
-        {{playlist_name}}
-    </h1>
-    <a class="btn btn-success" href="{{playlist_uri}}">Öppna i Spotify!</a>
-    <a class="btn btn-danger" href="{{ url_for('delete_playlist', pl_id=pl_id) }}">Radera spellistan!</a>
-    <div class="container">
+<div class="container mt-4 mb-4 p-4 playlist-page">
+    <h1 class="text-center playlist-page">{{ playlist_name }}</h1>
+
+    <div class="d-flex justify-content-center my-3">
+        <a class=" btn mx-2 pl-page-button" href="{{ playlist_uri }}">Öppna i Spotify!</a>
+        <a class=" btn mx-2 pl-page-button" href="{{ url_for('delete_playlist', pl_id=pl_id) }}">Radera spellistan!</a>
+    </div>
+</div>  
+    <div class="container mt-4">
         <div class="row">
             {% for playlist in playlist_items %}
-                <div class="col-4">
-                    <p class="lead">Artist: {{playlist['track']['artists'][0]['name']}}  </p>
-                </div>
-
-                <div class="col-4">
-                    <p class="lead">Track: {{playlist['track']['name']}} </p>
-                </div>
-
-                <div class="col-4">
-                    <p class="lead">Album:{{playlist['track']['album']['name']}} </p>
-                </div>
-                <div class="mb-5">
-                    <img class="album-img text-center" src="{{playlist['track']['album']['images'][0]['url']}}">
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="{{ playlist['track']['album']['images'][0]['url'] }}" alt="Album Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Track: {{ playlist['track']['name'] }}</h5>
+                            <p class="card-text">Artist: {{ playlist['track']['artists'][0]['name'] }}</p>
+                            <p class="card-text">Album: {{ playlist['track']['album']['name'] }}</p>
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
         </div>

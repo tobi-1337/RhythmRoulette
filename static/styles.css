@@ -336,7 +336,7 @@ body {
     border-color: whitesmoke;
 }
 .gen-button:hover {
-    background: -webkit-linear-gradient(#b6d8ca,#90d4be)
+    background: -webkit-linear-gradient(#b6d8ca,#90d4be);
   }
 
   #generate_playlist {
@@ -417,6 +417,22 @@ body {
     font-family: 'alexandria';
     border-radius: 20px; 
     color:white; 
+}
+
+.playlist-page {
+    background-color: #ddebe6;
+    font-family: 'alexandria';
+    color:white;
+}
+
+.pl-page-button {
+    color: white!important; 
+    background-color: #8dc6b0!important;  
+    border-color: whitesmoke;
+}
+
+.pl-page-button:hover {
+    background: -webkit-linear-gradient(#b6d8ca,#90d4be)!important;  
 }
 
 
