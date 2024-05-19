@@ -36,7 +36,7 @@ body {
     background: -webkit-linear-gradient(#439d7e,#98609a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-  
+  font-size: 4rem;
 }
 
 .sidebar {
@@ -61,7 +61,7 @@ body {
 }
 
 .nav-link {
-    color: #c48dc6!important;
+    color: #8dc6a5!important;
 }
 
 .nav-link:hover {
@@ -71,7 +71,7 @@ body {
 #nav-h2 {
     font-family: "Neonderthaw";
     font-size: 30px;
-    color: #c48dc6;
+    color: #96c68d;
 }
 
 .nav_link {
@@ -112,9 +112,9 @@ body {
     margin-left: 0;
 }
 
-.header {
-    position:static;
-    padding-bottom:250px ;
+#header {
+    box-shadow:0px 4px 6px rgba(0, 0, 0, 0.1) ;
+    background-color: #f6fcfb;
 }
 
 /* Här är bakgrundsbild (video/herobild) */
@@ -191,7 +191,7 @@ body {
 /*Landing page */
 
   .landing-page {
-    background-color: rgb(215, 236, 235);
+    background-color: rgba(215, 236, 235, 0.748);
     margin:20px;
     padding: 50px;
     width: 100vw;
@@ -200,6 +200,16 @@ body {
     font-family: 'alexandria';
     color:rgb(38, 175, 146);
     box-shadow: 3px 3px 18px 7px rgb(236, 233,233);
+}
+
+.landing-main{
+    background-color: #4CAF50;
+    box-shadow:16px 12px 14px 17px white;
+    
+    /* Gradient background */
+    background-image: linear-gradient(to bottom right, #9cd29e, #2196F3);
+    background-position: center; 
+    background-repeat: no-repeat;
 }
 
 #side-img {
@@ -536,6 +546,15 @@ body {
     color: #fff;
 }
 
+.card-body {
+    background-color: #9fe1d4;
+    opacity: 0.5;
+}
 
+.card-body:hover {
+    background-color: #0c6d5a;
+    opacity: 1;
+    transition: 0.5;
+}
 
   
