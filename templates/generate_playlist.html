@@ -6,16 +6,16 @@
             {% if messages %}
                 {% for msg in messages %}
                 <div class="text-center">
-                    <h1 class="fw-bold text-white">{{msg}}</h1>
+                    <h1 class="h1">{{msg}}</h1>
                 </div>
                 {% endfor %}    
             {% endif %}
     {% endwith %}
-    <div class="container m-8">
-        <div class="col-md-10 mx-auto col-lg-5">
+    <div class="container m-8" id="gen-playlist">
+        <div class="col">
             <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="generate_playlist" action="#" method="post">
                 <div class="form-floating mb-3">
-                    <p class="lead text-secondary fw-bold text-center">Berätta om spellistan!</p>
+                    <h2 class="h2 text-center">Berätta om spellistan!</h2>
                     <div class="mb-3">
                         <p>Spellistans namn:</p>
                         <input type="text" class="form-control" id="playlist_name" name="playlist_name"
@@ -27,13 +27,13 @@
                             placeholder="Du blir dig aldrig lik igen">
                     </div>
                 </div>
-                <p class="lead text-center fw-bold">GENERERA BASERAT PÅ</p>
+                <p class="p text-center ">Generera baserat på:</p>
                 <div class="row">
                     <div class="col-6">
-                        <button class="w-100 btn btn-lg btn-light fw-bold btn-outline-secondary gen-button" name ='generate-method' type="submit" value="genres">Genres</button>
+                        <button class="w-100 btn btn-lg btn-light btn-outline-secondary gen-button" name ='generate-method' type="submit" value="genres">Genres</button>
                     </div>
                     <div class="col-6">
-                        <button class="w-100 btn btn-lg btn-light fw-bold btn-outline-secondary gen-button" name ='generate-method' type="submit" value="years" >Årtal</button>
+                        <button class="w-100 btn btn-lg btn-light btn-outline-secondary gen-button" name ='generate-method' type="submit" value="years" >Årtal</button>
                     </div>
                 </div>
             </form>

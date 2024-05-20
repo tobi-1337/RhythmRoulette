@@ -3,7 +3,7 @@ body {
     /*position: relative;*/
     height:100%;
     margin: 0;
-    
+    background-color: #fff1e6f6;
     box-sizing: border-box;
     
 }
@@ -29,11 +29,30 @@ body {
 }
 
 
+
+/* Fonts */
+
+.h1, .h2{
+    font-family: 'antonio';
+    color: #00755e;
+}
+
+.p {
+    font-family: 'antonio';
+    color: #0f1312;  
+    font-size: 20px;
+}
+.landing-page p {
+    font-family: 'allura';
+    font-size: 2rem;
+    color: #8dc6a5;
+}
+
 /* här börjar 'navbar' */
 
 #h2 {
     font-family: "Neonderthaw";
-    background: -webkit-linear-gradient(#439d7e,#98609a);
+    background: -webkit-linear-gradient(#57439d,#103b26);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   font-size: 4rem;
@@ -107,7 +126,7 @@ body {
 }
 
 .navbar ul li a {
-    color: #070707;
+    color: #f7d386;
     text-decoration: none;
     margin-left: 0;
 }
@@ -116,6 +135,13 @@ body {
     box-shadow:0px 4px 6px rgba(0, 0, 0, 0.1) ;
     background-color: #f6fcfb;
 }
+
+#custom-cards {
+    
+    background-color: f6fcfb;
+    width: 100%;}
+
+
 
 /* Här är bakgrundsbild (video/herobild) */
 .background-video {
@@ -131,7 +157,7 @@ body {
 .video-wrapper {
     position: relative;
     width: 100%; /* Videowrappern tar upp hela förälderelementets bredd */
-    height: 64%; /* Ange den önskade höjden för videon */
+    height: 90%; /* Ange den önskade höjden för videon */
     margin-top: 0%;
     border-style: none;
 }
@@ -160,6 +186,7 @@ body {
     max-width: 700px;
     height: 400px;
     border-radius: 15px;
+    margin-bottom:25rem;
 }
 
 .hero h1 {
@@ -191,25 +218,31 @@ body {
 /*Landing page */
 
   .landing-page {
-    background-color: rgba(215, 236, 235, 0.748);
+
+    background-image: url(https://media.istockphoto.com/id/1065777586/sv/foto/retro-gyllene-mikrofon-f%C3%B6r-presskonferens-eller-intervju-p%C3%A5-tabell-fr%C3%A4mre-lutning-mintgr%C3%B6n.jpg?s=2048x2048&w=is&k=20&c=OhxdW2YNELZsyebzCcTv9jA9D7KP9FN9j7Ah4iZKVEg=);
     margin:20px;
     padding: 50px;
     width: 100vw;
     border-radius: 5px;
     overflow:hidden;
-    font-family: 'alexandria';
-    color:rgb(38, 175, 146);
-    box-shadow: 3px 3px 18px 7px rgb(236, 233,233);
+    position: center;
+    background-size: cover;
+}
+
+.landing-sidebar {
+    background-color:white;
 }
 
 .landing-main{
-    background-color: #4CAF50;
+    background-color: #f7ddc6;
     box-shadow:16px 12px 14px 17px white;
     
     /* Gradient background */
-    background-image: linear-gradient(to bottom right, #9cd29e, #2196F3);
+    background-image: linear-gradient(to bottom right, #daeeda, #9cd29e);
     background-position: center; 
     background-repeat: no-repeat;
+
+    border-color: none;
 }
 
 #side-img {
@@ -283,7 +316,7 @@ body {
 }
 
 .modal-header {
-    background-color: #aff8b7;
+    background-color: #f1ebe1;
     color: white;
     padding: 1rem 1.5rem;
     border-top-left-radius: 50%;
@@ -291,6 +324,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border:none;
 }
 
 .modal-header h1 {
@@ -304,7 +338,7 @@ body {
 
 .modal-body {
     padding: 2rem 1.5rem;
-    background-color: #aff8b7;
+    background-image: linear-gradient(to bottom, rgb(218, 195, 160), rgb(226, 132, 54));
     background-size: cover;
     background-position: center;
     color: white;
@@ -348,7 +382,7 @@ body {
 
 #modal-button {
     color: white;
-    background-color: #7aee66;
+    background-color: #eeba66;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -356,7 +390,7 @@ body {
 }
 
 #modal-button:hover {
-    background-color: #00b318;
+    background-color: #ffddae;
 }
 
 /* End of modal styling */
@@ -435,17 +469,30 @@ body {
 
 .gen-button {
     color: white;
-    background-color: #8dc6b0;
+    background: #eec659;
     border-color: whitesmoke;
 }
 .gen-button:hover {
-    background: -webkit-linear-gradient(#b6d8ca,#90d4be);
+    background: -webkit-linear-gradient(#df842f,#faf4e9);
   }
 
   #generate_playlist {
-    background: -webkit-linear-gradient(#c48dc6,#90d4be);
-    box-shadow:  3px 18px 7px rgb(208 190 215);
+    background: -webkit-linear-gradient(#f1e1ad,#fdfdfc);
+    margin:auto;
+    width: 80%;
   }
+
+  
+  #gen-playlist {
+    height: 100%;
+    margin: auto;
+    padding:10%;
+    background-image: url(https://media.istockphoto.com/id/1065738116/sv/foto/retro-f%C3%B6r%C3%A5ldrade-b%C3%A4rbar-stereo-mint-gr%C3%B6n-radio-kassettbandspelare-fr%C3%A5n-80s-fr%C3%A4mre-gul-bakgrund.jpg?s=2048x2048&w=is&k=20&c=eSisrI-Qfj8mjPNaqrioAPPNOOBPqBzwcp1alwPjfdA=);
+    background-size: cover;
+}
+
+
+
 
   #down {
     color:rgb(97, 2, 78);
@@ -546,15 +593,28 @@ body {
     color: #fff;
 }
 
+/* Rekomenderade låtar */
 .card-body {
-    background-color: #9fe1d4;
+    background-color: #f3eed87d;
     opacity: 0.5;
 }
 
+
+
+
 .card-body:hover {
-    background-color: #0c6d5a;
+    background-color: #8dc6a5;
     opacity: 1;
     transition: 0.5;
 }
 
-  
+
+.box {
+    --mask:
+      radial-gradient(4.47rem at 50% calc(100% - 6rem),#000 99%,#0000 101%) calc(50% - 4rem) 0/8rem 100%,
+      radial-gradient(4.47rem at 50% calc(100% + 4rem),#0000 99%,#000 101%) 50% calc(100% - 2rem)/8rem 100% repeat-x;
+    -webkit-mask: var(--mask);
+            mask: var(--mask);
+  }
+
+

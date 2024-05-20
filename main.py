@@ -107,6 +107,7 @@ def home():
 
     else:
         return render_template('index.html')
+    
         
 def recommend_playlist():
         '''

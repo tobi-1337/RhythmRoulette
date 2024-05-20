@@ -8,7 +8,7 @@
 
        <body>
         <div class="container-fluid text-center">
-            <div class="row landing-main">
+            <div class="row landing-main box">
               <!-- sidebar börjar här-->
               <div class="col-md-2 mr-md-3 mb-3 mt-5">
                 <section"> 
@@ -64,7 +64,7 @@
 
             <div class="col-md-6 ml-md-3 mb-3">
               <div class="col-md-12 mb-5 mt-5 ">
-                <h2>Välkommen till Rhythm Roulette</h2>
+                <h2 class="h2">Välkommen till Rhythm Roulette</h2>
                 <p>Här kan du generera spellistor utifrån genre och årtal.
                   Sätt igång!
                 </p>
@@ -77,13 +77,13 @@
              
         </div>
         
-        <div class="col-md-3 ml-md-3 mb-3 mt-5 landing-page"> 
+        <div class="col-md-3 ml-md-3 mb-5 mt-5 landing-page"> 
           {% if recommended_tracks %}
-          <h1>Upptäck ny musik!</h1>
+          <h1 class="h1">Upptäck ny musik!</h1>
           <h4>Genre som slumpades fram denna gång:</h4><p> {{ recommended_tracks[0].genre }}</p>
           {% for track in recommended_tracks %}
               {% if track.info and track.uri %}
-                  <div class="col">
+                  <div class="col mb-3">
                       <div class="card">
                           <div class="card-body">
                               
@@ -100,6 +100,9 @@
       {% endif %}
          </div>  
       </div>
+  </div>
+ </div> 
+  </div>
       
   </div>
 
