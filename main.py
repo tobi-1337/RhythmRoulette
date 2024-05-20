@@ -303,15 +303,6 @@ def generate_playlist():
         else:
             return render_template('generate_playlist.html')
 
-@app.route('/bio', methods=['GET', 'POST'])
-def write_bio():
-    if request.method == 'POST':
-        bio_text = request.form['bio']
-        user_id = get_user_info('me')
-        db.save_user_bio(user_id, bio_text)
-        return render_template('profile_page.html')
-    else: 
-        return render_template('bio_page.html')
 
 
 @app.route('/profile-page/<username>/playlists', methods=['GET', 'POST'])

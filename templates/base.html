@@ -47,7 +47,7 @@
                     <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5"/>
                   </svg></a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                    <li><a class="dropdown-item" href="{{url_for('get_playlist', username=username)}}">Dina spellistor!</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('get_playlist', username=current_user) }}">Dina spellistor!</a></li>
                     <li><a class="dropdown-item" href="{{url_for('generate_playlist')}}">Skapa ny spellista</a></li>
                   </ul>
             </div>
