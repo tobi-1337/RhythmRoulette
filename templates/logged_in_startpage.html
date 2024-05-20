@@ -29,7 +29,7 @@
                             <li><a href="{{url_for('users')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sök på användare</a></li>
                             <li><a href="{{url_for('profile_page')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Din profil</a></li>
                             <li><a href="{{url_for('get_top_artists')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina toppartister</a></li>
-                            <li><a href="{{url_for('get_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina spellistor</a></li>
+                            <li><a href="{{ url_for('get_playlist', username=current_user) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina spellistor</a></li>
                           </ul>
                         </div>
                       </li>

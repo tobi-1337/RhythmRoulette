@@ -91,7 +91,7 @@ def home():
         Also shows a list of 5 random tracks for inspiration '''
 
     if 'logged_in' in session: 
-        
+        current_user = get_user_info('username')
         if not sp_oauth.validate_token(cache_handler.get_cached_token()):
             auth_url = sp_oauth.get_authorize_url()
             return redirect(auth_url)
@@ -103,7 +103,7 @@ def home():
         else:
             recommended_tracks = session['recommended_tracks']
         
-        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks)
+        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks, current_user=current_user)
 
     else:
         return render_template('index.html')
@@ -314,20 +314,21 @@ def write_bio():
         return render_template('bio_page.html')
 
 
-@app.route('/playlist', methods=['GET', 'POST'])
-def get_playlist():
+@app.route('/profile-page/<username>/playlists', methods=['GET', 'POST'])
+def get_playlist(username):
     '''
     Retrieves the user's information and playlist details,
     and renders the playlist page template with this information.
     If a playlist doesn't exist on Spotify it will be deleted from the database.
     '''
-    username = get_user_info('username')
+    current_user = get_user_info('username')
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
-
+    if username == current_user:
+        username = current_user
     user_playlists = db.check_playlist(username)
     user_playlists_spotify = sp.user_playlists(username)
-        
+
     spotify_playlist_ids = {playlist['id'] for playlist in user_playlists_spotify['items']}
 
     for playlist_db in user_playlists:   

@@ -27,5 +27,8 @@
                             {% endif %}
                         {% endif %}
                 </div>
+                <div class="col">
+                    <a class="btn text-decoration-none" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
+                </div>
         </div>
     {% endblock %}
