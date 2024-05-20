@@ -249,6 +249,18 @@ def delete_profile():
             return redirect(url_for('home'))
 
 
+@app.route('/bio', methods=['GET', 'POST'])
+def write_bio():
+    if request.method == 'POST':
+        bio_text = request.form['bio']
+        user_id = get_user_info('username')
+        db.save_user_bio(user_id, bio_text)
+        return render_template('profile_page.html')
+    else: 
+        return render_template('bio_page.html')
+
+
+
 @app.route('/top-artists')
 def get_top_artists():
     '''
