@@ -33,8 +33,9 @@ body {
 /* Fonts */
 
 .h1, .h2{
-    font-family: 'antonio';
+    font-family: 'anton';
     color: #00755e;
+    font-style:bold;
 }
 
 .p {
@@ -44,7 +45,7 @@ body {
 }
 .landing-page p {
     font-family: 'allura';
-    font-size: 2rem;
+    font-size: 3rem;
     color: #8dc6a5;
 }
 
@@ -647,9 +648,8 @@ margin-bottom:0;
 }
 
 /* Rekomenderade låtar */
-.card-body {
-    background-color: #f3eed87d;
-    opacity: 0.5;
+.card-body a {
+  font-family:"antonio"
 }
 
 
@@ -677,6 +677,31 @@ margin-bottom:0;
     background: -webkit-linear-gradient(#ffffff,#90d4be);
  }
 
+/*template för search_for_users.html */
+.users{
+background-image:url(//images.pexels.com/photos/1222949/pexels-photo-1222949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+background-size: cover;
+height:750px;
+ }
 
+ #search_user {
+    width: 60%;
+    margin:auto;
+    border-style: none;
+ }
 
- 
+ .search-button{
+    background-color: #cc9da9;
+    border-radius: 10px;
+    width: 80px;
+ }
+
+ .search-button:hover{
+    background-color: #ffe8ff;
+ }
+
+ #alert {
+    background-color: #cc9da9d1;
+    border-color: #000000;
+    margin:auto;
+ }

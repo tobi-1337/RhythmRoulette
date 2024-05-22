@@ -6,8 +6,8 @@
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for msg in messages %}
-        <div class="alert alert-info text-center" role="alert">
-            {{msg}}
+        <div class="alert alert-info text-center" role="alert" id="alert">
+           <p class="p"> {{msg}} </p>
         </div>
         {% endfor %}
     {% endif %}
@@ -67,7 +67,7 @@
                 <p>Här kan du generera spellistor utifrån genre och årtal.
                   Sätt igång!
                 </p>
-                <button class="btn btn-outline-secondary gen-button" type="button" id="gen-button" ><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" >Generera spellista!</a></button>
+                <button class="btn btn-outline-secondary gen-button btn-lg" type="button" id="gen-button" ><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" >Generera spellista</a></button>
               
               </div>
             
