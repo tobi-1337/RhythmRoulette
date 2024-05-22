@@ -2,6 +2,29 @@ $(document).ready(function () {
     var selectedGenres = [];
     var searchedGenres = [];
 
+
+
+
+
+    function searchFunction() {
+        document.getElementById('genreSearch').classList.toggle("show");
+    }
+
+    function filterFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById('myInput');
+        filter = input.value.toUpperCase();
+        div = document.getElementById("genreSearch");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
     $('.genre-checkbox').change(function () {
         var checkedGenres = $('.genre-checkbox:checked');
         selectedGenres = [];
