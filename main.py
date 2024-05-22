@@ -388,10 +388,11 @@ def delete_playlist(pl_id):
     Parameter: 
         - pl_id (str) - The id of the playlist to delete
     '''
+    username = get_user_info('username')
     sp.current_user_unfollow_playlist(pl_id)
     db.delete_playlist(pl_id)
     flash(f"Spellistan borttagen!")
-    return redirect(url_for('get_playlist'))
+    return redirect(url_for('get_playlist', username=username))
 
 
 @app.route('/recommendations', methods=['GET', 'POST'])
