@@ -351,9 +351,8 @@ def get_playlist(username):
 
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         if len(playlists['name']) > 0:
-            return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url)
-        else:
-            return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url)
+            return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
+    return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
 
 
 @app.route('/playlist/<pl_id>')
@@ -372,8 +371,6 @@ def playlist_page(pl_id):
     playlist_name = playlist_info['name']
     playlist_items = playlist_tracks['items']
     owner_of_playlist = db.check_if_playlist_is_own(pl_id)
-    print(owner_of_playlist)
-    print(username)
     if username == owner_of_playlist:
         delete_button = True
     return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url, delete_button=delete_button)
