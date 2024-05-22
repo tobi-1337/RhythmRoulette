@@ -10,8 +10,8 @@
                 <div id="genreSearch" class="dropdown-content rounded-3">
                     <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
                     {% for recco in recco_list['genres'] %}
-                    <div class="genre-item">
-                        <input type="checkbox" class="form-check-input mb-3 genre-checkbox proanalysecheck" id="{{ recco }}" name="genres" value="{{ recco }}">
+                    <div class="genre-item form-check form-switch switch form-switch-color">
+                        <input type="checkbox" class="form-check-input ms-4 mb-3 genre-checkbox proanalysecheck" id="{{ recco }}" name="genres" value="{{ recco }}">
                         <label for="{{ recco }}" class="text-secondary fw-bold mb-2">{{ recco }}</label>
                     </div>
                     {% endfor %}
