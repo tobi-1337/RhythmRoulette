@@ -7,6 +7,18 @@
         <form class="p-4 p-md-5 border rounded-3" id="recco-box" action="#" method="post">
             <div class="form-floating mb-3">
                 <p class="lead text-secondary fw-bold text-center">Välj genres!</p>
+                <div class="dropdown">
+                    <button onclick="searchFunction()" class="dropbtn">Dropdown</button>
+                    <div id="genreSearch" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                    <div class="form-check form-switch switch">
+                        {% for recco in recco_list['genres'] %}
+                        <input type="checkbox" class="form-check-input mb-3 genre-checkbox proanalysecheck"
+                            id="{{ recco }}" name="genres" value="{{ recco }}">
+                        <label for="{{ recco }}" class="lead fw-bold mb-2">{{ recco }}</label><br>
+                    </div>
+                    </div>
+                </div>
                 <div>
                     <h1 class="display-5 text-center text-white">Generera en spellista!</h1>
                     <p class="lead text-white">Välj upp till 5 genres:</p>
