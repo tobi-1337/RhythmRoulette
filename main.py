@@ -255,7 +255,8 @@ def write_bio():
         bio_text = request.form['bio']
         user_id = get_user_info('username')
         db.save_user_bio(user_id, bio_text)
-        return render_template('profile_page.html')
+        return redirect(url_for('user_profile', username=user_id))
+        
     else: 
         return render_template('bio_page.html')
 
