@@ -400,6 +400,7 @@ margin-bottom:0;
 /*Playlist styling*/
 #pl-main {
     background-image: linear-gradient(to bottom, rgb(255, 255, 255), rgb(249, 199, 240));
+    padding-bottom: 120px;
 }
 
 .hidden-form {
@@ -462,6 +463,7 @@ margin-bottom:0;
     color: #C0d8c0 !important;
     font-family: 'Helvetica';
 }
+/* Playlist end */pl
 
 /* Playlist_page */
 #p-page-body {
