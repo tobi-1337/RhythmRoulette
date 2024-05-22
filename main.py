@@ -7,7 +7,6 @@ import db
 import random
 
 
-
 # This variable is used to run the program
 app = Flask(__name__) 
 # Secret key is needed when you use sessions in Flask
@@ -87,8 +86,10 @@ def register_user():
     
 @app.route('/')
 def home():
-    ''' Home page for the website.
-        Also shows a list of 5 random tracks for inspiration '''
+    ''' 
+    Home page for the website.
+    Also shows a list of 5 random tracks for inspiration.
+    '''
 
     if 'logged_in' in session: 
         current_user = get_user_info('username')
@@ -218,7 +219,6 @@ def user_profile(username):
     print(user_bio)
     return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio)
 
-
     
 @app.route('/profile-settings')
 def profile_settings():
@@ -228,6 +228,17 @@ def profile_settings():
         username = get_user_info('username')
         user_image_url = get_user_info('img')
         return render_template('profile_settings.html', display_name=display_name, username=username, user_image_url=user_image_url)
+
+
+@app.route('/bio', methods=['GET', 'POST'])
+def write_bio():
+    if request.method == 'POST':
+        bio_text = request.form['bio']
+        user_id = get_user_info('me')
+        db.save_user_bio(user_id, bio_text)
+        return render_template('profile_page.html')
+    else: 
+        return render_template('bio_page.html')
 
 
 @app.route('/delete-profile', methods=['POST'])
