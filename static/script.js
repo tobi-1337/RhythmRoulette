@@ -47,7 +47,7 @@ $(document).ready(function () {
             $(this).prop('checked', false);
             return;
         }
-        updateSelectedGenresList();
+        updateSelectedGenres();
     });
     
     $('.search-checkbox').change(function () {
