@@ -1,11 +1,10 @@
 from flask import Flask, render_template, url_for, session, redirect, request, flash, jsonify
 from spotipy import Spotify
-from spotipy.oauth2 import SpotifyOAuth 
+from spotipy.oauth2 import SpotifyOAuth, SpotifyOauthError 
 from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
 import db
 import random
-import spotipy
 
 
 # This variable is used to run the program
@@ -87,20 +86,29 @@ def register_user():
     
 @app.route('/')
 def home():
-    ''' Home page for the website.
-        Also shows a list of 5 random tracks for inspiration '''
+    ''' 
+    Home page for the website.
+    Also shows a list of 5 random tracks for inspiration.
+    '''
 
     if 'logged_in' in session: 
-        
+        current_user = get_user_info('username')
         if not sp_oauth.validate_token(cache_handler.get_cached_token()):
             auth_url = sp_oauth.get_authorize_url()
             return redirect(auth_url)
+    
+        if 'recommended_tracks' not in session:
+
+            recommended_tracks = recommend_playlist()
+            session['recommended_tracks'] = recommended_tracks
+        else:
+            recommended_tracks = session['recommended_tracks']
         
-        #recommended_tracks = recommend_playlist()
-        return render_template('logged_in_startpage.html')# recommended_tracks=recommended_tracks)
+        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks, current_user=current_user)
 
     else:
         return render_template('index.html')
+    
         
 def recommend_playlist():
         '''
@@ -140,12 +148,22 @@ def login():
 def callback():
     ''' The callback page is where the user gets redirected to from the Spotify authorization page. '''
     try:
-        sp_oauth.get_access_token(request.args['code'])
-        return register_user()
-    except:
-        flash(f"Du måste godkänna villkoren!")
+        access_token = sp_oauth.get_access_token(request.args['code'])
+        if access_token:
+            return register_user()
+        else:
+            flash(f"Du måste godkänna villkoren!")
+            return redirect(url_for('home'))
+    
+    except SpotifyOauthError as e:
+        flash('Något gick fel med vårt samarbete med Spotify. Försök igen lite senare.')
+        app.logger.error(f"Spotify OAuth error: {str(e)}")
         return redirect(url_for('home'))
-
+    except Exception as e:
+        flash("Sorry, oväntat fel!")
+        app.logger.error(f"Oväntat fel: {str(e)}")
+        return redirect(url_for('home'))
+    
 
 @app.route('/profile-page')
 def profile_page():
@@ -192,17 +210,14 @@ def user_profile(username):
     if not search_name:
         return render_template('index.html')
     user = user_info(username)
+    print(user['id'])
     username = user['id']
     current_user = get_user_info('username')
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
-
-    user_bio = db.save_user_bio(username)
-    if user_bio:
-        return render_template('profile_page.html', username=username,current_user=current_user,display_name=display_name,user_image_url=user_image_url,user_bio=user_bio)
-    else:
-        not_in_bio = "Det finns ingen biografi för denna användare ännu"
-    return render_template('profile_page.html',username=username,current_user=current_user,display_name=display_name,user_image_url=user_image_url,user_bio=not_in_bio)
+    user_bio = db.get_user_bio(username)
+    print(user_bio)
+    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio)
 
     
 @app.route('/profile-settings')
@@ -232,6 +247,18 @@ def delete_profile():
             session.clear()
             flash(f"Du har raderat ditt konto! ")
             return redirect(url_for('home'))
+
+
+@app.route('/bio', methods=['GET', 'POST'])
+def write_bio():
+    if request.method == 'POST':
+        bio_text = request.form['bio']
+        user_id = get_user_info('username')
+        db.save_user_bio(user_id, bio_text)
+        return render_template('profile_page.html')
+    else: 
+        return render_template('bio_page.html')
+
 
 
 @app.route('/top-artists')
@@ -289,20 +316,22 @@ def generate_playlist():
             return render_template('generate_playlist.html')
 
 
-@app.route('/playlist', methods=['GET', 'POST'])
-def get_playlist():
+
+@app.route('/profile-page/<username>/playlists', methods=['GET', 'POST'])
+def get_playlist(username):
     '''
     Retrieves the user's information and playlist details,
     and renders the playlist page template with this information.
     If a playlist doesn't exist on Spotify it will be deleted from the database.
     '''
-    username = get_user_info('username')
+    current_user = get_user_info('username')
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
-
+    if username == current_user:
+        username = current_user
     user_playlists = db.check_playlist(username)
     user_playlists_spotify = sp.user_playlists(username)
-        
+
     spotify_playlist_ids = {playlist['id'] for playlist in user_playlists_spotify['items']}
 
     for playlist_db in user_playlists:   
@@ -467,3 +496,14 @@ def logout():
 ''' Makes sure that the program is run from this file and not from anywhere else. '''
 if __name__ == '__main__':
     app.run(debug=True)
+
+'''
+user_bio = db.save_user_bio(username)
+if user_bio:  
+        return render_template('profile_page.html', username=username,current_user=current_user,display_name=display_name,user_image_url=user_image_url,user_bio=user_bio)
+
+else:
+        not_in_bio = "Det finns ingen biografi för denna användare ännu"
+    return render_template('profile_page.html',username=username,current_user=current_user,display_name=display_name,user_image_url=user_image_url,user_bio=not_in_bio)
+
+'''

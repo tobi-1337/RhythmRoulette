@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Write Bio{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="text-center">
+                    <h1 class="fw-bold text-white">{{msg}}</h1>
+                </div>
+                {% endfor %}    
+            {% endif %}
+    {% endwith %}
+    <div class="container m-5">
+            <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" action="#" method="post">
+                <div class="form-floating mb-3">
+                    <p class="lead text-secondary fw-bold text-center">Vem är du?</p>
+                    <div class="mb-3">
+                        <p>Skriv din biografi:</p>
+                        <textarea id="bio" name="bio" rows="4" cols="50"></textarea>
+                        <button class="w-100 btn btn-lg btn-info fw-bold" name ='write_bio' type="submit" value="submit">Spara</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+{% endblock %}

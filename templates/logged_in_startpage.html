@@ -3,31 +3,30 @@
 
 {% block content %}
 
-    
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-info text-center" role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}   
     
 
        <body>
-        <div class="container text-center">
-            <div class="row">
-              <div class="col-md-2 landing-page">
+        <div class="container-fluid text-center">
+            <div class="row landing-main box">
+              <!-- sidebar börjar här-->
+              <div class="col-md-2 mr-md-3 mb-3 mt-5">
                 <section"> 
                   <div class="p-3 border-bottom">
-                    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-                      <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-                      <span class="fs-5 fw-semibold">Välkommen!</span>
-                    </a>
+                    
+                      
+                    
                     <ul class="list-unstyled ps-0">
                       <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                          Skapa spellista
-                        </button>
-                        <div class="collapse" id="home-collapse">
-                          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            
-                            <li><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Genre</a></li>
-                            <li><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Årtal</a></li>
-                          </ul>
-                        </div>
+                        <a href="{{url_for('generate_playlist')}}" class="text-decoration-none btn">Skapa spellista </a>
                       </li>
                       <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
@@ -38,7 +37,7 @@
                             <li><a href="{{url_for('users')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sök på användare</a></li>
                             <li><a href="{{url_for('profile_page')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Din profil</a></li>
                             <li><a href="{{url_for('get_top_artists')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina toppartister</a></li>
-                            <li><a href="{{url_for('get_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina spellistor</a></li>
+                            <li><a href="{{ url_for('get_playlist', username=current_user) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina spellistor</a></li>
                           </ul>
                         </div>
                       </li>
@@ -59,39 +58,60 @@
                   </div>
                 </section>
               </div>
-              <div class="col-md-5 landing-page">
-                <h2>Välkommen till Rhythm Roulette</h2>
+
+              <!-- Main content börjar här-->
+
+            <div class="col-md-6 ml-md-3 mb-3 mt-5">
+              <div class="col-md-12 mb-5 mt-5 ">
+                <h2 class="h2">Välkommen till Rhythm Roulette</h2>
                 <p>Här kan du generera spellistor utifrån genre och årtal.
                   Sätt igång!
                 </p>
                 <button class="btn btn-outline-secondary gen-button" type="button" id="gen-button" ><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" >Generera spellista!</a></button>
+              
               </div>
-              <div class="col-md-3" id="recco-tracks" >
-                  
+            
+            <div class="col-md-12 mt-4" >
                 
-                  
-                  {% if recommended_tracks %}
-                  <h2>Upptäck ny musik!</h2>
-                  <h3>Genre:</h3>
-                  {% for track in recommended_tracks%}
-                  <h3>{{track.genre}}</h3>
-                  <ul class="track-link">  
-                    <li><a href="{{ track.uri }}"  class="track-link">{{ track.info }}</a></li>
-                    {% endfor %}
-                  </ul>
-                  {% else %}
-                  <p>Inga spellistor tillgängliga...</p>
-                  {% endif %}
-                
-                 
-               
-              </div>
-            </div>
-          </div>
+            </div>          
+             
+        </div>
+        
+        <div class="col-md-3 ml-md-3 mb-5 mt-5 landing-page"> 
+          {% if recommended_tracks %}
+          <h1 class="h1">Upptäck ny musik!</h1>
+          <h4>Genre som slumpades fram denna gång:</h4><p> {{ recommended_tracks[0].genre }}</p>
+          {% for track in recommended_tracks %}
+              {% if track.info and track.uri %}
+                  <div class="col mb-3">
+                      <div class="card">
+                          <div class="card-body">
+                              
+                              <a href="{{ track.uri }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ track.info }}<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                                <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
+                              </svg></a>
+                          </div>
+                      </div>
+                  </div>
+              {% endif %}
+          {% endfor %}
+      {% else %}
+          <p>Inga spellistor tillgängliga...</p>
+      {% endif %}
+         </div>  
+      </div>
+  </div>
+ </div> 
+  </div>
+      
+  </div>
 
 
   
 
+			</div>
+		</div>
+	</div>
 </body>
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>

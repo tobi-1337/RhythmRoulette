@@ -2,17 +2,29 @@
 {% block title %}Top Artists{% endblock %}
 
 {% block content %}
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for msg in messages %}
-        <div class="text-center">
-            <h1 class="fw-bold">{{msg}}</h1>
+    
+    
+    <div class="container-fluid mt-5 mb-5 top-artist box">
+        <h1 class="text-center h1">Här är dina toppartister!</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8 mb-5">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Artist</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for artist in artists %}
+                        <tr>
+                            <th scope="row">{{ loop.index0 + 1 }}</th>
+                            <td class="p">{{ artist['name'] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        {% endfor %}
-    {% endif %}
-        <h1 class="text-center fw-bold">Här är dina toppartister!</h1>
-        {% for artist in artists %}
-            <p class="lead text-center">{{ loop.index0 + 1 }}. {{artist['name']}}</p>
-        {%endfor%}
-    {% endwith %}
+    </div>
 {% endblock %}
