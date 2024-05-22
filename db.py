@@ -94,6 +94,16 @@ def add_playlist(pl_id,pl_url,user_id):
     )
     conn.commit()
 
+def check_if_playlist_is_own(pl_id):
+    
+    cur.execute(
+                '''
+                SELECT user_id FROM playlist 
+                WHERE pl_id = %s
+                ''',(pl_id,)
+    )
+
+    return cur.fetchone()[0]
 
 def check_playlist(user_id):
     '''

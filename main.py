@@ -362,6 +362,7 @@ def playlist_page(pl_id):
     This function tries to open a page showing the contents of a playlist.
     If a playlist is empty or doesn't exist, it will be deleted from the database.
     '''
+    delete_button = False
     username = get_user_info('username')
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
@@ -370,13 +371,12 @@ def playlist_page(pl_id):
     playlist_uri = playlist_info['uri']
     playlist_name = playlist_info['name']
     playlist_items = playlist_tracks['items']
-
-    try:
-        return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url)
-    except:
-        flash(f"Spellistan du försöker öppna är tom/existerar inte! Den raderas från databasen.")
-        db.delete_playlist(pl_id)
-        return redirect(url_for('get_playlist'))
+    owner_of_playlist = db.check_if_playlist_is_own(pl_id)
+    print(owner_of_playlist)
+    print(username)
+    if username == owner_of_playlist:
+        delete_button = True
+    return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url, delete_button=delete_button)
 
 
 @app.route('/delete-playlist/<pl_id>')
