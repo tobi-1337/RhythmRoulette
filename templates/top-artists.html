@@ -2,15 +2,7 @@
 {% block title %}Top Artists{% endblock %}
 
 {% block content %}
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for msg in messages %}
-        <div class="alert alert-info text-center" role="alert">
-            {{msg}}
-        </div>
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
+    
     
     <div class="container-fluid mt-5 mb-5 top-artist box">
         <h1 class="text-center h1">Här är dina toppartister!</h1>

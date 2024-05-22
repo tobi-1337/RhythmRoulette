@@ -11,7 +11,7 @@
                     <h1 class="display-5 text-center text-white">Generera en spellista!</h1>
                     <p class="lead text-white">Välj upp till 5 genres:</p>
                     {% for recco in recco_list['genres'] %}
-                    <div class="form-check form-switch switch">
+                    <div class="form-check form-switch switch form-switch-color">
                         <input type="checkbox" class="form-check-input mb-3 genre-checkbox proanalysecheck"
                             id="{{ recco }}" name="genres" value="{{ recco }}">
                         <label for="{{ recco }}" class="lead fw-bold mb-2">{{ recco }}</label><br>

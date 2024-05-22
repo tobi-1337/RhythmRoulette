@@ -238,7 +238,7 @@ body {
     box-shadow:16px 12px 14px 17px white;
     
     /* Gradient background */
-    background-image: linear-gradient(to bottom right, #f7faf7, #9cd29e);
+    background-image: linear-gradient(to bottom right,#55a591, #f7faf7 );
     background-position: center; 
     background-repeat: no-repeat;
 
