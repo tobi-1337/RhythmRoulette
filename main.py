@@ -230,17 +230,6 @@ def profile_settings():
         return render_template('profile_settings.html', display_name=display_name, username=username, user_image_url=user_image_url)
 
 
-@app.route('/bio', methods=['GET', 'POST'])
-def write_bio():
-    if request.method == 'POST':
-        bio_text = request.form['bio']
-        user_id = get_user_info('me')
-        db.save_user_bio(user_id, bio_text)
-        return render_template('profile_page.html')
-    else: 
-        return render_template('bio_page.html')
-
-
 @app.route('/delete-profile', methods=['POST'])
 def delete_profile():
     '''
