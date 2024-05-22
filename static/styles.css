@@ -394,9 +394,6 @@ margin-bottom:0;
 /* End of modal styling */
 
 
-/* End of modal styling */
-
-
 /*Playlist styling*/
 #pl-main {
     background-image: url(/static/Pictures/jason-leung-6rGJQry0_WI-unsplash.jpeg) !important;
@@ -411,7 +408,7 @@ margin-bottom:0;
     display: block;
     text-decoration: none;
     transition: 0.3s;
-    color: rgb(197, 196, 196);
+    color: #000000;
     font-size: large;
     
 }
@@ -433,9 +430,9 @@ margin-bottom:0;
     display: flex;
     flex-direction: column;
     border-style: solid;
-    border-color: #aaced951;
+    border-color: #ffffff9a;
     border-radius: 8px;
-    background-color: rgba(245, 245, 245, 0.426);
+    background-color: rgba(255, 255, 255, 0.643);
 }
 
 .playlist_container {
@@ -444,26 +441,27 @@ margin-bottom:0;
     margin: 2%;
     width: 95%;
     border-radius: 5px;
+    text-align: center;
 }
 
 .playlist-box{
     margin:10%;
     padding:5%;
-    background-color: rgba(255, 255, 255, 0.445);
     border-radius: 20px;
 }
 
 .h1-playlist {
-    color: #AACED9;
-    font-family: 'Allura';
+    color: #ffffff;
+    font-family: 'Helvetica';
     font-size: 300%;
 }
 
 #h5-playlist {
-    color: #C0d8c0 !important;
+    color: #ffffff !important;
     font-family: 'Helvetica';
 }
-/* Playlist end */pl
+/* Playlist end */
+
 
 /* Playlist_page */
 #p-page-body {

@@ -14,7 +14,7 @@
 
 <main id="pl-main">
     <div class="position-relative overflow-hidden text-center" id="show-playlist">
-        <div class="col-md-6 p-lg-5 mx-auto my-3">
+        <div class="p-lg-5 mx-auto my-3">
 
             {% if playlist %}
 
@@ -51,7 +51,7 @@
 
         <ol class="list-group playlist_container">
             <li class="list-group playlist_list">
-                <a class=" playlist_link lead display-6" href="{{ url_for('playlist_page', pl_id=id) }}">{{ name }}</a>
+                <a class=" playlist_link text-muted m-2 lead display-6" href="{{ url_for('playlist_page', pl_id=id) }}">{{ name }}</a>
             </li>
         </ol>
 
