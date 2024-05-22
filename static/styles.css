@@ -719,12 +719,12 @@ margin-bottom:0;
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
-    position: absolute;
+    position: relative;
     background-color: #f6f6f6;
-    min-width: 100%;
+    width: 100%;
     border: 1px solid #ddd;
     z-index: 1;
-    max-height: 200px;
+    max-height: 400px;
     overflow-y: auto;
 }
 
@@ -744,6 +744,17 @@ margin-bottom:0;
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
     display: block;
+}
+
+.dropdown-container {
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+
+}
+
+.dropdown-container.show-content {
+    margin-top: 400px;
 }
 
 #selectedGenresContainer {

@@ -2,9 +2,8 @@
 {% block title %}Recommendations{% endblock %}
 
 {% block content %}
-<div class="container d-flex reccos">
+<div class=" d-flex reccos">
     <div class="col-md-10 mx-auto col-lg-5">
-        <p class="lead text-secondary fw-bold text-center">Välj genres!</p>
         <form class="p-4 p-md-5 border rounded-3" id="recco-box" action="#" method="post">
             <div class="dropdown">
                 <button type="button" onclick="searchFunction()" class="dropbtn rounded-3">Genres</button>
@@ -12,24 +11,26 @@
                     <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
                     {% for recco in recco_list['genres'] %}
                     <div class="genre-item">
-                        <input type="checkbox" class="form-check-input mb-3 genre-checkbox" id="{{ recco }}" name="genres" value="{{ recco }}">
+                        <input type="checkbox" class="form-check-input mb-3 genre-checkbox proanalysecheck" id="{{ recco }}" name="genres" value="{{ recco }}">
                         <label for="{{ recco }}" class="text-secondary fw-bold mb-2">{{ recco }}</label>
                     </div>
                     {% endfor %}
                 </div>
             </div>
-            <div class="form-floating mb-3">
-                <p class="display-7 text-secondary">Hur många låtar vill du generera?</p>
-                <input type="range" name="recco_limit" id="recco_limit" value="24" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
-                <output>24</output>
+            <div class="dropdown-container">
+                <div class="form-floating mb-3">
+                    <p class="display-7 text-secondary">Hur många låtar vill du generera?</p>
+                    <input type="range" name="recco_limit" id="recco_limit" value="24" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
+                    <output>24</output>
+                </div>
             </div>
             <button class="w-100 btn btn-lg text-white" id="search_value" type="submit" value="submit">Skapa!</button>
             <hr class="my-4">
         </form>
-        <div id="selectedGenresContainer">
-            <p class="lead text-secondary fw-bold">Valda genres:</p>
-            <ul id="selectedGenresList"></ul>
-        </div>
+    </div>
+    <div id="selectedGenresContainer">
+        <p class="lead text-secondary fw-bold">Valda genres:</p>
+        <ul id="selectedGenresList"></ul>
     </div>
 </div>
 {% endblock %}
