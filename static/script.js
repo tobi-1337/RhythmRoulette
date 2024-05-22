@@ -18,6 +18,18 @@ function filterFunction() {
         }
     }
 }
+
+function updateSelectedGenres() {
+    var selectedGenresList = document.getElementById('selectedGenresList');
+    selectedGenresList.innerHTML = ''; // Rensa listan
+
+    $('.genre-checkbox:checked').each(function() {
+        var listItem = document.createElement('li');
+        listItem.textContent = $(this).val();
+        selectedGenresList.appendChild(listItem);
+    });
+}
+
 $(document).ready(function () {
     var selectedGenres = [];
     var searchedGenres = [];
@@ -28,9 +40,11 @@ $(document).ready(function () {
         checkedGenres.each(function () {
             selectedGenres.push($(this).val());
         });
+        updateSelectedGenresList();
         if (checkedGenres.length > 5) {
             alert("Du kan max välja 5 genres.");
             $(this).prop('checked', false);
+            updateSelectedGenresList();
             return;
         }
     });
