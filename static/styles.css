@@ -521,11 +521,11 @@ margin-bottom:0;
 
 .gen-button {
     color: white;
-    background: #eec659;
+    background: #cc9da9;
     border-color: whitesmoke;
 }
 .gen-button:hover {
-    background: -webkit-linear-gradient(#df842f,#faf4e9);
+    background: -webkit-linear-gradient(#cc9da9,#faf4e9);
   }
 
   #generate_playlist {
