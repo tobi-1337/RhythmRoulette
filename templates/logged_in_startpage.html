@@ -79,8 +79,8 @@
         
         <div class="col-md-3 ml-md-3 mb-5 mt-5 landing-page"> 
           {% if recommended_tracks %}
-          <h1 class="h1">Upptäck ny musik!</h1>
-          <h4>Genre som slumpades fram denna gång:</h4><p> {{ recommended_tracks[0].genre }}</p>
+          <h1 class="h1-landing-page">Upptäck ny musik!</h1>
+          <h4 class="h1-landing-page">Genre:</h4><p> {{ recommended_tracks[0].genre }}</p>
           {% for track in recommended_tracks %}
               {% if track.info and track.uri %}
                   <div class="col mb-3">

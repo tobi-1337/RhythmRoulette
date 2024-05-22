@@ -48,6 +48,11 @@ body {
     color: #8dc6a5;
 }
 
+.h1-landing-page {
+    font-family: 'antonio';
+    color: #cc9da9;
+}
+
 /* här börjar 'navbar' */
 
 #h2 {
@@ -215,7 +220,7 @@ body {
 
   .landing-page {
 
-    background-image: url(https://media.istockphoto.com/id/1065777586/sv/foto/retro-gyllene-mikrofon-f%C3%B6r-presskonferens-eller-intervju-p%C3%A5-tabell-fr%C3%A4mre-lutning-mintgr%C3%B6n.jpg?s=2048x2048&w=is&k=20&c=OhxdW2YNELZsyebzCcTv9jA9D7KP9FN9j7Ah4iZKVEg=);
+    background-image: url(https://images.pexels.com/photos/167092/pexels-photo-167092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
     margin:20px;
     padding: 50px;
     width: 100vw;
@@ -237,8 +242,7 @@ body {
     background-image: linear-gradient(to bottom right,#55a591, #f7faf7 );
     background-position: center; 
     background-repeat: no-repeat;
-
-    border-color: none;
+margin-bottom:0;
 }
 
 #side-img {
@@ -465,7 +469,7 @@ body {
 }
 
 .text-center {
-    font-family: 'Allura';
+    font-family: 'Helvetica';
     color: black;
 }
 
@@ -663,7 +667,9 @@ body {
       radial-gradient(4.47rem at 50% calc(100% + 4rem),#0000 99%,#000 101%) 50% calc(100% - 2rem)/8rem 100% repeat-x;
     -webkit-mask: var(--mask);
             mask: var(--mask);
-  }
+            margin-top:1rem !important;  
+        }
+  
 
 
  .top-artist{
