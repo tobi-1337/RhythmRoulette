@@ -131,7 +131,8 @@ def delete_playlist(pl_id):
 
 def save_user_bio(user_id, bio_text):
     ''' Adds a user biopraph of maximum 500 words into the database or update if one already exist'''
-    
+    user_id = str(user_id)
+    bio_text = str(bio_text)
     cur.execute(
                 '''
                 INSERT INTO a_user(s_id, user_bio)
