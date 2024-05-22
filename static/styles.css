@@ -400,6 +400,7 @@ margin-bottom:0;
 /*Playlist styling*/
 #pl-main {
     background-image: linear-gradient(to bottom, rgb(255, 255, 255), rgb(249, 199, 240));
+    padding-bottom: 120px;
 }
 
 .hidden-form {
@@ -667,7 +668,7 @@ margin-bottom:0;
       radial-gradient(4.47rem at 50% calc(100% + 4rem),#0000 99%,#000 101%) 50% calc(100% - 2rem)/8rem 100% repeat-x;
     -webkit-mask: var(--mask);
             mask: var(--mask);
-            margin-top:1rem !important;  
+           
         }
   
 
