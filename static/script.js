@@ -21,11 +21,12 @@ function filterFunction() {
 
 function updateSelectedGenres() {
     var selectedGenresList = document.getElementById('selectedGenresList');
+    var checkboxes = document.querySelectorAll('.genre-checkbox:checked');
     selectedGenresList.innerHTML = ''; // Rensa listan
 
-    $('.genre-checkbox:checked').each(function() {
+    checkboxes.forEach(function(checkbox) {
         var listItem = document.createElement('li');
-        listItem.textContent = $(this).val();
+        listItem.textContent = checkbox.value;
         selectedGenresList.appendChild(listItem);
     });
 }
@@ -40,13 +41,13 @@ $(document).ready(function () {
         checkedGenres.each(function () {
             selectedGenres.push($(this).val());
         });
-        updateSelectedGenresList();
+        
         if (checkedGenres.length > 5) {
             alert("Du kan max välja 5 genres.");
             $(this).prop('checked', false);
-            updateSelectedGenresList();
             return;
         }
+        updateSelectedGenresList();
     });
     
     $('.search-checkbox').change(function () {

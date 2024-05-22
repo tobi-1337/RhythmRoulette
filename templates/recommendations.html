@@ -5,7 +5,7 @@
 <div class="container d-flex reccos">
     <div class="col-md-10 mx-auto col-lg-5">
         <p class="lead text-secondary fw-bold text-center">Välj genres!</p>
-        <form id="recommendationForm" action="/recommendations" method="post">
+        <form class="p-4 p-md-5 border rounded-3" id="recco-box" action="#" method="post">
             <div class="dropdown">
                 <button type="button" onclick="searchFunction()" class="dropbtn rounded-3">Genres</button>
                 <div id="genreSearch" class="dropdown-content rounded-3">
@@ -13,7 +13,7 @@
                     {% for recco in recco_list['genres'] %}
                     <div class="genre-item">
                         <input type="checkbox" class="form-check-input mb-3 genre-checkbox" id="{{ recco }}" name="genres" value="{{ recco }}">
-                        <label for="{{ recco }}" class="lead fw-bold mb-2">{{ recco }}</label>
+                        <label for="{{ recco }}" class="text-secondary fw-bold mb-2">{{ recco }}</label>
                     </div>
                     {% endfor %}
                 </div>
