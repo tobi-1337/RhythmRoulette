@@ -398,7 +398,9 @@ margin-bottom:0;
 #pl-main {
     background-image: url(/static/Pictures/jason-leung-6rGJQry0_WI-unsplash.jpeg) !important;
     padding-bottom: 120px;
-    margin-top: 50px;
+    margin-top: 70px;
+    margin-bottom: 40px;
+    width: 85%;
 }
 
 .hidden-form {
@@ -433,7 +435,7 @@ margin-bottom:0;
     border-style: solid;
     border-color: #ffffff9a;
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.643);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.909), rgba(255, 255, 255, 0.736), rgba(255, 255, 255, 0.639))
 }
 
 .playlist_container {
