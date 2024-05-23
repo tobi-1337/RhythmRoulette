@@ -82,6 +82,29 @@ def check_playlist(user_id):
 
     return cur.fetchall()
 
+def generated_playlist_details(conn, pl_id):
+    '''
+    Retrievs the information about generated playlists by either year or genre from database
+    '''
+    with conn.cursor() as cursor:
+        query = """
+        SELECT p.pl_id,p.pl_url, gb.by_genre, gb.by_year
+        FROM playlist p
+        JOIN generated_by gb ON p.pl_id = gb.pl_id
+        WHERE p.pl_id = %s;
+        """
+        cursor.execute(query,(pl_id,))
+        result = cursor.fetchone()
+
+        if result:
+            pl_id, pl_url, by_genre, by_year = result
+            print(f"Playlist ID: {pl_id}")
+            print(f"URL: {pl_url}")
+            print(f"Genre: {by_genre}")
+            print(f"Year: {by_year}")
+        else: 
+            print("No information generated_playlist available")
+
 def delete_playlist(user_id):
     cur.execute(
         ''' 
@@ -90,6 +113,7 @@ def delete_playlist(user_id):
         ''', (user_id,)
     )
     conn.commit()
+
 try: 
     conn = psycopg2.connect(
     host=host,
