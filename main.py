@@ -267,6 +267,10 @@ def delete_profile():
 
 @app.route('/bio', methods=['GET', 'POST'])
 def write_bio():
+    '''
+    Let's the user write their own biography and save it to 
+    the database using user_id and bio_text
+    '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
@@ -500,19 +504,6 @@ def search():
         return render_template('search.html', decades=decades_ranges.keys())
 
 
-@app.route('/login-error')
-def error():
-    flash(f"Du måste logga in!")
-    return redirect(url_for('home'))
-
-
-
-@app.route('/signup', methods=['GET', 'POST']) # ska vi ta bort den här funktionen eftersom den ej längre används? 
-def signup():
-    ''' Renders the signup page. '''
-    return render_template('signup.html')
-
-
 @app.route('/logout')
 def logout():
     ''' The logout page is used to clear the Flask session. '''
@@ -524,9 +515,33 @@ def logout():
     return redirect(url_for('home'))
 
 
+@app.route('/login-error')
+def error():
+    '''
+    If the user is not logged in while trying to access the site, they will be
+    redirected to this function.
+    '''
+    flash(f"Du måste logga in!")
+    return redirect(url_for('home'))
+
+
 ''' Makes sure that the program is run from this file and not from anywhere else. '''
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 '''
 user_bio = db.save_user_bio(username)
