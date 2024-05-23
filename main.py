@@ -97,17 +97,17 @@ def home():
             auth_url = sp_oauth.get_authorize_url()
             return redirect(auth_url)
     
-        if 'recommended_tracks' not in session:
+        #if 'recommended_tracks' not in session:
 
-            recommended_tracks = recommend_playlist()
-            session['recommended_tracks'] = recommended_tracks
-        else:
-            recommended_tracks = session['recommended_tracks']
+            #recommended_tracks = recommend_playlist()
+            #session['recommended_tracks'] = recommended_tracks
+        #else:
+            #recommended_tracks = session['recommended_tracks']
         
-        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks, current_user=current_user)
+    return render_template('logged_in_startpage.html')#, recommended_tracks=recommended_tracks, current_user=current_user)
 
-    else:
-        return render_template('index.html')
+   # else:
+        #return render_template('index.html')
     
         
 def recommend_playlist():
