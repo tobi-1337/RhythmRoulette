@@ -82,6 +82,8 @@ def register_user():
         if not registered_user:
             db.register_user(user_id)
         session['logged_in'] = True
+        session['user_id'] = user_id
+        session['display_name'] = display_name
         flash(f"Välkommen {display_name}, \n Du är inloggad!")
         return redirect(url_for('home'))
     else:
@@ -96,12 +98,13 @@ def home():
     Also shows a list of 5 random tracks for inspiration.
     '''
 
-    if 'logged_in' in session: 
-        current_user = get_user_info('username')
+    if 'user_id' in session: 
         if not sp_oauth.validate_token(cache_handler.get_cached_token()):
             auth_url = sp_oauth.get_authorize_url()
             return redirect(auth_url)
-    
+        
+        user_id = session['user_id']
+
         if 'recommended_tracks' not in session:
 
             recommended_tracks = recommend_playlist()
@@ -109,7 +112,7 @@ def home():
         else:
             recommended_tracks = session['recommended_tracks']
         
-        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks, current_user=current_user)
+        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks, current_user=user_id)
 
     else:
         return render_template('index.html')
