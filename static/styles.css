@@ -386,10 +386,12 @@ margin-bottom:0;
     padding: 0.5rem 1rem;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    width: 40%;
 }
 
 #modal-button:hover {
     background-color: #ffddae;
+
 }
 
 /* End of modal styling */
