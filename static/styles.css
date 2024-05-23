@@ -252,12 +252,20 @@ margin-bottom:0;
     margin:auto;
     max-width: 100%;
 }
-
+/*styling profilpage*/
 
 #profile_page {
     width: 100%;
     height: 80%;
 }
+
+.profile-aside {
+    background-color: #439d7e;
+    height:500px;
+    padding-top: 50px;
+}
+/*styling profilpage ends*/
+
 
 .btn-primary{
     text-decoration: none;
@@ -525,11 +533,11 @@ margin-bottom:0;
 
 .gen-button {
     color: white;
-    background: #cc9da9;
+    background: #014b33;
     border-color: whitesmoke;
 }
 .gen-button:hover {
-    background: -webkit-linear-gradient(#cc9da9,#faf4e9);
+    background: -webkit-linear-gradient(#286250,#0a825c);
   }
 
   #generate_playlist {

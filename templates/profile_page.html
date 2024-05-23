@@ -2,13 +2,13 @@
 {% block title %}Profile page{% endblock %}
 
     {% block content %}
-        <div class="container text-center" id="profile_page">
+        <div class="container-fluid text-center" id="profile_page">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-2 profile-aside">
                     <img src="{{ user_image_url }}" id="user_image" alt="User Image">
-                    <p class="lead">{{username}}</p>
-                    <p class="lead">Namn: </p>
-                    <p class="lead">{{display_name}}</p>
+                    <p class="p">{{username}}</p>
+                    <p class="p">Namn: </p>
+                    <p class="p">{{display_name}}</p>
                         {% if current_user == username %}
                         {% if user_bio %}
                             <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('write_bio')}}">Ändra din bio</a>
@@ -16,17 +16,17 @@
                         {% endif %}
                         {% endif %}
                         <div class="col">
-                            <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('profile_settings')}}">Inställningar</a>
-                            <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
+                            <a class="btn  gen-button btn-lg mb-3" href="{{url_for('profile_settings')}}">Inställningar</a>
+                            <a class="btn  gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
                         </div>
                         
                 </div>
-                <div class="col-md-5">
-                    <h1 class="display-5"> Om {{ username }}:</h1>
+                <div class="col-md-5 py-5">
+                    <h1 class="h1"> Om {{ username }}:</h1>
                         {% if user_bio %}
-                            <p>{{user_bio}}</p>
+                            <p class="p">{{user_bio}}</p>
                         {% else %}
-                            <p>Oj, här var det tomt!</p>
+                            <p class="p">Oj, här var det tomt!</p>
                             {% if current_user == username %}
                             <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('write_bio')}}">Skriv en bio!</a>
                             {% endif %}
