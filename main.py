@@ -40,6 +40,9 @@ def user_info(user):
     Parameters:
         - user: the id of the usr
     '''
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('/error'))
+    
     return sp._get('users/' + user)
 
 
@@ -53,16 +56,18 @@ def get_user_info(info):
     Returns:
         - Various types: Depending on the 'info' parameter, returns different types of user information.
     '''
-    if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        current_user = sp.me()
-        if info == 'me':
-            return current_user
-        elif info == 'username':
-            return current_user['id']
-        elif info == 'img':
-            return current_user['images'][0]['url'] if current_user['images'] else None
-        elif info == 'display_name':
-            return current_user['display_name']
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('/error'))
+    
+    current_user = sp.me()
+    if info == 'me':
+        return current_user
+    elif info == 'username':
+        return current_user['id']
+    elif info == 'img':
+        return current_user['images'][0]['url'] if current_user['images'] else None
+    elif info == 'display_name':
+        return current_user['display_name']
 
 
 def register_user():
