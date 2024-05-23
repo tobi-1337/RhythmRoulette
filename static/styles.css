@@ -85,7 +85,7 @@ body {
 }
 
 .nav-link {
-    color: #9cd9d5!important;
+    color: #517371!important;
 }
 
 .nav-link:hover {
@@ -531,7 +531,7 @@ margin-bottom:0;
   }
 
   #generate_playlist {
-    background: -webkit-linear-gradient(#f1e1ad,#fdfdfc);
+    background: -webkit-linear-gradient(#f1e1ad,#eea76a);
     margin:auto;
     width: 80%;
   }
@@ -541,8 +541,7 @@ margin-bottom:0;
     height: 100%;
     margin: auto;
     padding:10%;
-    background-image: url(https://media.istockphoto.com/id/1065738116/sv/foto/retro-f%C3%B6r%C3%A5ldrade-b%C3%A4rbar-stereo-mint-gr%C3%B6n-radio-kassettbandspelare-fr%C3%A5n-80s-fr%C3%A4mre-gul-bakgrund.jpg?s=2048x2048&w=is&k=20&c=eSisrI-Qfj8mjPNaqrioAPPNOOBPqBzwcp1alwPjfdA=);
-    background-size: cover;
+    background: -webkit-linear-gradient(#f1e1ad,#eea76a);
 }
 
 
