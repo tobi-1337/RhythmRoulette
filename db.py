@@ -94,7 +94,7 @@ def generated_playlist_details(conn, pl_id):
         WHERE p.pl_id = %s;
         """
         cursor.execute(query,(pl_id,))
-        result = cursor.fetchone()
+        result = cursor.fetchone()[0]
 
         if result:
             pl_id, pl_url, by_genre, by_year = result
