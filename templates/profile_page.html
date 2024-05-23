@@ -11,10 +11,13 @@
                     <p class="lead">{{display_name}}</p>
                         {% if current_user == username %}
                         {% if user_bio %}
-                            <a class="btn btn-primary m-3" href="{{url_for('write_bio')}}">Ändra din bio</a>
-                            <a class="btn btn-secondary m-3" href="{{url_for('profile_settings')}}">Inställningar</a>
+                            <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('write_bio')}}">Ändra din bio</a>
+                            <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('profile_settings')}}">Inställningar</a>
                         {% endif %}
                         {% endif %}
+                        <div class="col">
+                            <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
+                        </div>
                         
                 </div>
                 <div class="col-md-5">
@@ -29,8 +32,6 @@
                         {% endif %}
 
                 </div>
-                <div class="col">
-                    <a class="btn btn-success text-decoration-none" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
-                </div>
+               
         </div>
     {% endblock %}

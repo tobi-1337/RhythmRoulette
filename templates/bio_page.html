@@ -11,16 +11,20 @@
                 {% endfor %}    
             {% endif %}
     {% endwith %}
-    <div class="container m-5">
-            <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" action="#" method="post">
-                <div class="form-floating mb-3">
-                    <p class="lead text-secondary fw-bold text-center">Vem är du?</p>
-                    <div class="mb-3">
-                        <p>Skriv din biografi:</p>
-                        <textarea id="bio" name="bio" rows="4" cols="50"></textarea>
-                        <button class="w-100 btn btn-lg btn-info fw-bold" name ='write_bio' type="submit" value="submit">Spara</button>
-                    </div>
-                </div>
-            </form>
-    </div>
+    <div class="container m-5 w-50 mx-auto">
+        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" action="#" method="post">
+            <div class="form-floating mb-3">
+                <h2 class="h2">Berätta lite om dig själv..</h2>
+                <div class="mb-3">
+
+                      <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label"><p class="p">Skriv din biografi:</p></label>
+                        <textarea class="form-control" id="bio exampleFormControlTextarea1" rows="3" name="bio"></textarea>
+                      </div>
+                     </div>
+<button class="btn btn-outline-secondary gen-button btn-lg" name ='write_bio' type="submit" value="submit">Spara</button>
+               
+            </div>
+        </form>
+</div>
 {% endblock %}
