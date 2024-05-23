@@ -776,3 +776,10 @@ margin-bottom:0;
     border-radius: 5px;
     display: block;
 }
+
+
+#alert{
+    background-color: #cc9da9d1;
+    border-color: #000000;
+    margin:auto;
+}
