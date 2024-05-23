@@ -12,10 +12,11 @@
                         {% if current_user == username %}
                         {% if user_bio %}
                             <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('write_bio')}}">Ändra din bio</a>
-                            <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('profile_settings')}}">Inställningar</a>
+                            
                         {% endif %}
                         {% endif %}
                         <div class="col">
+                            <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('profile_settings')}}">Inställningar</a>
                             <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
                         </div>
                         
@@ -27,7 +28,7 @@
                         {% else %}
                             <p>Oj, här var det tomt!</p>
                             {% if current_user == username %}
-                            <a class="btn btn-primary" href="{{url_for('write_bio')}}">Skriv en bio!</a>
+                            <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('write_bio')}}">Skriv en bio!</a>
                             {% endif %}
                         {% endif %}
 
