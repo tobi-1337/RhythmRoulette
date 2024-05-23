@@ -179,7 +179,7 @@ def profile_page():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
-    username = get_user_info('username')
+    username = session['user_id']
     return redirect(url_for('user_profile', username=username))
 
 
@@ -230,7 +230,7 @@ def user_profile(username):
     user = user_info(username)
     print(user['id'])
     username = user['id']
-    current_user = get_user_info('username')
+    current_user = session['user_id']
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
     user_bio = db.get_user_bio(username)
@@ -246,10 +246,7 @@ def profile_settings():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
-    display_name = get_user_info('display_name')
-    username = get_user_info('username')
-    user_image_url = get_user_info('img')
-    return render_template('profile_settings.html', display_name=display_name, username=username, user_image_url=user_image_url)
+    return render_template('profile_settings.html')
 
 
 @app.route('/delete-profile', methods=['GET', 'POST'])
@@ -262,10 +259,10 @@ def delete_profile():
     '''
     if request.method == 'GET':
         return redirect(url_for('error'))
+    
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        user_id = get_user_info('username')
+        user_id = session['user_id']
         registered_user = db.check_user_in_db(user_id)
-
         if registered_user:
             db.delete_user(user_id)
             session.clear()
@@ -284,7 +281,7 @@ def write_bio():
     
     if request.method == 'POST':
         bio_text = request.form['bio']
-        user_id = get_user_info('username')
+        user_id = session['user_id']
         db.save_user_bio(user_id, bio_text)
         return redirect(url_for('user_profile', username=user_id))
         
@@ -304,12 +301,8 @@ def get_top_artists():
         return redirect(url_for('error'))
     
     top_artists = sp.current_user_top_artists()
-    username = get_user_info('username')
-    display_name = get_user_info('display_name')
     artists = top_artists['items']
-    nr = 0
-    user_image_url = get_user_info('img')
-    return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
+    return render_template('top-artists.html', artists=artists)
     
 
 
@@ -325,7 +318,7 @@ def generate_playlist():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     if request.method == 'POST':
-        user_id = get_user_info('username')
+        user_id = session['user_id']
         playlist_name = request.form['playlist_name']
         playlist_description = request.form['playlist_description']
         if len(playlist_name) > 0:
@@ -360,8 +353,8 @@ def get_playlist(username):
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
-    current_user = get_user_info('username')
-    display_name = get_user_info('display_name')
+    current_user = session['user_id']
+    display_name = session['display_name']
     user_image_url = get_user_info('img')
     if username == current_user:
         username = current_user
@@ -399,9 +392,8 @@ def playlist_page(pl_id):
         return redirect(url_for('error'))
     
     delete_button = False
-    username = get_user_info('username')
-    display_name = get_user_info('display_name')
-    user_image_url = get_user_info('img')
+    username = session['user_id']
+    display_name = session['display_name']
     playlist_tracks = sp.playlist_tracks(pl_id)
     playlist_info = sp.playlist(pl_id)
     playlist_uri = playlist_info['uri']
@@ -410,7 +402,7 @@ def playlist_page(pl_id):
     owner_of_playlist = db.check_if_playlist_is_own(pl_id)
     if username == owner_of_playlist:
         delete_button = True
-    return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url, delete_button=delete_button)
+    return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, delete_button=delete_button)
 
 
 @app.route('/delete-playlist/<pl_id>')
@@ -425,7 +417,7 @@ def delete_playlist(pl_id):
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
-    username = get_user_info('username')
+    username = session['user_id']
     sp.current_user_unfollow_playlist(pl_id)
     db.delete_playlist(pl_id)
     flash(f"Spellistan borttagen!")
