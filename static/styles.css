@@ -402,6 +402,14 @@ margin-bottom:0;
 
 }
 
+#modal-button-yes{
+    background-color: #ad0000;
+}
+
+#modal-button-no{
+    background-color: #6b9f54;
+}
+
 /* End of modal styling */
 
 
