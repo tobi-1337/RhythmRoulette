@@ -255,7 +255,8 @@ def write_bio():
         bio_text = request.form['bio']
         user_id = get_user_info('username')
         db.save_user_bio(user_id, bio_text)
-        return render_template('profile_page.html')
+        return redirect(url_for('user_profile', username=user_id))
+        
     else: 
         return render_template('bio_page.html')
 
@@ -350,9 +351,8 @@ def get_playlist(username):
 
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         if len(playlists['name']) > 0:
-            return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url)
-        else:
-            return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url)
+            return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
+    return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
 
 
 @app.route('/playlist/<pl_id>')
@@ -361,6 +361,7 @@ def playlist_page(pl_id):
     This function tries to open a page showing the contents of a playlist.
     If a playlist is empty or doesn't exist, it will be deleted from the database.
     '''
+    delete_button = False
     username = get_user_info('username')
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
@@ -369,13 +370,10 @@ def playlist_page(pl_id):
     playlist_uri = playlist_info['uri']
     playlist_name = playlist_info['name']
     playlist_items = playlist_tracks['items']
-
-    try:
-        return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url)
-    except:
-        flash(f"Spellistan du försöker öppna är tom/existerar inte! Den raderas från databasen.")
-        db.delete_playlist(pl_id)
-        return redirect(url_for('get_playlist'))
+    owner_of_playlist = db.check_if_playlist_is_own(pl_id)
+    if username == owner_of_playlist:
+        delete_button = True
+    return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url, delete_button=delete_button)
 
 
 @app.route('/delete-playlist/<pl_id>')
@@ -387,10 +385,11 @@ def delete_playlist(pl_id):
     Parameter: 
         - pl_id (str) - The id of the playlist to delete
     '''
+    username = get_user_info('username')
     sp.current_user_unfollow_playlist(pl_id)
     db.delete_playlist(pl_id)
     flash(f"Spellistan borttagen!")
-    return redirect(url_for('get_playlist'))
+    return redirect(url_for('get_playlist', username=username))
 
 
 @app.route('/recommendations', methods=['GET', 'POST'])
