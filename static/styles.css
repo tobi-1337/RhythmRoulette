@@ -435,7 +435,8 @@ margin-bottom:0;
     border-style: solid;
     border-color: #ffffff9a;
     border-radius: 8px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.909), rgba(255, 255, 255, 0.736), rgba(255, 255, 255, 0.639))
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.909), rgba(255, 255, 255, 0.736), rgba(255, 255, 255, 0.639));
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .playlist_container {
@@ -457,6 +458,7 @@ margin-bottom:0;
     color: #ffffff;
     font-family: 'Helvetica';
     font-size: 300%;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #h5-playlist {
