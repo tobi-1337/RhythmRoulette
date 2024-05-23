@@ -218,7 +218,7 @@ body {
     background: -webkit-linear-gradient(#c48dc6,#98609a)
 }
 
-  .landing-page {
+.landing-page {
 
     background-image: url(https://images.pexels.com/photos/167092/pexels-photo-167092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
     margin:20px;
@@ -411,15 +411,12 @@ margin-bottom:0;
     display: block;
     text-decoration: none;
     transition: 0.3s;
-    color: #000000;
     font-size: large;
-    
 }
 
 .playlist_link:hover {
     font-size: 300%;
     text-shadow: 1px 1px 10px;
-    color:-webkit-linear-gradient(#efaff4,#873281);
 }
 
 .playlist_list {
@@ -433,7 +430,7 @@ margin-bottom:0;
     display: flex;
     flex-direction: column;
     border-style: solid;
-    border-color: #ffffff9a;
+    border-color: #eae7e773;
     border-radius: 8px;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.909), rgba(255, 255, 255, 0.736), rgba(255, 255, 255, 0.639));
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
