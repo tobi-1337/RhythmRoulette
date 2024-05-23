@@ -1,3 +1,36 @@
+function searchFunction() {
+    document.getElementById('genreSearch').classList.toggle("show");
+}
+
+function filterFunction() {
+    var input, filter, div, genreItems, label, i, txtValue;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    div = document.getElementById("genreSearch");
+    genreItems = div.getElementsByClassName("genre-item");
+    for (i = 0; i < genreItems.length; i++) {
+        label = genreItems[i].getElementsByTagName("label")[0];
+        txtValue = label.textContent || label.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            genreItems[i].style.display = "";
+        } else {
+            genreItems[i].style.display = "none";
+        }
+    }
+}
+
+function updateSelectedGenres() {
+    var selectedGenresList = document.getElementById('selectedGenresList');
+    var checkboxes = document.querySelectorAll('.genre-checkbox:checked');
+    selectedGenresList.innerHTML = ''; // Rensa listan
+
+    checkboxes.forEach(function(checkbox) {
+        var listItem = document.createElement('li');
+        listItem.textContent = checkbox.value;
+        selectedGenresList.appendChild(listItem);
+    });
+}
+
 $(document).ready(function () {
     var selectedGenres = [];
     var searchedGenres = [];
@@ -8,11 +41,13 @@ $(document).ready(function () {
         checkedGenres.each(function () {
             selectedGenres.push($(this).val());
         });
+        
         if (checkedGenres.length > 5) {
             alert("Du kan max välja 5 genres.");
             $(this).prop('checked', false);
             return;
         }
+        updateSelectedGenres();
     });
     
     $('.search-checkbox').change(function () {

@@ -10,24 +10,24 @@
                     <p class="lead">Namn: </p>
                     <p class="lead">{{display_name}}</p>
                         {% if current_user == username %}
-                        <a class="btn btn-primary m-3" href="{{url_for('write_bio')}}">Ändra din bio</a>
-                        <a class="btn btn-secondary m-3" href="{{url_for('profile_settings')}}">Inställningar</a>
+                        {% if user_bio %}
+                            <a class="btn btn-primary m-3" href="{{url_for('write_bio')}}">Ändra din bio</a>
+                            <a class="btn btn-secondary m-3" href="{{url_for('profile_settings')}}">Inställningar</a>
+                        {% endif %}
+                        {% endif %}
+                        
                 </div>
                 <div class="col-md-5">
                     <h1 class="display-5"> Om {{ username }}:</h1>
-                            {%if user_bio %}
+                        {% if user_bio %}
                             <p>{{user_bio}}</p>
-                            {% else %}
+                        {% else %}
                             <p>Oj, här var det tomt!</p>
+                            {% if current_user == username %}
                             <a class="btn btn-primary" href="{{url_for('write_bio')}}">Skriv en bio!</a>
                             {% endif %}
-                        {% else %}
-                            {%if user_bio %}
-                            <p>{{user_bio}}</p>
-                            {% else %}
-                            <p>Oj, här var det tomt!</p>
-                            {% endif %}
                         {% endif %}
+
                 </div>
                 <div class="col">
                     <a class="btn btn-success text-decoration-none" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>

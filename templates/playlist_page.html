@@ -7,7 +7,9 @@
 
     <div class="d-flex justify-content-center my-3">
         <a class=" btn mx-2 pl-page-button" href="{{ playlist_uri }}">Öppna i Spotify!</a>
+        {% if delete_button %}
         <a class=" btn mx-2 pl-page-button" href="{{ url_for('delete_playlist', pl_id=pl_id) }}">Radera spellistan!</a>
+        {% endif %}
     </div>
 </div>  
     <div class="container mt-4">
