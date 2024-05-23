@@ -141,7 +141,7 @@ def login():
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)
     flash(f"Du är redan inloggad!")
-    return redirect(url_for('get_top_artists'))
+    return redirect(url_for('home'))
 
 
 @app.route('/callback')
@@ -168,6 +168,9 @@ def callback():
 @app.route('/profile-page')
 def profile_page():
     ''' Redirects the user to their profile page. '''
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
     username = get_user_info('username')
     return redirect(url_for('user_profile', username=username))
 
@@ -183,6 +186,9 @@ def users():
         - Renders the 'users.html' template with search results if found, 
         or with an indication of no results if not found.
     '''
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
     if request.method == 'POST':
         username = request.form['search_user']
         search_name = db.search_users(username)
@@ -191,6 +197,7 @@ def users():
         else: 
             return render_template('users.html', username=username, search_name=False)
     else:
+        
         return render_template('search_for_users.html')
 
 
@@ -206,6 +213,9 @@ def user_profile(username):
     Returns:
         - The profile page template with the user's information.
     '''
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
     search_name = db.check_user_in_db(username)
     if not search_name:
         return render_template('index.html')
@@ -218,19 +228,23 @@ def user_profile(username):
     user_bio = db.get_user_bio(username)
     print(user_bio)
     return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio)
+    
+    
 
     
 @app.route('/profile-settings')
 def profile_settings():
     ''' Retrieves the current user's display name, username, and profile image URL. '''
-    if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        display_name = get_user_info('display_name')
-        username = get_user_info('username')
-        user_image_url = get_user_info('img')
-        return render_template('profile_settings.html', display_name=display_name, username=username, user_image_url=user_image_url)
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    display_name = get_user_info('display_name')
+    username = get_user_info('username')
+    user_image_url = get_user_info('img')
+    return render_template('profile_settings.html', display_name=display_name, username=username, user_image_url=user_image_url)
 
 
-@app.route('/delete-profile', methods=['POST'])
+@app.route('/delete-profile', methods=['GET', 'POST'])
 def delete_profile():
     '''
     Deletes the user's profile if they are authenticated.
@@ -238,6 +252,8 @@ def delete_profile():
     If the user's token is validated, their profile is deleted from the database
     and their session is cleared. Then, the user is redirected to the home page.
     '''
+    if request.method == 'GET':
+        return redirect(url_for('error'))
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
         user_id = get_user_info('username')
         registered_user = db.check_user_in_db(user_id)
@@ -251,6 +267,9 @@ def delete_profile():
 
 @app.route('/bio', methods=['GET', 'POST'])
 def write_bio():
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
     if request.method == 'POST':
         bio_text = request.form['bio']
         user_id = get_user_info('username')
@@ -259,6 +278,7 @@ def write_bio():
         
     else: 
         return render_template('bio_page.html')
+    
 
 
 
@@ -269,8 +289,8 @@ def get_top_artists():
     If not, they will be redirected to the Spotify authorization page.
     '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        auth_url = sp_oauth.get_authorize_url()
-        return redirect(auth_url)
+        return redirect(url_for('error'))
+    
     top_artists = sp.current_user_top_artists()
     username = get_user_info('username')
     display_name = get_user_info('display_name')
@@ -290,32 +310,32 @@ def generate_playlist():
     used, which it will be granted the form was filled, it will return the url for 
     recommendations.
     '''
-    if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        if request.method == 'POST':
-            user_id = get_user_info('username')
-            playlist_name = request.form['playlist_name']
-            playlist_description = request.form['playlist_description']
-            if len(playlist_name) > 0:
-                playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
-            else:
-                flash(f'Du måste ange ett namn på spellistan!')
-                return render_template('generate_playlist.html')
-            playlist_id = playlist['id']
-            playlist_uri = playlist['uri']
-            playlist_named = playlist['name']
-            generate_method = request.form['generate-method']
-            db.add_playlist(playlist_id, playlist_uri, user_id)
-            session['playlist_uri'] = playlist_uri  
-            session['playlist_id'] = playlist_id
-            session['playlist_named'] = playlist_named
-
-            if generate_method == 'genres':
-                return redirect(url_for('recommendations'))
-            elif generate_method == 'years':
-                return redirect(url_for('search'))
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    if request.method == 'POST':
+        user_id = get_user_info('username')
+        playlist_name = request.form['playlist_name']
+        playlist_description = request.form['playlist_description']
+        if len(playlist_name) > 0:
+            playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
         else:
+            flash(f'Du måste ange ett namn på spellistan!')
             return render_template('generate_playlist.html')
+        playlist_id = playlist['id']
+        playlist_uri = playlist['uri']
+        playlist_named = playlist['name']
+        generate_method = request.form['generate-method']
+        db.add_playlist(playlist_id, playlist_uri, user_id)
+        session['playlist_uri'] = playlist_uri  
+        session['playlist_id'] = playlist_id
+        session['playlist_named'] = playlist_named
 
+        if generate_method == 'genres':
+            return redirect(url_for('recommendations'))
+        elif generate_method == 'years':
+            return redirect(url_for('search'))
+    else:
+        return render_template('generate_playlist.html')
 
 
 @app.route('/profile-page/<username>/playlists', methods=['GET', 'POST'])
@@ -325,6 +345,9 @@ def get_playlist(username):
     and renders the playlist page template with this information.
     If a playlist doesn't exist on Spotify it will be deleted from the database.
     '''
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
     current_user = get_user_info('username')
     display_name = get_user_info('display_name')
     user_image_url = get_user_info('img')
@@ -349,9 +372,8 @@ def get_playlist(username):
 
     zipped_playlists = zip(playlists['name'], playlists['id'])
 
-    if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        if len(playlists['name']) > 0:
-            return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
+    if len(playlists['name']) > 0:
+        return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
     return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
 
 
@@ -361,6 +383,9 @@ def playlist_page(pl_id):
     This function tries to open a page showing the contents of a playlist.
     If a playlist is empty or doesn't exist, it will be deleted from the database.
     '''
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
     delete_button = False
     username = get_user_info('username')
     display_name = get_user_info('display_name')
@@ -385,6 +410,9 @@ def delete_playlist(pl_id):
     Parameter: 
         - pl_id (str) - The id of the playlist to delete
     '''
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
     username = get_user_info('username')
     sp.current_user_unfollow_playlist(pl_id)
     db.delete_playlist(pl_id)
@@ -402,32 +430,35 @@ def recommendations():
     a pop up notifying them that their playlist was made, then redirected to the home page.
     For the POST method the function is using JavaScript for storing the genres chosen and handling the redirection.
     '''
-    if sp_oauth.validate_token(cache_handler.get_cached_token()):
-            recco_list = sp.recommendation_genre_seeds()
-            if request.method == 'POST':
-                if request.is_json:
-                    data = request.json
-                    genre_seeds = data.get('genres')
-                    recco_limit = data.get('recco_limit')
-                else:
-                    genre_seeds = request.form['genres']
-                    recco_limit = request.form['recco_limit']
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    recco_list = sp.recommendation_genre_seeds()
+    if request.method == 'POST':
+        if request.is_json:
+            data = request.json
+            genre_seeds = data.get('genres')
+            recco_limit = data.get('recco_limit')
+        else:
+            genre_seeds = request.form['genres']
+            recco_limit = request.form['recco_limit']
 
-                reccos = sp.recommendations(seed_genres=genre_seeds, 
-                                            limit=recco_limit, market='SE')
+        reccos = sp.recommendations(seed_genres=genre_seeds, 
+                                    limit=recco_limit, market='SE')
 
-                if 'playlist_id' in session:
-                    playlist_id = session['playlist_id']
-                    track_list = []
-                    
-                    for track in reccos['tracks']:
-                        song_uri = track['uri']
-                        track_list.append(song_uri)
-                    sp.playlist_add_items(playlist_id, track_list, position=None)
-                return jsonify({"message": "Spellista skapad!"}), 200
-            else:
-                return render_template('recommendations.html', recco_list=recco_list)
-
+        if 'playlist_id' in session:
+            playlist_id = session['playlist_id']
+            track_list = []
+            
+            for track in reccos['tracks']:
+                song_uri = track['uri']
+                track_list.append(song_uri)
+            sp.playlist_add_items(playlist_id, track_list, position=None)
+        return jsonify({"message": "Spellista skapad!"}), 200
+    
+    else:
+        return render_template('recommendations.html', recco_list=recco_list)
+    
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -439,39 +470,40 @@ def search():
     a pop up notifying them that their playlist was made, then redirected to the home page.
     For the POST method the function is using JavaScript for storing the decades chosen and handling the redirection.
     '''
-    if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        decades_ranges = {'50s': '1950-1959', '60s': '1960-1969', '70s': '1970-1979', '80s': '1980-1989',
-                        '90s': '1990-1999', '00s': '2000-2009', '10s': '2010-2020'}  
-
-        if request.method == 'POST':
-            if request.is_json:
-                data = request.json
-                decades = data.get('decades')
-                search_limit = data.get('search_limit')
-
-            else:
-                decades = request.form.getlist('decades')
-                search_limit = request.form.get('search_limit')
-
-            if 'playlist_id' in session:
-                playlist_id = session['playlist_id']
-                track_list = []  
-
-                for decade in decades:
-                    searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
-
-                    for track in searches['tracks']['items']:
-                        track_list.append(track['uri'])
-
-                sp.playlist_add_items(playlist_id, track_list, position=None)
-
-            return jsonify({"message": "Spellista skapad!"}), 200
-        
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    decades_ranges = {'50s': '1950-1959', '60s': '1960-1969', '70s': '1970-1979', '80s': '1980-1989',
+                    '90s': '1990-1999', '00s': '2000-2009', '10s': '2010-2020'}  
+    if request.method == 'POST':
+        if request.is_json:
+            data = request.json
+            decades = data.get('decades')
+            search_limit = data.get('search_limit')
         else:
-            return render_template('search.html', decades=decades_ranges.keys())
+            decades = request.form.getlist('decades')
+            search_limit = request.form.get('search_limit')
+        if 'playlist_id' in session:
+            playlist_id = session['playlist_id']
+            track_list = []  
+
+            for decade in decades:
+                searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
+
+                for track in searches['tracks']['items']:
+                    track_list.append(track['uri'])
+
+            sp.playlist_add_items(playlist_id, track_list, position=None)
+        return jsonify({"message": "Spellista skapad!"}), 200
+    
+    else:
+        return render_template('search.html', decades=decades_ranges.keys())
 
 
-   
+@app.route('/login-error')
+def error():
+    flash(f"Du måste logga in!")
+    return redirect(url_for('home'))
 
 
 
