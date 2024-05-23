@@ -464,13 +464,13 @@ margin-bottom:0;
 }
 
 /* Playlist_page */
-#p-page-body {
-    background: linear-gradient(0deg, rgba(149,199,194,1) 0%, rgba(255,255,255,1) 100%); 
+.playlist-page {
+    background: linear-gradient(#dbe9e8, #95c7c2) !important;
 }
 
-.text-center {
-    font-family: 'Helvetica';
-    color: black;
+.pl-name {
+    font-family: 'Helvetica'!important;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #buttons {
@@ -483,15 +483,15 @@ margin-bottom:0;
 }
 
 #spotify {
-    background-color: #C0d8c0;
+    background-color: #e5d0e3!important;
     border-style: solid;
-    border-color: #b4cbb4;
+    border-color: #dec1db;
 }
 
 #delete {
-    background-color: #f49f51;
+    background-color: #f4ae6c!important;
     border-style: solid;
-    border-color: #e0924a;
+    border-color: #dc9757;
 }
 
 .album-img{

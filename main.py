@@ -289,8 +289,6 @@ def write_bio():
         return render_template('bio_page.html')
     
 
-
-
 @app.route('/top-artists')
 def get_top_artists():
     '''
