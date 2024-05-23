@@ -591,29 +591,27 @@ margin-bottom:0;
 /*Generate playlist*/
 
 .reccos {
-    background: -webkit-linear-gradient(#c48dc6,#90d4be);
+    background: -webkit-linear-gradient(#eff4f3,#90d4be);
     border-radius: 5px;
 }
 
 #recco-box {
-    background: rgb(201, 231, 201);
-    box-shadow: 2px 4px 20px 4px rgb(250, 249, 249);
-    font-family: 'alexandria';
-    border-radius: 20px;
+    
+    font-family: 'antonio';
     color:white;
 }
 
 .form-check-input {
-    background-color:#873281!important;
+    background-color:#00755e!important;
     border-color: whitesmoke!important;
 }
 
 #search_value {
-    background-color:#873281!important;  
+    background-color:#00755e!important;  
 }
 
 #search_value:hover {
-    background-color:#d094cc!important;  
+    background-color:#469888!important;  
 }
 
 #searches {
@@ -680,17 +678,18 @@ margin-bottom:0;
 
 /* Dropdown Button */
 .dropbtn {
-    background-color: #04AA6D;
+    background-color:#00755e;
     color: white;
     padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
+    width: 100%;
 }
 
 /* Dropdown button on hover & focus */
 .dropbtn:hover, .dropbtn:focus {
-    background-color: #3e8e41;
+    background-color: #337769;
 }
 
 /* The search field */
@@ -760,7 +759,7 @@ margin-bottom:0;
 }
 
 #selectedGenresContainer {
-    margin-top: 20px;
+  color:white;
 }
 
 #selectedGenresList {
@@ -769,7 +768,7 @@ margin-bottom:0;
 }
 
 #selectedGenresList li {
-    background-color: #04AA6D;
+    background-color: #00755e;
     color: white;
     padding: 5px 10px;
     margin: 5px 0;
