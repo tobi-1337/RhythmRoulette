@@ -82,16 +82,23 @@ def check_playlist(user_id):
 
     return cur.fetchall()
 
-def generated_playlist_details(pl_id,songs_in_list,genres, gen_type):
+def generated_playlist_details(pl_id, genres, gen_type):
     '''
     Retrievs the information about generated playlists by either year or genre from database
     '''
     genre_list = genres[:5] + [None] * (5 - len(genres))
 
+    genre_type = bool(genres)
+    if genre_type: 
+        gen_type = "genre"
+    else:
+        gen_type = "year"
+
+
     cur.execute(
         '''
         INSERT INTO generated_by(pl_id, songs_in_list, genre_no_1, genre_no_2, genre_no_3, genre_no_4, genre_no_5, gen_type)
-        VALUES (%s,%s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         ''',(pl_id,genre_list[0],genre_list[1],genre_list[2],genre_list[3],genre_list[4],gen_type)
     )
 

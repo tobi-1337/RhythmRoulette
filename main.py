@@ -210,7 +210,18 @@ def get_top_artists():
     nr = 0
     user_image_url = get_user_info('img')
     return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
-    
+
+def fetch_playlist_details(playlist_id):    
+    '''
+    '''
+    playlist_details = sp.playlist(playlist_id)
+
+    playlist_name = playlist_details['playlist_name'] 
+    generated_by_genre = 'genre' in playlist_name 
+    generated_by_year = 'year' in playlist_name
+
+    db.generated_playlist_details(playlist_id, generated_by_genre, generated_by_year)
+
 
 @app.route('/generate-playlist', methods=['GET', 'POST'])
 def generate_playlist():
@@ -238,6 +249,9 @@ def generate_playlist():
             session['playlist_uri'] = playlist_uri  
             session['playlist_id'] = playlist_id
             session['playlist_named'] = playlist_named  
+
+            fetch_playlist_details(playlist_id)
+
             return redirect(url_for('recommendations'))
         else:
             return render_template('generate_playlist.html')
