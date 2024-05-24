@@ -202,8 +202,8 @@ def users():
         else: 
             return render_template('users.html', username=username, search_name=False)
     else:
-        
-        return render_template('search_for_users.html')
+        current_user = get_user_info('username')
+        return render_template('search_for_users.html', current_user=current_user)
 
 
 @app.route('/profile-page/<username>')
@@ -246,7 +246,7 @@ def profile_settings():
     display_name = get_user_info('display_name')
     username = get_user_info('username')
     user_image_url = get_user_info('img')
-    return render_template('profile_settings.html', display_name=display_name, username=username, user_image_url=user_image_url)
+    return render_template('profile_settings.html', display_name=display_name, current_user=username, user_image_url=user_image_url)
 
 
 @app.route('/delete-profile', methods=['GET', 'POST'])
@@ -306,7 +306,7 @@ def get_top_artists():
     artists = top_artists['items']
     nr = 0
     user_image_url = get_user_info('img')
-    return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
+    return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, current_user=username, display_name=display_name)
     
 
 
@@ -319,14 +319,16 @@ def generate_playlist():
     used, which it will be granted the form was filled, it will return the url for 
     recommendations.
     '''
+    
+    current_user = get_user_info('username')
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     if request.method == 'POST':
-        user_id = get_user_info('username')
+        
         playlist_name = request.form['playlist_name']
         playlist_description = request.form['playlist_description']
         if len(playlist_name) > 0:
-            playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
+            playlist = sp.user_playlist_create(current_user, playlist_name, public=True, collaborative=False, description=playlist_description)
         else:
             flash(f'Du måste ange ett namn på spellistan!')
             return render_template('generate_playlist.html')
@@ -334,7 +336,7 @@ def generate_playlist():
         playlist_uri = playlist['uri']
         playlist_named = playlist['name']
         generate_method = request.form['generate-method']
-        db.add_playlist(playlist_id, playlist_uri, user_id)
+        db.add_playlist(playlist_id, playlist_uri, current_user)
         session['playlist_uri'] = playlist_uri  
         session['playlist_id'] = playlist_id
         session['playlist_named'] = playlist_named
@@ -344,7 +346,7 @@ def generate_playlist():
         elif generate_method == 'years':
             return redirect(url_for('search'))
     else:
-        return render_template('generate_playlist.html')
+        return render_template('generate_playlist.html', current_user=current_user)
 
 
 @app.route('/profile-page/<username>/playlists', methods=['GET', 'POST'])
@@ -407,7 +409,7 @@ def playlist_page(pl_id):
     owner_of_playlist = db.check_if_playlist_is_own(pl_id)
     if username == owner_of_playlist:
         delete_button = True
-    return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, user_image_url=user_image_url, delete_button=delete_button)
+    return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, current_user=username, display_name=display_name, user_image_url=user_image_url, delete_button=delete_button)
 
 
 @app.route('/delete-playlist/<pl_id>')
@@ -441,7 +443,6 @@ def recommendations():
     '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
-    
     recco_list = sp.recommendation_genre_seeds()
     if request.method == 'POST':
         if request.is_json:
@@ -466,7 +467,8 @@ def recommendations():
         return jsonify({"message": "Spellista skapad!"}), 200
     
     else:
-        return render_template('recommendations.html', recco_list=recco_list)
+        current_user = get_user_info('username')
+        return render_template('recommendations.html', recco_list=recco_list, current_user=current_user)
     
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -506,7 +508,8 @@ def search():
         return jsonify({"message": "Spellista skapad!"}), 200
     
     else:
-        return render_template('search.html', decades=decades_ranges.keys())
+        current_user = get_user_info('username')
+        return render_template('search.html', decades=decades_ranges.keys(), current_user=current_user)
 
 
 @app.route('/logout')
