@@ -348,6 +348,36 @@ def generate_playlist():
     else:
         return render_template('generate_playlist.html', current_user=current_user)
 
+@app.route('/generate-playlist', methods=['GET', 'POST'])
+def save_genre_year_db(pl_id):
+    try:
+        playlist = sp.playlist(pl_id)
+    except Exception as e:
+        print("Error fetching playlist:", e)
+        return []
+
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+
+    if playlist['type'] == 'playlist' and 'name' in playlist:
+        playlist_name = playlist['name'].lower()
+        if 'genre' in playlist_name:
+            # Extract genres from playlist name
+            genres = playlist_name.split(',')[:5]  # Split at commas and keep the first 5
+            genres = [genre.strip() for genre in genres]  # Remove leading/trailing whitespace
+            return genres
+        elif 'year' in playlist_name:
+            # Extract year from playlist name
+            try:
+                year = int(playlist_name.split('year')[-1].strip())  # Extract year from name
+                return [year]
+            except ValueError:
+                print("Error extracting year from playlist name:", playlist_name)
+                return []
+
+    return []
+
+
 
 @app.route('/profile-page/<username>/playlists', methods=['GET', 'POST'])
 def get_playlist(username):
