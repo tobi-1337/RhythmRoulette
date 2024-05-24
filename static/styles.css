@@ -644,6 +644,7 @@ margin-bottom:0;
     border-color: whitesmoke!important;
 }
 
+/* Styling for search (decades form) */
 #search_value {
     background-color:#00755e!important;  
 }
@@ -659,6 +660,7 @@ margin-bottom:0;
     border-radius: 20px; 
     color:white; 
 }
+/* Styling for search (decades form) ends */
 
 .playlist-page {
     background-color: #ddebe6;

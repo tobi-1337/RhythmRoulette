@@ -484,8 +484,8 @@ def search():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
-    decades_ranges = {'50s': '1950-1959', '60s': '1960-1969', '70s': '1970-1979', '80s': '1980-1989',
-                    '90s': '1990-1999', '00s': '2000-2009', '10s': '2010-2020'}  
+    decades_ranges = {'1920s': '1920-1929', '1930s': '1930-1939' ,'1940s': '1940-1949', '1950s': '1950-1959', '1960s': '1960-1969', '1970s': '1970-1979', '1980s': '1980-1989',
+                    '1990s': '1990-1999', '2000s': '2000-2009', '2010s': '2010-2020', '2020s': '2020-2024'}  
     if request.method == 'POST':
         if request.is_json:
             data = request.json
