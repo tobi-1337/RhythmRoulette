@@ -324,7 +324,7 @@ def get_top_tracks():
     tracks = top_tracks['items']
     nr = 0
     user_image_url = get_user_info('img')
-    return render_template('top_tracks.html', tracks=tracks, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
+    return render_template('top-tracks.html', tracks=tracks, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
 
 
 @app.route('/generate-playlist', methods=['GET', 'POST'])
