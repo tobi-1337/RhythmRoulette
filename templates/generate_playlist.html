@@ -11,18 +11,18 @@
                 {% endfor %}    
             {% endif %}
     {% endwith %}
-    <div class="container m-8" id="gen-playlist">
+    <div class="container m-8 mt-5" id="gen-playlist">
         <div class="col">
             <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="generate_playlist" action="#" method="post">
                 <div class="form-floating mb-3">
-                    <h2 class="h2 text-center">Berätta om spellistan!</h2>
+                    <h2 class="h2 ">Berätta om spellistan!</h2>
                     <div class="mb-3">
-                        <p>Spellistans namn:</p>
+                        <p class="p">Spellistans namn:</p>
                         <input type="text" class="form-control" id="playlist_name" name="playlist_name"
-                            placeholder="My Beautiful Dark Twisted Playlist">
+                            placeholder="My Beautiful Dark Twisted Playlist" required>
                     </div>
                     <div class="mb-3">
-                        <p>Kort beskrivning:</p>
+                        <p class="p">Kort beskrivning:</p>
                         <input type="text" class="form-control" id="playlist_description" name="playlist_description"
                             placeholder="Du blir dig aldrig lik igen">
                     </div>

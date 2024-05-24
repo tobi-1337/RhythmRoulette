@@ -6,8 +6,8 @@
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for msg in messages %}
-        <div class="alert alert-info text-center" role="alert">
-            {{msg}}
+        <div class="alert alert-info text-center" role="alert" id="alert">
+           <p class="p"> {{msg}} </p>
         </div>
         {% endfor %}
     {% endif %}
@@ -16,7 +16,7 @@
 
        <body>
         <div class="container-fluid text-center">
-            <div class="row landing-main box">
+            <div class="row landing-main box pb-5">
               <!-- sidebar börjar här-->
               <div class="col-md-2 mr-md-3 mb-3 mt-5">
                 <section"> 
@@ -26,29 +26,29 @@
                     
                     <ul class="list-unstyled ps-0">
                       <li class="mb-1">
-                        <a href="{{url_for('generate_playlist')}}" class="text-decoration-none btn">Skapa spellista </a>
+                        <a href="{{url_for('generate_playlist')}}" class="text-decoration-none btn"> <p class="p"> Skapa spellista</p> </a>
                       </li>
                       <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                          Meny
+                          <p class="p">Meny</p>
                         </button>
                         <div class="collapse" id="dashboard-collapse">
                           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li><a href="{{url_for('users')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sök på användare</a></li>
-                            <li><a href="{{url_for('profile_page')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Din profil</a></li>
-                            <li><a href="{{url_for('get_top_artists')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina toppartister</a></li>
-                            <li><a href="{{ url_for('get_playlist', username=current_user) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina spellistor</a></li>
+                            <li><a href="{{url_for('profile_page')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Min profil</a></li>
+                            <li><a href="{{url_for('get_top_artists')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mina toppartister</a></li>
+                            <li><a href="{{ url_for('get_playlist', username=current_user) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mina spellistor</a></li>
                           </ul>
                         </div>
                       </li>
                       <li class="border-top my-3"></li>
                       <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                          Ditt konto
+                          <p class="p">Mitt konto</p>
                         </button>
                         <div class="collapse" id="account-collapse">
                           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{{url_for('profile_page')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Din profil</a></li>
+                            <li><a href="{{url_for('profile_page')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Min profil</a></li>
                           <!--  <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Settings</a></li>-->
                             <li><a href="{{url_for('logout')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Logga ut</a></li>
                           </ul>
@@ -67,7 +67,7 @@
                 <p>Här kan du generera spellistor utifrån genre och årtal.
                   Sätt igång!
                 </p>
-                <button class="btn btn-outline-secondary gen-button" type="button" id="gen-button" ><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" >Generera spellista!</a></button>
+                <button class="btn btn-outline-secondary gen-button btn-lg" type="button" id="gen-button" ><a href="{{url_for('generate_playlist')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded" >Skapa spellista</a></button>
               
               </div>
             
@@ -79,8 +79,8 @@
         
         <div class="col-md-3 ml-md-3 mb-5 mt-5 landing-page"> 
           {% if recommended_tracks %}
-          <h1 class="h1-landing-page">Upptäck ny musik!</h1>
-          <h4 class="h1-landing-page">Genre:</h4><p> {{ recommended_tracks[0].genre }}</p>
+          <h1 class="h1-landing-page">Upptäck en ny genre!</h1>
+          <p> {{ recommended_tracks[0].genre }}</p>
           {% for track in recommended_tracks %}
               {% if track.info and track.uri %}
                   <div class="col mb-3">

@@ -18,17 +18,17 @@
 					<h1 class="modal-title fs-5" id="deleteBackdropLabel">Titta hit!</h1>
 				</div>
 				<div class="modal-body">
-					<p class="lead">När du raderar kontot kommer datan försvinna från den här hemsidan. Spellistor du skapat
+					<p>När du raderar kontot kommer datan försvinna från den här hemsidan. Spellistor du skapat
 						ligger fortfarande kvar på ditt Spotifykonto.</p>
 					<p class="fw-bold">Är du säker på att du vill lämna oss?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Nej jag stannar!</button>
+					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal-button-no">Nej jag stannar!</button>
 					<form method="post" action="delete-profile" class="hidden-form">
 						<input type="hidden" name="extra_submit_param" value="extra_submit_value">
-						<button type="submit" name="submit_param" value="submit_value" class="btn btn-danger">Japp jag har fått
-							nog</button>
+						<button type="submit" name="submit_param" value="submit_value" class="btn btn-danger" id="modal-button-yes">Japp!</button>
 					</form>
+				</div>
+				<div class="modal-footer">
+					
 				</div>
 			</div>
 		</div>

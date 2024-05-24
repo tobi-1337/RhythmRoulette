@@ -2,11 +2,14 @@
 {% block title %}Recommendations{% endblock %}
 
 {% block content %}
-<div class=" d-flex reccos">
-    <div class="col-md-10 mx-auto col-lg-5">
-        <form class="p-4 p-md-5 border rounded-3" id="recco-box" action="#" method="post">
-            <div class="dropdown">
-                <button type="button" onclick="searchFunction()" class="dropbtn rounded-3">Genres</button>
+<div class=" container d-flex  my-5 reccos">
+    <div class="col-md-10 mx-auto col-lg-5 p-5">
+        <form class="p-4 p-md-5" id="recco-box" action="#" method="post">
+            <div class="dropdown py-5">
+                <p class="p">Välj upp till 5 genres</p>
+                <button type="button" onclick="searchFunction()" class="dropbtn rounded-3">Genres     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
+                  </svg></button>
                 <div id="genreSearch" class="dropdown-content rounded-3">
                     <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
                     {% for recco in recco_list['genres'] %}
@@ -19,17 +22,17 @@
             </div>
             <div class="dropdown-container">
                 <div class="form-floating mb-3">
-                    <p class="display-7 text-secondary">Hur många låtar vill du generera?</p>
-                    <input type="range" name="recco_limit" id="recco_limit" value="24" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
-                    <output>24</output>
+                    <p class="p">Hur många låtar vill du generera?</p>
+                    <input class="form-range" type="range" name="recco_limit" id="recco_limit" value="24" min="1" max="100" oninput="updateRangeValue(this.value)">
+                    <output id="rangeValue">24</output>
                 </div>
             </div>
             <button class="w-100 btn btn-lg text-white" id="search_value" type="submit" value="submit">Skapa!</button>
             <hr class="my-4">
         </form>
     </div>
-    <div id="selectedGenresContainer">
-        <p class="lead text-secondary fw-bold">Valda genres:</p>
+    <div class="col-md-10 mx-auto col-lg-5 p-5  py-5" id="selectedGenresContainer">
+        <p class="p mt-5 p-5">Valda genres:</p>
         <ul id="selectedGenresList"></ul>
     </div>
 </div>
