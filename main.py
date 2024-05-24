@@ -312,7 +312,7 @@ def get_top_artists():
 @app.route('/top-tracks')
 def get_top_tracks():
     '''
-    If the user is authorized they will se their top tracks written out on the page.
+    If the user is authorized they will se their top tracks (short term) written out on the page.
     If not, they will be redirected to the Spotify authorization page.
     '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
@@ -322,6 +322,25 @@ def get_top_tracks():
     username = get_user_info('username')
     display_name = get_user_info('display_name')
     tracks = top_tracks['items']
+    nr = 0
+    user_image_url = get_user_info('img')
+    return render_template('top-tracks.html', tracks=tracks, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
+
+
+@app.route('/top-tracks-ever')
+def get_top_tracks_ever():
+    '''
+    If the user is authorized they will se their top tracks (long term) written out on the page.
+    If not, they will be redirected to the Spotify authorization page.
+    '''
+
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    top_tracks_ever = sp.current_user_top_tracks(limit=20, offset=0, time_range='long_term')
+    username = get_user_info('username')
+    display_name = get_user_info('display_name')
+    tracks = top_tracks_ever['items']
     nr = 0
     user_image_url = get_user_info('img')
     return render_template('top-tracks.html', tracks=tracks, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
