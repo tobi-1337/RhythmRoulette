@@ -645,19 +645,46 @@ margin-bottom:0;
 
 /* Styling for search (decades form) */
 #search_value {
-    background-color:#00755e!important;  
+    background-color: #98c98a !important;  
 }
 
 #search_value:hover {
-    background-color:#469888!important;  
+    background-color: #7ba270 !important;  
 }
 
 .form-check-input-search {
-    color: #a6cc9b !important;
+    background-color: #98c98a !important;
+    border-color: whitesmoke!important;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    background: #7272729a; /* Bakgrundsfärg för slidebaren */
+    outline: none;
+    opacity: 0.7; /* Opacitet för slidebaren */
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+input[type="range"]:hover {
+    opacity: 1;
+}
+
+/* sliderns "thumb" */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #a6cc9b; 
+    cursor: pointer;
+    border-radius: 50%; 
 }
 
 .search-text {
-    color:#A6CC9B; 
+    color: #a6cc9b !important; 
 }
 
 .search-text-grey {
