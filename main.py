@@ -307,7 +307,24 @@ def get_top_artists():
     nr = 0
     user_image_url = get_user_info('img')
     return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
+
+
+@app.route('/top-tracks')
+def get_top_tracks():
+    '''
+    If the user is authorized they will se their top tracks written out on the page.
+    If not, they will be redirected to the Spotify authorization page.
+    '''
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
     
+    top_tracks = sp.current_user_top_tracks(limit=20, offset=0, time_range='short_term')
+    username = get_user_info('username')
+    display_name = get_user_info('display_name')
+    tracks = top_tracks['items']
+    nr = 0
+    user_image_url = get_user_info('img')
+    return render_template('top_tracks.html', tracks=tracks, nr=nr, user_image_url=user_image_url, username=username, display_name=display_name)
 
 
 @app.route('/generate-playlist', methods=['GET', 'POST'])
