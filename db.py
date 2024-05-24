@@ -58,8 +58,8 @@ def check_if_friends(user_1, user_2):
     cur.execute(
         '''
         SELECT * FROM friends_with
-        WHERE user_one = %s AND user_two = %s
-        ''', (user_1, user_2)
+        WHERE user_one = %s AND user_two = %s OR user_one = %s AND user_two = %s
+        ''', (user_1, user_2, user_2, user_1)
     )
     friends_with = cur.fetchall()
     if len(friends_with) > 0:
@@ -72,8 +72,8 @@ def remove_friend(user_1, user_2):
     cur.execute(
         '''
         DELETE FROM friends_with 
-        WHERE user_one = %s AND user_two = %s
-        ''', (user_1, user_2)
+        WHERE user_one = %s AND user_two = %s OR user_one = %s AND user_two = %s
+        ''', (user_1, user_2, user_2, user_1)
     )
     conn.commit()
 
