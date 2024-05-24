@@ -175,7 +175,6 @@ def profile_page():
     ''' Redirects the user to their profile page. '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
-    
     username = get_user_info('username')
     return redirect(url_for('user_profile', username=username))
 
@@ -224,15 +223,15 @@ def user_profile(username):
     search_name = db.check_user_in_db(username)
     if not search_name:
         return render_template('index.html')
+    
     user = user_info(username)
-    print(user['id'])
     username = user['id']
-    current_user = get_user_info('username')
+    current_user = session['user_id']
+    is_friend = db.check_if_friends(current_user, username)
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
     user_bio = db.get_user_bio(username)
-    print(user_bio)
-    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio)
+    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio, is_friend=is_friend)
     
     
 
@@ -247,6 +246,20 @@ def profile_settings():
     username = get_user_info('username')
     user_image_url = get_user_info('img')
     return render_template('profile_settings.html', display_name=display_name, current_user=username, user_image_url=user_image_url)
+
+@app.route('/become-friends/<user_1>/<user_2>')
+def add_friend(user_1, user_2):
+
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    if not db.check_if_friends(user_1, user_2):
+        db.become_friends(user_1, user_2)
+        flash(f"Nu är ni vänner!")
+        return redirect(url_for('user_profile', username = user_2))
+    
+    flash(f'Ni kunde inte bli vänner.')
+    return redirect(url_for('user_profile', username = user_2))
 
 
 @app.route('/delete-profile', methods=['GET', 'POST'])

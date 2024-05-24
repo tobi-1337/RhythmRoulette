@@ -45,6 +45,39 @@ def search_users(search_value):
     return cur.fetchall()
 
 
+def become_friends(user_1, user_2):
+    cur.execute(
+        '''
+        INSERT INTO friends_with
+        VALUES (%s, %s)
+        ''', (user_1, user_2)
+    )
+    conn.commit()
+
+def check_if_friends(user_1, user_2):
+    cur.execute(
+        '''
+        SELECT * FROM friends_with
+        WHERE user_one = %s AND user_two = %s
+        ''', (user_1, user_2)
+    )
+    friends_with = cur.fetchall()
+    if len(friends_with) > 0:
+        return True
+    else: 
+        return False
+
+
+def remove_friend(user_1, user_2):
+    cur.execute(
+        '''
+        DELETE FROM friends_with 
+        WHERE user_one = %s AND user_two = %s
+        ''', (user_1, user_2)
+    )
+    conn.commit()
+
+
 def register_user(user_id):
     '''
     Registers a user to the database.

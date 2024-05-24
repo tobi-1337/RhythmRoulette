@@ -12,16 +12,33 @@
                         {% if current_user == username %}
                         {% if user_bio %}
                             <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('write_bio')}}">Ändra din bio</a>
-                            
                         {% endif %}
                         {% endif %}
                         <div class="col">
+                        {% if current_user == username %}
                             <a class="btn  gen-button btn-lg mb-3" href="{{url_for('profile_settings')}}">Inställningar</a>
+                        {% else %}
+                            {% if not is_friend %}
+                            <a class="btn  gen-button btn-lg mb-3" href="{{url_for('add_friend', user_1=current_user, user_2=username)}}">Bli vän med {{username}}!</a>
+                            {% else %}
+                            <p class="lead">Du och {{username}} är vänner!:D</p>
+                        {% endif %}
+                        {% endif %}
                             <a class="btn  gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
                         </div>
                         
                 </div>
                 <div class="col-md-5 py-5">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for msg in messages %}
+                        <div class="text-center">
+                            <p class="fw-bold">{{msg}}</p>
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+
                     <h1 class="h1"> Om {{ username }}:</h1>
                         {% if user_bio %}
                             <p class="p">{{user_bio}}</p>
