@@ -107,6 +107,9 @@ myModal.addEventListener('shown.bs.modal', () => {
   myInput.focus()
 })
 
+function updateRangeValue(value) {
+    document.getElementById("rangeValue").innerText = value;
+}
 
 
 //Följande är en funktion för dropdown-meny vi inte använder.
