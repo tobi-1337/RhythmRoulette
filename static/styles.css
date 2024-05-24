@@ -631,6 +631,7 @@ margin-bottom:0;
 .reccos {
     background: -webkit-linear-gradient(#eff4f3,#90d4be);
     border-radius: 5px;
+    margin-top: 20px;
 }
 
 #recco-box {
@@ -659,6 +660,8 @@ margin-bottom:0;
     font-family: 'alexandria';
     border-radius: 20px; 
     color:white; 
+    margin-top: 60px;
+    margin-bottom: 60px;
 }
 /* Styling for search (decades form) ends */
 
