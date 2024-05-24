@@ -262,6 +262,24 @@ def add_friend(user_1, user_2):
     return redirect(url_for('user_profile', username = user_2))
 
 
+@app.route('/remove-friend/<user_1>/<user_2>', methods = ['GET', 'POST'])
+def remove_friend(user_1, user_2):
+    if request.method == 'GET':
+        return redirect(url_for('error'))
+    
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    if db.check_if_friends(user_1, user_2):
+        flash(f"Du är nu inte längre vän med {user_2}")
+        db.remove_friend(user_1, user_2)
+        return redirect(url_for('profile_page'))
+    
+    else:
+        flash(f"Du är inte vän med {user_2}")
+        return redirect(url_for('user_profile', username = user_2))
+    
+
 @app.route('/delete-profile', methods=['GET', 'POST'])
 def delete_profile():
     '''

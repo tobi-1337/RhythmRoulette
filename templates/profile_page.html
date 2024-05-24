@@ -22,6 +22,31 @@
                             <a class="btn  gen-button btn-lg mb-3" href="{{url_for('add_friend', user_1=current_user, user_2=username)}}">Bli vän med {{username}}!</a>
                             {% else %}
                             <p class="lead">Du och {{username}} är vänner!:D</p>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteBackdrop">Ta bort {{username}} som vän.</button>
+                            <div id="modal-div">
+                                <div class="modal fade" id="deleteBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                    aria-labelledby="deleteBackdropLabel" aria-hidden="true" data>
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="deleteBackdropLabel">Titta hit!</h1>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Du och {{username}} kommer inte längre att vara vänner på Rhythm Roulette. Ni kan adda varandra igen efteråt.</p>
+                                                <p class="fw-bold">Är du säker på att du vill ta bort {{username}} som vän?</p>
+                                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal-button-no">Okejdå vi kan väl vara vänner</button>
+                                                <form method="post" action="{{url_for('remove_friend', user_1=current_user, user_2=username)}}" class="hidden-form">
+                                                    <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+                                                    <button type="submit" name="submit_param" value="submit_value" class="btn btn-danger" id="modal-button-yes">Ja.</button>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         {% endif %}
                         {% endif %}
                             <a class="btn  gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
