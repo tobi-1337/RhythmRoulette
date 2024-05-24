@@ -82,28 +82,18 @@ def check_playlist(user_id):
 
     return cur.fetchall()
 
-def generated_playlist_details(conn, pl_id):
+def generated_playlist_details(pl_id,songs_in_list,genres, gen_type):
     '''
     Retrievs the information about generated playlists by either year or genre from database
     '''
-    with conn.cursor() as cursor:
-        query = """
-        SELECT p.pl_id,p.pl_url, gb.by_genre, gb.by_year
-        FROM playlist p
-        JOIN generated_by gb ON p.pl_id = gb.pl_id
-        WHERE p.pl_id = %s;
-        """
-        cursor.execute(query,(pl_id,))
-        result = cursor.fetchone()[0]
+    genre_list = genres[:5] + [None] * (5 - len(genres))
 
-        if result:
-            pl_id, pl_url, by_genre, by_year = result
-            print(f"Playlist ID: {pl_id}")
-            print(f"URL: {pl_url}")
-            print(f"Genre: {by_genre}")
-            print(f"Year: {by_year}")
-        else: 
-            print("No information generated_playlist available")
+    cur.execute(
+        '''
+        INSERT INTO generated_by(pl_id, songs_in_list, genre_no_1, genre_no_2, genre_no_3, genre_no_4, genre_no_5, gen_type)
+        VALUES (%s,%s, %s, %s, %s, %s, %s)
+        ''',(pl_id,genre_list[0],genre_list[1],genre_list[2],genre_list[3],genre_list[4],gen_type)
+    )
 
 def delete_playlist(user_id):
     cur.execute(
