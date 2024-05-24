@@ -194,6 +194,56 @@ def get_user_bio(user_id):
     )
     return cur.fetchone()[0]
 
+
+def get_user_r_date(user_id):
+    cur.execute(
+            '''
+            SELECT TO_CHAR(r_date, 'YYYY-MM-DD HH24:MI') as formatted_date
+            FROM a_user
+            WHERE s_id = %s;
+            ''', (user_id, )
+    )
+    registered = cur.fetchone()[0]
+    if len(registered) == 0:
+        return False
+    return registered
+
+def comment_user(user_1, user_2, comment_text):
+    cur.execute(
+            '''
+            INSERT INTO comment_user (user_one, user_two, u_comment)
+            VALUES(%s, %s, %s)
+            ''', (user_1, user_2, comment_text )
+    )
+    conn.commit()
+
+def get_user_comments(user_id):
+            cur.execute(
+                '''
+                SELECT user_one, user_two, u_comment, c_date
+                FROM comment_user
+                WHERE user_two = %s
+                ''', (user_id,)
+    )
+            return cur.fetchall()
+
+
+def remove_comment(user_1, user_2, comment_text):
+    cur.execute(
+            '''
+            DELETE FROM comment_user
+            WHERE user_one = %s AND user_two = %s AND u_comment = %s
+            ''', (user_1, user_2, comment_text )
+    )
+    conn.commit()
+
+
+
+
+
+
+
+
 try: 
     conn = psycopg2.connect(
     host=host,

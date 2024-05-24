@@ -227,15 +227,18 @@ def user_profile(username):
     search_name = db.check_user_in_db(username)
     if not search_name:
         return render_template('index.html')
-    
+
     user = user_info(username)
     username = user['id']
     current_user = session['user_id']
+    register_date = db.get_user_r_date(username)
+    print(register_date)
     is_friend = db.check_if_friends(current_user, username)
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
     user_bio = db.get_user_bio(username)
-    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio, is_friend=is_friend)
+    user_comments = db.get_user_comments(username)
+    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio, is_friend=is_friend, register_date=register_date, user_comments=user_comments)
     
     
 
@@ -283,6 +286,18 @@ def remove_friend(user_1, user_2):
         flash(f"Du är inte vän med {user_2}")
         return redirect(url_for('user_profile', username = user_2))
     
+
+@app.route('/comment-user/<user_1>/<user_2>', methods = ['GET', 'POST'])
+def write_comment(user_1, user_2):
+    if request.method == 'GET' or not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    comment_text = request.form['comment']
+    if len(comment_text) > 0:
+        db.comment_user(user_1, user_2, comment_text)
+        return redirect(url_for('user_profile', username = user_2, comment_text = comment_text))
+
+
 
 @app.route('/delete-profile', methods=['GET', 'POST'])
 def delete_profile():
@@ -353,12 +368,10 @@ def generate_playlist():
     recommendations.
     '''
     
-    current_user = get_user_info('username')
+    current_user = session['user_id']
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
-    
-    user_id = session['user_id']
-    
+
     if request.method == 'POST':
         
         playlist_name = request.form['playlist_name']
@@ -402,7 +415,7 @@ def get_playlist(username):
         username = current_user
     user_playlists = db.check_playlist(username)
     user_playlists_spotify = sp.user_playlists(username)
-
+    
     spotify_playlist_ids = {playlist['id'] for playlist in user_playlists_spotify['items']}
 
     for playlist_db in user_playlists:   

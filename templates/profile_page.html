@@ -49,22 +49,22 @@
                             </div>
                         {% endif %}
                         {% endif %}
-                            <a class="btn  gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
+                            
                         </div>
                         
                 </div>
-                <div class="col-md-5 py-5">
-                    {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                    {% for msg in messages %}
-                        <div class="text-center">
-                            <p class="fw-bold">{{msg}}</p>
-                        </div>
-                    {% endfor %}
-                    {% endif %}
-                    {% endwith %}
-
-                    <h1 class="h1"> Om {{ username }}:</h1>
+                <div class="profile-middle col-md-8 py-5">
+                    <div id="profile-about" class="mb-5">
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        {% for msg in messages %}
+                            <div class="text-center">
+                                <p class="fw-bold">{{msg}}</p>
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                        <h1 class="h1"> Om {{ username }}:</h1>
                         {% if user_bio %}
                             <p class="p">{{user_bio}}</p>
                         {% else %}
@@ -73,8 +73,28 @@
                             <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('write_bio')}}">Skriv en bio!</a>
                             {% endif %}
                         {% endif %}
-
+                        <a class="btn btn-success gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
+                    </div>
+                    <div id="profile-write" >
+                        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="comment_user" action="#" method="post">
+                            <p>Skriv något i {{username}}s gästbok</p>
+                            <input type="text" id="comment" name="comment">
+                            <button class="btn btn-secondary" type="submit" name="write-comment" value="submit">Skicka</button>
+                        </form>
+                    </div>
+                    <div id="profile-comments">
+                        {% if user_comments %}
+                        {% for comment in user_comments %}
+                        <p>{{comment}}</p>
+                        {% endfor %}
+                        {% endif %}
+                        
+                    </div>
                 </div>
-               
+
+                <div class="col-md-2 profile-aside">
+                    <p class="lead fw-bold">Medlem sedan: </p> 
+                    <p class="lead">{{register_date}}</p>
+                </div>
         </div>
     {% endblock %}
