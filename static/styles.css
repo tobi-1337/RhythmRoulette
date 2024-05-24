@@ -631,13 +631,11 @@ margin-bottom:0;
 .reccos {
     background: -webkit-linear-gradient(#eff4f3,#90d4be);
     border-radius: 5px;
-    margin-top: 20px;
+    margin-top: 60px;
 }
 
 #recco-box {
-    
     font-family: 'antonio';
-    
 }
 
 .form-check-input {
@@ -654,14 +652,32 @@ margin-bottom:0;
     background-color:#469888!important;  
 }
 
+.form-check-input-search {
+    color: #a6cc9b !important;
+}
+
+.search-text {
+    color:#A6CC9B; 
+}
+
+.search-text-grey {
+    color: #727272; 
+}
+
 #searches {
-    background: rgb(201, 231, 201);
-    box-shadow: 2px 4px 20px 4px rgb(250, 249, 249);
+    background: #ffffff6b;
+    box-shadow: 2px 4px 20px 4px rgb(230 176 236 / 39%);
     font-family: 'alexandria';
     border-radius: 20px; 
-    color:white; 
+    color:#727272; 
     margin-top: 60px;
     margin-bottom: 60px;
+}
+
+#search {
+    background: -webkit-linear-gradient(#f7e6f7,#c19bcc);
+    border-radius: 5px;
+    margin-top: 60px;
 }
 /* Styling for search (decades form) ends */
 
