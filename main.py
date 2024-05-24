@@ -494,6 +494,7 @@ def search():
         else:
             decades = request.form.getlist('decades')
             search_limit = request.form.get('search_limit')
+            
         if 'playlist_id' in session:
             playlist_id = session['playlist_id']
             track_list = []  
@@ -502,7 +503,9 @@ def search():
                 searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
 
                 for track in searches['tracks']['items']:
-                    track_list.append(track['uri'])
+                    audio_features = sp.audio_features(track['uri'])[0]
+                    if audio_features['speechiness'] < 0.7:
+                        track_list.append(track['uri'])
 
             sp.playlist_add_items(playlist_id, track_list, position=None)
         return jsonify({"message": "Spellista skapad!"}), 200
