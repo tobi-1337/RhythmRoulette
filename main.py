@@ -243,8 +243,8 @@ def profile_settings():
     ''' Retrieves the current user's display name, username, and profile image URL. '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
-    
-    return render_template('profile_settings.html')
+    current_user = session['user_id']
+    return render_template('profile_settings.html', current_user=current_user)
 
 
 @app.route('/delete-profile', methods=['GET', 'POST'])
@@ -277,14 +277,15 @@ def write_bio():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
+    user_id = session['user_id']
+
     if request.method == 'POST':
         bio_text = request.form['bio']
-        user_id = session['user_id']
         db.save_user_bio(user_id, bio_text)
         return redirect(url_for('user_profile', username=user_id))
         
     else: 
-        return render_template('bio_page.html')
+        return render_template('bio_page.html', current_user=user_id)
     
 
 
@@ -300,7 +301,8 @@ def get_top_artists():
     
     top_artists = sp.current_user_top_artists()
     artists = top_artists['items']
-    return render_template('top-artists.html', artists=artists)
+    current_user = session['user_id']
+    return render_template('top-artists.html', artists=artists, current_user=current_user)
     
 
 
@@ -315,8 +317,10 @@ def generate_playlist():
     '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
+    
+    user_id = session['user_id']
+    
     if request.method == 'POST':
-        user_id = session['user_id']
         playlist_name = request.form['playlist_name']
         playlist_description = request.form['playlist_description']
         if len(playlist_name) > 0:
@@ -338,7 +342,7 @@ def generate_playlist():
         elif generate_method == 'years':
             return redirect(url_for('search'))
     else:
-        return render_template('generate_playlist.html')
+        return render_template('generate_playlist.html', current_user=user_id)
 
 
 @app.route('/profile-page/<username>/playlists', methods=['GET', 'POST'])
@@ -400,7 +404,7 @@ def playlist_page(pl_id):
     owner_of_playlist = db.check_if_playlist_is_own(pl_id)
     if username == owner_of_playlist:
         delete_button = True
-    return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, username=username, display_name=display_name, delete_button=delete_button)
+    return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, current_user=username, display_name=display_name, delete_button=delete_button)
 
 
 @app.route('/delete-playlist/<pl_id>')
@@ -419,7 +423,7 @@ def delete_playlist(pl_id):
     sp.current_user_unfollow_playlist(pl_id)
     db.delete_playlist(pl_id)
     flash(f"Spellistan borttagen!")
-    return redirect(url_for('get_playlist', username=username))
+    return redirect(url_for('get_playlist', current_user=username))
 
 
 @app.route('/recommendations', methods=['GET', 'POST'])
@@ -459,7 +463,8 @@ def recommendations():
         return jsonify({"message": "Spellista skapad!"}), 200
     
     else:
-        return render_template('recommendations.html', recco_list=recco_list)
+        current_user = session['user_id']
+        return render_template('recommendations.html', recco_list=recco_list, current_user=current_user)
     
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -499,7 +504,8 @@ def search():
         return jsonify({"message": "Spellista skapad!"}), 200
     
     else:
-        return render_template('search.html', decades=decades_ranges.keys())
+        current_user = session['user_id']
+        return render_template('search.html', decades=decades_ranges.keys(), current_user=current_user)
 
 
 @app.route('/logout')
