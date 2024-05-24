@@ -807,7 +807,7 @@ margin-bottom:0;
 }
 
 #selectedGenresList li {
-    background-color: #00755e;
+    background-color: #61b6a5;
     color: white;
     padding: 5px 10px;
     margin: 5px 0;
@@ -881,4 +881,17 @@ margin-bottom:0;
 
 .form-range:focus {
     outline: none;
+}
+
+
+#search_user {
+    margin:auto;
+    width:65%;
+}
+
+.users {
+    background-image: url(https://images.pexels.com/photos/1222949/pexels-photo-1222949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+background-size: cover;
+height: 720px;
+
 }
