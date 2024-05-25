@@ -645,15 +645,15 @@ margin-bottom:0;
 
 /* Styling for search (decades form) */
 #search_value {
-    background-color: #98c98a !important;  
+    background: -webkit-linear-gradient(#3c776b, #5aae9d)!important;  
 }
 
 #search_value:hover {
-    background-color: #7ba270 !important;  
+    background: -webkit-linear-gradient(#2a544c, #3c7469)!important; 
 }
 
 .form-check-input-search {
-    background-color: #98c98a !important;
+    background-color: #6edac5!important;
     border-color: whitesmoke!important;
 }
 
@@ -678,13 +678,13 @@ input[type="range"]::-webkit-slider-thumb {
     appearance: none;
     width: 20px;
     height: 20px;
-    background: #a6cc9b; 
+    background: #00755e; 
     cursor: pointer;
     border-radius: 50%; 
 }
 
 .search-text {
-    color: #a6cc9b !important; 
+    color: #00755e !important; 
 }
 
 .search-text-grey {
@@ -693,7 +693,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 #searches {
     background: #ffffff6b;
-    box-shadow: 2px 4px 20px 4px rgb(230 176 236 / 39%);
+    box-shadow: 2px 4px 20px 4px rgba(176, 236, 235, 0.39);
     font-family: 'alexandria';
     border-radius: 20px; 
     color:#727272; 
@@ -702,7 +702,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 #search {
-    background: -webkit-linear-gradient(#f7e6f7,#c19bcc);
+    background:  -webkit-linear-gradient(#eff4f3,#90d4be);
     border-radius: 5px;
     margin-top: 60px;
 }
