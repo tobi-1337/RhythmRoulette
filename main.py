@@ -345,17 +345,23 @@ def generate_playlist():
 
 
 @app.route('/generate-playlist', methods=['GET', 'POST'])
-def fetch_genre_year(user_id, generate_method):
-    playlists = sp.user_playlists(user_id)
-    playlist_name = [playlist['name'] for playlist in playlists['item'][:5]]
+def fetch_genre_year(playlist_id, playlist_name, playlist_length, last_updated_datetime):
 
-    if generate_method == 'genres':
-        gen_type = True
-    else: gen_type = False
+    playlist = sp.playlist_tracks(playlist_id)
 
-    pl_id = playlists['items'][0]['id'] if playlists['items'] else None
+    playlist_name = playlist['name']    
 
-    db.generated_playlist_details(pl_id, playlist_name, gen_type)
+    # Hämta antalet låtar i spellistan
+    playlist_length = len(playlist['tracks']['items'])
+
+    last_updated_timestamp = playlist.get('snapshot_id')
+    if last_updated_timestamp:
+        last_updated_datetime = datetime.datetime.fromtimestamp(int(last_updated_timestamp.split(":")[0], base=16))
+    else:
+        last_updated_datetime = None
+
+    db.generated_playlist_details(playlist_id, playlist_name, playlist_length, last_updated_datetime)
+    return playlist_length
 
 
 @app.route('/profile-page/<username>/playlists', methods=['GET', 'POST'])

@@ -1,3 +1,4 @@
+import logging
 import psycopg2
 from config import password, host, database, user, port
 
@@ -122,25 +123,17 @@ def check_playlist(user_id):
 
     return cur.fetchall()
 
-def generated_playlist_details(pl_id, playlist_name, gen_type):
+def generated_playlist_details(pl_id, playlist_name, playlist_length, last_updated_datetime):
     '''
     Retrievs the information about generated playlists by either year or genre from database
     '''
-    genre_list = playlist_name[:5] + [None] * (5 - len(playlist_name))
-
-    genre_type = any(isinstance(genre, str) for genre in genre_list)
-    if genre_type: 
-        gen_type = "genre"
-    else:
-        gen_type = "year"
-
     cur.execute(
-        '''
-        INSERT INTO generated_by(pl_id, genre_no_1, genre_no_2, genre_no_3, genre_no_4, genre_no_5, gen_type)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
-        ''',(pl_id,genre_list[0],genre_list[1],genre_list[2],genre_list[3],genre_list[4],gen_type)
-    )
-    
+            '''
+            INSERT INTO generated_by(pl_id, playlist_name playlist_length, last_updated_datetiime)
+            VALUES (%s, %s, %s, %s)
+            ''',(pl_id, playlist_name, playlist_length, last_updated_datetime)
+        )
+        
     conn.commit()
 
 def delete_playlist(pl_id):
