@@ -233,8 +233,6 @@ def user_profile(username):
     user_bio = db.get_user_bio(username)
     print(user_bio)
     return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio)
-    
-    
 
     
 @app.route('/profile-settings')
@@ -287,8 +285,6 @@ def write_bio():
         
     else: 
         return render_template('bio_page.html')
-    
-
 
 
 @app.route('/top-artists')
@@ -306,8 +302,7 @@ def get_top_artists():
     artists = top_artists['items']
     nr = 0
     user_image_url = get_user_info('img')
-    return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, current_user=username, display_name=display_name)
-    
+    return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, current_user=username, display_name=display_name)    
 
 
 @app.route('/generate-playlist', methods=['GET', 'POST'])
@@ -348,10 +343,11 @@ def generate_playlist():
     else:
         return render_template('generate_playlist.html', current_user=current_user)
 
+
 @app.route('/generate-playlist', methods=['GET', 'POST'])
 def fetch_genre_year(user_id, generate_method):
     playlists = sp.user_playlists(user_id)
-    playlist_name = [playlist['name']] for playlist in playlists['item'][:5]
+    playlist_name = [playlist['name'] for playlist in playlists['item'][:5]]
 
     if generate_method == 'genres':
         gen_type = True

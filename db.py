@@ -128,7 +128,7 @@ def generated_playlist_details(pl_id, playlist_name, gen_type):
     '''
     genre_list = playlist_name[:5] + [None] * (5 - len(playlist_name))
 
-    genre_type = any(isinstance(genre, str) for genre in genres)
+    genre_type = any(isinstance(genre, str) for genre in genre_list)
     if genre_type: 
         gen_type = "genre"
     else:
