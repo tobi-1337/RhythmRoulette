@@ -645,15 +645,17 @@ margin-bottom:0;
 
 /* Styling for search (decades form) */
 #search_value {
-    background: -webkit-linear-gradient(#3c776b, #5aae9d)!important;  
+    background: -webkit-linear-gradient(#cc9da9, #e5e5b9)!important;
+    color: #727272;
+
 }
 
 #search_value:hover {
-    background: -webkit-linear-gradient(#2a544c, #3c7469)!important; 
+    background: #cb8e9d!important; 
 }
 
 .form-check-input-search {
-    background-color: #6edac5!important;
+    background-color: #cc9da9!important;
     border-color: whitesmoke!important;
 }
 
