@@ -122,11 +122,11 @@ def check_playlist(user_id):
 
     return cur.fetchall()
 
-def generated_playlist_details(pl_id, genres, gen_type):
+def generated_playlist_details(pl_id, playlist_name, gen_type):
     '''
     Retrievs the information about generated playlists by either year or genre from database
     '''
-    genre_list = genres[:5] + [None] * (5 - len(genres))
+    genre_list = playlist_name[:5] + [None] * (5 - len(playlist_name))
 
     genre_type = any(isinstance(genre, str) for genre in genres)
     if genre_type: 
