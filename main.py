@@ -349,34 +349,17 @@ def generate_playlist():
         return render_template('generate_playlist.html', current_user=current_user)
 
 @app.route('/generate-playlist', methods=['GET', 'POST'])
-def save_genre_year_db(pl_id):
-    try:
-        playlist = sp.playlist(pl_id)
-    except Exception as e:
-        print("Error fetching playlist:", e)
-        return []
+def fetch_genre_year(user_id, generate_method):
+    playlists = sp.user_playlists(user_id)
+    playlist_name = [playlist['name']] for playlist in playlists['item'][:5]
 
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    if generate_method == 'genres':
+        gen_type = True
+    else: gen_type = False
 
-    if playlist['type'] == 'playlist' and 'name' in playlist:
-        playlist_name = playlist['name'].lower()
-        if 'genre' in playlist_name:
-            # Extract genres from playlist name
-            genres = playlist_name.split(',')[:5]  # Split at commas and keep the first 5
-            genres = [genre.strip() for genre in genres]  # Remove leading/trailing whitespace
-            return genres
-        elif 'year' in playlist_name:
-            # Extract year from playlist name
-            try:
-                year = int(playlist_name.split('year')[-1].strip())  # Extract year from name
-                return [year]
-            except ValueError:
-                print("Error extracting year from playlist name:", playlist_name)
-                return []
+    pl_id = playlists['items'][0]['id'] if playlists['items'] else None
 
-    return []
-
+    db.generated_playlist_details(pl_id, playlist_name, gen_type)
 
 
 @app.route('/profile-page/<username>/playlists', methods=['GET', 'POST'])
