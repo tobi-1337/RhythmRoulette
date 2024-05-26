@@ -4,6 +4,7 @@ from spotipy.oauth2 import SpotifyOAuth, SpotifyOauthError
 from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
 import db
+from datetime import datetime 
 import random
 
 
@@ -304,6 +305,22 @@ def get_top_artists():
     user_image_url = get_user_info('img')
     return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, current_user=username, display_name=display_name)    
 
+def save_playlist_details(current_user, playlist_id):
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+
+    # Hämta användarinfo från sessionen
+    current_user = session.get('username')
+    
+    # Hämta spellistans detaljer inklusive längd och namn
+    playlist_info = sp.user_playlist(current_user, playlist_id)
+    playlist_name = playlist_info['name']
+    playlist_length = len(playlist_info['tracks']['items'])
+    last_updated_datetime = datetime.now()
+    
+    # Spara spellistans detaljer i databasen
+    db.generated_playlist_details(playlist_id, playlist_name, playlist_length, last_updated_datetime)
+
 
 @app.route('/generate-playlist', methods=['GET', 'POST'])
 def generate_playlist():
@@ -332,6 +349,9 @@ def generate_playlist():
         playlist_named = playlist['name']
         generate_method = request.form['generate-method']
         db.add_playlist(playlist_id, playlist_uri, current_user)
+
+        save_playlist_details(current_user, playlist_id)
+
         session['playlist_uri'] = playlist_uri  
         session['playlist_id'] = playlist_id
         session['playlist_named'] = playlist_named
@@ -342,27 +362,6 @@ def generate_playlist():
             return redirect(url_for('search'))
     else:
         return render_template('generate_playlist.html', current_user=current_user)
-
-
-@app.route('/generate-playlist', methods=['GET', 'POST'])
-def fetch_genre_year(playlist_id, playlist_name, playlist_length, last_updated_datetime):
-
-    playlist = sp.playlist_tracks(playlist_id)
-
-    playlist_name = playlist['name']    
-
-    # Hämta antalet låtar i spellistan
-    playlist_length = len(playlist['tracks']['items'])
-
-    last_updated_timestamp = playlist.get('snapshot_id')
-    if last_updated_timestamp:
-        last_updated_datetime = datetime.datetime.fromtimestamp(int(last_updated_timestamp.split(":")[0], base=16))
-    else:
-        last_updated_datetime = None
-
-    db.generated_playlist_details(playlist_id, playlist_name, playlist_length, last_updated_datetime)
-    return playlist_length
-
 
 @app.route('/profile-page/<username>/playlists', methods=['GET', 'POST'])
 def get_playlist(username):

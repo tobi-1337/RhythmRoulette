@@ -125,16 +125,21 @@ def check_playlist(user_id):
 
 def generated_playlist_details(pl_id, playlist_name, playlist_length, last_updated_datetime):
     '''
-    Retrievs the information about generated playlists by either year or genre from database
+    Inserts the information about generated playlists into the database.
     '''
-    cur.execute(
-            '''
-            INSERT INTO generated_by(pl_id, playlist_name playlist_length, last_updated_datetiime)
-            VALUES (%s, %s, %s, %s)
-            ''',(pl_id, playlist_name, playlist_length, last_updated_datetime)
-        )
-        
-    conn.commit()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                '''
+                INSERT INTO about_generated_playlist (pl_id, playlist_name, playlist_length, last_updated_datetime)
+                VALUES (%s, %s, %s, %s)
+                ''', (pl_id, playlist_name, playlist_length, last_updated_datetime)
+            )
+            conn.commit()
+    except psycopg2.Error as e:
+        # Hantera eventuella fel som uppstår vid databasanrop
+        print("Error:", e)
+        conn.rollback()
 
 def delete_playlist(pl_id):
     '''
