@@ -82,10 +82,8 @@ def add_playlist(pl_id,pl_url,user_id):
     Saves the playlist to the database
     Parameters:
         - pl_id: The ID of the Spotify playlist created through the application.
-    Returns:
-        - pl_name (str): The name of the playlist.
-        - nr_songs (int): The number of songs in the playlist.
-        - date_created (date): The date when the playlist was created.
+        - pl_url: The uri of the playlist created through the application.
+        - user_id: The Spotify ID of the user created the playlist.
     '''
 
     cur.execute(
@@ -101,9 +99,10 @@ def generated_playlist_info(pl_id, pl_name, nr_songs, date_created ):
     Inserting information about a playlist generated
         Parameters: 
         - pl_id (str): The playlist-id from the current playlist.
-        - pl_name (str): The generated name of a playlist.
-        - nr_songs (int): The number of songs generated.
-        - date_created (date): The date of when the playlist was created
+    Returns:
+        - pl_name (str): The name of the playlist.
+        - nr_songs (int): The number of songs in the playlist.
+        - date_created (date): The date when the playlist was created.
 	'''
     cur.execute(
 				'''
