@@ -8,15 +8,15 @@
                     <img src="{{ user_image_url }}" id="user_image" alt="User Image">
                     <p class="p">{{username}}</p>
                     <p class="p">Namn: </p>
-                    <p class="p">{{display_name}}</p>
+                    <p class="p-name">{{display_name}}</p>
                         {% if current_user == username %}
                         {% if user_bio %}
-                            <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('write_bio')}}">Ändra din bio</a>
+                            <a class="btn btn-outline-secondary gen-button btn-lg mb-3 p-btn" href="{{url_for('write_bio')}}">Ändra din bio</a>
                         {% endif %}
                         {% endif %}
                         <div class="col">
                         {% if current_user == username %}
-                            <a class="btn  gen-button btn-lg mb-3" href="{{url_for('profile_settings')}}">Inställningar</a>
+                            <a class="btn gen-button btn-lg mb-3 p-btn" href="{{url_for('profile_settings')}}">Inställningar</a>
                         {% else %}
                             {% if not is_friend %}
                             <a class="btn  gen-button btn-lg mb-3" href="{{url_for('add_friend', user_1=current_user, user_2=username)}}">Bli vän med {{username}}!</a>
@@ -73,13 +73,13 @@
                             <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('write_bio')}}">Skriv en bio!</a>
                             {% endif %}
                         {% endif %}
-                        <a class="btn btn-success gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
+                        <a class="btn btn-success gen-button btn-lg mb-3 p-btn" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
                     </div>
                     <div id="profile-write" >
                         <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="comment_user" action="#" method="post">
                             <p>Skriv något på {{username}}s webbsida!</p>
                             <input type="text" id="comment" name="comment">
-                            <button class="btn btn-secondary" type="submit" name="write-comment" value="submit">Skicka</button>
+                            <button class="btn btn-secondary btn-send" type="submit" name="write-comment" value="submit">Skicka</button>
                         </form>
                     </div>
                     <div id="profile-comments">

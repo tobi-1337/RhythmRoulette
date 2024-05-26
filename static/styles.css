@@ -284,6 +284,37 @@ margin-bottom:0;
 #profile-comments {
     grid-area: comments;
 }
+
+.p-name {
+    font-style: 'Helvetica';
+    font-size: 20px;
+}
+
+.p-btn {
+    background: linear-gradient(#439d7e, #a2d8a7)!important;
+    border-style: solid;
+    border-color: #439d7e!important;
+    color: #000000b9!important;
+}
+
+.p-btn:hover {
+    background: linear-gradient(#4db590, #b0eab6)!important;
+    border-style: solid;
+    border-color: #439d7e!important;
+    color: #000000b9!important;
+}
+
+.btn-send {
+    background: linear-gradient(#11c088, #def1c7) !important;
+    color: #000000b9!important;
+}
+
+.btn-send:hover {
+    background: linear-gradient(#3c9a79, rgb(190, 209, 164))!important;
+    border-style: solid;
+    border-color: #439d7e!important;
+    color: #000000b9!important;
+}
 /*styling profilpage ends*/
 
 
