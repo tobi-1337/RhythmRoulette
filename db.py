@@ -94,6 +94,18 @@ def add_playlist(pl_id,pl_url,user_id):
     )
     conn.commit()
 
+def generated_playlist_info(pl_id, pl_name, nr_songs, date_created ):
+    '''
+    Insert 
+	'''
+    cur.execute(
+				'''
+				INSERT INTO about_generated_playlist(pl_id)
+				VALUES (%s, %s, %s, %s)
+				''', (pl_id, pl_name, nr_songs, date_created))
+
+    conn.commit()
+
 def check_if_playlist_is_own(pl_id):
     
     cur.execute(
