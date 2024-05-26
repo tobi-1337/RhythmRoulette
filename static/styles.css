@@ -252,15 +252,15 @@ margin-bottom:0;
     margin:auto;
     max-width: 100%;
 }
-/*styling profilpage*/
 
+/*styling profilpage*/
 #profile_page {
     width: 100%;
     height: 80%;
 }
 
 .profile-aside {
-    background-color: #439d7e;
+    
     height:500px;
     padding-top: 50px;
 }
@@ -915,3 +915,5 @@ background-size: cover;
 height: 720px;
 
 }
+
+
