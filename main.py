@@ -127,6 +127,8 @@ def recommend_playlist():
         available_genres = sp.recommendation_genre_seeds()['genres']
         random_genre = random.choice(available_genres)
         recommendations = sp.recommendations(seed_genres=[random_genre], limit=5,  market='SE')
+
+        save_playlist_info(playlist_id, playlist_name, nr_songs, created_date)
         
         recommended_tracks = [{'genre': random_genre}]
         for track in recommendations['tracks']:
@@ -353,7 +355,6 @@ def generate_playlist():
         playlist_tracks = len(playlist_tracks)
         created_date = datetime.now()
 
-        db.generated_playlist_info(playlist_id, playlist_name, playlist_tracks, created_date)
 
         if generate_method == 'genres':
             return redirect(url_for('recommendations'))
@@ -401,6 +402,22 @@ def get_playlist(username):
         return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
     return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
 
+def save_generated_playlist(playlist_id):
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+
+    playlist = sp.playlist(playlist_id)
+    playlist_tracks = sp.playlist_tracks(playlist_id)
+    playlist_items = playlist_tracks['items'] 
+    track_list = []
+    for i in playlist_items:
+        track_list.append(i['track'])
+
+    playlist_name = playlist['name']
+    nr_songs = len(track_list)
+    created_date = datetime.now()
+                           
+    db.generated_playlist_info(playlist_id, playlist_name, nr_songs, created_date)
 
 @app.route('/playlist/<pl_id>')
 def playlist_page(pl_id):
@@ -473,17 +490,18 @@ def recommendations():
         if 'playlist_id' in session:
             playlist_id = session['playlist_id']
             track_list = []
-            
+    
             for track in reccos['tracks']:
                 song_uri = track['uri']
                 track_list.append(song_uri)
             sp.playlist_add_items(playlist_id, track_list, position=None)
+            save_generated_playlist(playlist_id)
         return jsonify({"message": "Spellista skapad!"}), 200
     
     else:
         current_user = get_user_info('username')
         return render_template('recommendations.html', recco_list=recco_list, current_user=current_user)
-    
+
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -519,6 +537,7 @@ def search():
                     track_list.append(track['uri'])
 
             sp.playlist_add_items(playlist_id, track_list, position=None)
+            save_generated_playlist(playlist_id)
         return jsonify({"message": "Spellista skapad!"}), 200
     
     else:
