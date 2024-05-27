@@ -221,7 +221,7 @@ body {
 
 #login-button {
     color:white;
-    background-color: #c48dc6;
+    background-color: #825C82;
     border-color: whitesmoke;
 } 
 
@@ -929,4 +929,9 @@ margin-bottom:0;
 background-size: cover;
 height: 720px;
 
+}
+
+#alert{
+    background:#8F6E76;
+    border-color:none;
 }
