@@ -741,6 +741,15 @@ margin-bottom:0;
     background: -webkit-linear-gradient(#ffffff,#90d4be);
  }
 
+.top-tracks {
+    background: -webkit-linear-gradient(#ffffff,#90d4be);
+}
+
+.top-tracks-h1 {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
 /* Dropdown Button */
 .dropbtn {
     background-color:#00755e;

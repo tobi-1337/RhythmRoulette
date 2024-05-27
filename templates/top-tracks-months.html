@@ -1,0 +1,30 @@
+{% extends "profile_page.html" %}
+{% block title %}Top Tracks Months{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-5 mb-5 top-tracks box">
+    <h1 class="text-center top-tracks-h1">Under de senaste 6 månaderna har du lyssnat på:</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8 mb-5">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tracks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for track in tracks %}
+                    <tr>
+                        <th scope="row">{{ loop.index0 + 1 }}</th>
+                        <td class="p">{{ track['name'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
