@@ -178,7 +178,12 @@ def profile_page():
     ''' Redirects the user to their profile page. '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
-    
+    tracks = sp.playlist_tracks("4ZvJxrLxlmTxfMENidJcM4")
+    items = tracks['items']
+    track_list = []
+    for i in items:
+        track_list.append(i['track']['name'])
+    print(len(track_list))
     username = session['user_id']
     return redirect(url_for('user_profile', username=username))
 
