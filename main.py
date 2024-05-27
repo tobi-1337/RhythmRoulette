@@ -131,7 +131,7 @@ def recommend_playlist():
         random_genre = random.choice(available_genres)
         recommendations = sp.recommendations(seed_genres=[random_genre], limit=5,  market='SE')
 
-        save_playlist_info(playlist_id, playlist_name, nr_songs, created_date)
+       
         
         recommended_tracks = [{'genre': random_genre}]
         for track in recommendations['tracks']:
