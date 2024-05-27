@@ -82,6 +82,8 @@ def register_user():
         if not registered_user:
             db.register_user(user_id)
         session['logged_in'] = True
+        session['user_id'] = user_id
+        session['display_name'] = display_name
         flash(f"Välkommen {display_name}, \n Du är inloggad!")
         return redirect(url_for('home'))
     else:
@@ -96,12 +98,13 @@ def home():
     Also shows a list of 5 random tracks for inspiration.
     '''
 
-    if 'logged_in' in session: 
-        current_user = get_user_info('username')
+    if 'user_id' in session: 
         if not sp_oauth.validate_token(cache_handler.get_cached_token()):
             auth_url = sp_oauth.get_authorize_url()
             return redirect(auth_url)
-    
+        
+        user_id = session['user_id']
+
         if 'recommended_tracks' not in session:
 
             recommended_tracks = recommend_playlist()
@@ -109,7 +112,7 @@ def home():
         else:
             recommended_tracks = session['recommended_tracks']
         
-        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks, current_user=current_user)
+        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks, current_user=user_id)
 
     else:
         return render_template('index.html')
@@ -176,7 +179,7 @@ def profile_page():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
-    username = get_user_info('username')
+    username = session['user_id']
     return redirect(url_for('user_profile', username=username))
 
 
@@ -224,15 +227,18 @@ def user_profile(username):
     search_name = db.check_user_in_db(username)
     if not search_name:
         return render_template('index.html')
+
     user = user_info(username)
-    print(user['id'])
     username = user['id']
-    current_user = get_user_info('username')
+    current_user = session['user_id']
+    register_date = db.get_user_r_date(username)
+    print(register_date)
+    is_friend = db.check_if_friends(current_user, username)
     display_name = user['display_name']
     user_image_url = user['images'][0]['url'] if user['images'] else None
     user_bio = db.get_user_bio(username)
-    print(user_bio)
-    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio)
+    user_comments = db.get_user_comments(username)
+    return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio, is_friend=is_friend, register_date=register_date, user_comments=user_comments)
     
     
 
@@ -248,6 +254,50 @@ def profile_settings():
     user_image_url = get_user_info('img')
     return render_template('profile_settings.html', display_name=display_name, current_user=username, user_image_url=user_image_url)
 
+@app.route('/become-friends/<user_1>/<user_2>')
+def add_friend(user_1, user_2):
+
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    if not db.check_if_friends(user_1, user_2):
+        db.become_friends(user_1, user_2)
+        flash(f"Nu är ni vänner!")
+        return redirect(url_for('user_profile', username = user_2))
+    
+    flash(f'Ni kunde inte bli vänner.')
+    return redirect(url_for('user_profile', username = user_2))
+
+
+@app.route('/remove-friend/<user_1>/<user_2>', methods = ['GET', 'POST'])
+def remove_friend(user_1, user_2):
+    if request.method == 'GET':
+        return redirect(url_for('error'))
+    
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    if db.check_if_friends(user_1, user_2):
+        flash(f"Du är nu inte längre vän med {user_2}")
+        db.remove_friend(user_1, user_2)
+        return redirect(url_for('profile_page'))
+    
+    else:
+        flash(f"Du är inte vän med {user_2}")
+        return redirect(url_for('user_profile', username = user_2))
+    
+
+@app.route('/comment-user/<user_1>/<user_2>', methods = ['GET', 'POST'])
+def write_comment(user_1, user_2):
+    if request.method == 'GET' or not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    comment_text = request.form['comment']
+    if len(comment_text) > 0:
+        db.comment_user(user_1, user_2, comment_text)
+        return redirect(url_for('user_profile', username = user_2, comment_text = comment_text))
+
+
 
 @app.route('/delete-profile', methods=['GET', 'POST'])
 def delete_profile():
@@ -259,10 +309,10 @@ def delete_profile():
     '''
     if request.method == 'GET':
         return redirect(url_for('error'))
+    
     if sp_oauth.validate_token(cache_handler.get_cached_token()):
-        user_id = get_user_info('username')
+        user_id = session['user_id']
         registered_user = db.check_user_in_db(user_id)
-
         if registered_user:
             db.delete_user(user_id)
             session.clear()
@@ -279,14 +329,15 @@ def write_bio():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
+    user_id = session['user_id']
+
     if request.method == 'POST':
         bio_text = request.form['bio']
-        user_id = get_user_info('username')
         db.save_user_bio(user_id, bio_text)
         return redirect(url_for('user_profile', username=user_id))
         
     else: 
-        return render_template('bio_page.html')
+        return render_template('bio_page.html', current_user=user_id)
     
 
 
@@ -301,12 +352,9 @@ def get_top_artists():
         return redirect(url_for('error'))
     
     top_artists = sp.current_user_top_artists()
-    username = get_user_info('username')
-    display_name = get_user_info('display_name')
     artists = top_artists['items']
-    nr = 0
-    user_image_url = get_user_info('img')
-    return render_template('top-artists.html', artists=artists, nr=nr, user_image_url=user_image_url, current_user=username, display_name=display_name)
+    current_user = session['user_id']
+    return render_template('top-artists.html', artists=artists, current_user=current_user)
     
 
 
@@ -320,9 +368,10 @@ def generate_playlist():
     recommendations.
     '''
     
-    current_user = get_user_info('username')
+    current_user = session['user_id']
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
+
     if request.method == 'POST':
         
         playlist_name = request.form['playlist_name']
@@ -359,14 +408,14 @@ def get_playlist(username):
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
-    current_user = get_user_info('username')
-    display_name = get_user_info('display_name')
+    current_user = session['user_id']
+    display_name = session['display_name']
     user_image_url = get_user_info('img')
     if username == current_user:
         username = current_user
     user_playlists = db.check_playlist(username)
     user_playlists_spotify = sp.user_playlists(username)
-
+    
     spotify_playlist_ids = {playlist['id'] for playlist in user_playlists_spotify['items']}
 
     for playlist_db in user_playlists:   
@@ -398,9 +447,8 @@ def playlist_page(pl_id):
         return redirect(url_for('error'))
     
     delete_button = False
-    username = get_user_info('username')
-    display_name = get_user_info('display_name')
-    user_image_url = get_user_info('img')
+    username = session['user_id']
+    display_name = session['display_name']
     playlist_tracks = sp.playlist_tracks(pl_id)
     playlist_info = sp.playlist(pl_id)
     playlist_uri = playlist_info['uri']
@@ -409,7 +457,7 @@ def playlist_page(pl_id):
     owner_of_playlist = db.check_if_playlist_is_own(pl_id)
     if username == owner_of_playlist:
         delete_button = True
-    return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, current_user=username, display_name=display_name, user_image_url=user_image_url, delete_button=delete_button)
+    return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, current_user=username, display_name=display_name, delete_button=delete_button)
 
 
 @app.route('/delete-playlist/<pl_id>')
@@ -424,11 +472,11 @@ def delete_playlist(pl_id):
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
-    username = get_user_info('username')
+    username = session['user_id']
     sp.current_user_unfollow_playlist(pl_id)
     db.delete_playlist(pl_id)
     flash(f"Spellistan borttagen!")
-    return redirect(url_for('get_playlist', username=username))
+    return redirect(url_for('get_playlist', current_user=username))
 
 
 @app.route('/recommendations', methods=['GET', 'POST'])
@@ -467,7 +515,7 @@ def recommendations():
         return jsonify({"message": "Spellista skapad!"}), 200
     
     else:
-        current_user = get_user_info('username')
+        current_user = session['user_id']
         return render_template('recommendations.html', recco_list=recco_list, current_user=current_user)
     
 
@@ -508,7 +556,7 @@ def search():
         return jsonify({"message": "Spellista skapad!"}), 200
     
     else:
-        current_user = get_user_info('username')
+        current_user = session['user_id']
         return render_template('search.html', decades=decades_ranges.keys(), current_user=current_user)
 
 

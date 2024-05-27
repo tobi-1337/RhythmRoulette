@@ -264,6 +264,26 @@ margin-bottom:0;
     height:500px;
     padding-top: 50px;
 }
+
+.profile-middle {
+    display:grid;
+    grid-template-areas:
+    'about about'
+    'write comments'
+}
+
+#profile-about {
+    grid-area: about;
+    border-bottom: 1px solid;
+}
+
+#profile-write {
+    grid-area: write;
+}
+
+#profile-comments {
+    grid-area: comments;
+}
 /*styling profilpage ends*/
 
 
