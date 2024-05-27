@@ -299,6 +299,26 @@ margin-bottom:0;
 
 #profile-comments {
     grid-area: comments;
+
+}
+
+.profil-bio {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    background-color: #90d4be;
+    margin:40px;
+    padding:10%;
+    border-top-left-radius: 20%;
+  
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);;
+}
+
+#comment-button {
+    background-color: #00755e;
+}
+
+#comment-button:hover {
+    background-color: #27a189;
 }
 /*styling profilpage ends*/
 

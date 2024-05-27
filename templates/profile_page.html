@@ -20,7 +20,8 @@
                         {% if current_user == username %}
                             <a class="btn btn-outline-secondary profil-button btn-lg mb-3" href="{{url_for('profile_settings')}}">Inställningar</a>
                             <a class="btn btn-outline-secondary profil-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
-                  
+                            <p class="p">Medlem sedan: </p> 
+                            <p class="p">{{register_date}}</p>
                         {% else %}
                             {% if not is_friend %}
                             <a class="btn  gen-button btn-lg mb-3" href="{{url_for('add_friend', user_1=current_user, user_2=username)}}">Bli vän med {{username}}!</a>
@@ -63,14 +64,14 @@
                         {% if messages %}
                         {% for msg in messages %}
                             <div class="text-center">
-                                <p class="fw-bold">{{msg}}</p>
+                                <p class="p">{{msg}}</p>
                             </div>
                         {% endfor %}
                         {% endif %}
                         {% endwith %}
                         <h1 class="h1"> Om {{ username }}:</h1>
                         {% if user_bio %}
-                            <p class="p">{{user_bio}}</p>
+                            <p class="profil-bio">{{user_bio}}</p>
                         {% else %}
                             <p class="p">Oj, här var det tomt!</p>
                             {% if current_user == username %}
@@ -78,14 +79,13 @@
                             {% endif %}
                             
                         {% endif %}
-                        <p class="p fw-bold">Medlem sedan: </p> 
-                            <p class="p">{{register_date}}</p>
+                        
                           </div>
                     <div id="profile-write" >
                         <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="comment_user" action="{{url_for('write_comment', user_1=current_user, user_2=username)}}" method="post">
-                            <p>Skriv något på {{username}}s webbsida!</p>
+                            <p class="p">Skriv något på {{username}}s webbsida!</p>
                             <input type="text" id="comment" name="comment">
-                            <button class="btn btn-secondary" type="submit" name="write-comment" value="submit">Skicka</button>
+                            <button class="btn btn-secondary" type="submit" name="write-comment" value="submit" id="comment-button">Skicka</button>
                         </form>
                     </div>
                     <div id="profile-comments">
