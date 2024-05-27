@@ -205,7 +205,7 @@ def users():
         else: 
             return render_template('users.html', username=username, search_name=False)
     else:
-        current_user = get_user_info('username')
+        current_user = session['user_id']
         return render_template('search_for_users.html', current_user=current_user)
 
 
@@ -250,7 +250,7 @@ def profile_settings():
         return redirect(url_for('error'))
     
     display_name = get_user_info('display_name')
-    username = get_user_info('username')
+    username = session['user_id']
     user_image_url = get_user_info('img')
     return render_template('profile_settings.html', display_name=display_name, current_user=username, user_image_url=user_image_url)
 
