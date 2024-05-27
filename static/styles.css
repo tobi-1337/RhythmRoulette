@@ -219,6 +219,16 @@ body {
     background: -webkit-linear-gradient(#c48dc6,#98609a)
 }
 
+#login-button {
+    color:white;
+    background-color: #c48dc6;
+    border-color: whitesmoke;
+} 
+
+#login-button:hover {
+    background: -webkit-linear-gradient(#c48dc6,#98609a)
+}
+
   .landing-page {
 
     background-image: url(https://images.pexels.com/photos/167092/pexels-photo-167092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
