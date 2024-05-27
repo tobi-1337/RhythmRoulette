@@ -553,7 +553,7 @@ def delete_playlist(pl_id):
     sp.current_user_unfollow_playlist(pl_id)
     db.delete_playlist(pl_id)
     flash(f"Spellistan borttagen!")
-    return redirect(url_for('get_playlist', current_user=username))
+    return redirect(url_for('get_playlist', username=username))
 
 
 @app.route('/recommendations', methods=['GET', 'POST'])
