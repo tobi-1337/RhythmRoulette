@@ -275,6 +275,10 @@ margin-bottom:0;
     padding-top: 50px;
 }
 
+.col-md-2.profile-aside {
+    background: -webkit-linear-gradient(#ffffff, #90d4be) !important;
+}
+
 .profile-middle {
     display:grid;
     grid-template-areas:
