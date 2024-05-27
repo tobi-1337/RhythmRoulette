@@ -249,7 +249,7 @@ def profile_settings():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
-    display_name = get_user_info('display_name')
+    display_name = session['display_name']
     username = session['user_id']
     user_image_url = get_user_info('img')
     return render_template('profile_settings.html', display_name=display_name, current_user=username, user_image_url=user_image_url)
