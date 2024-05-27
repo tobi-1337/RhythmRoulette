@@ -3,20 +3,24 @@
 
     {% block content %}
         <div class="container-fluid text-center" id="profile_page">
-            <div class="row">
-                <div class="col-md-2 profile-aside">
+            <div class="row py-4 my-4">
+                <div class="col-md-2 py-4 profile-aside">
                     <img src="{{ user_image_url }}" id="user_image" alt="User Image">
                     <p class="p">{{username}}</p>
                     <p class="p">Namn: </p>
                     <p class="p">{{display_name}}</p>
+                    
                         {% if current_user == username %}
                         {% if user_bio %}
                             <a class="btn btn-outline-secondary profil-button btn-lg mb-3" href="{{url_for('write_bio')}}">Ändra din bio</a>
+                            
                         {% endif %}
                         {% endif %}
                         <div class="col">
                         {% if current_user == username %}
                             <a class="btn btn-outline-secondary profil-button btn-lg mb-3" href="{{url_for('profile_settings')}}">Inställningar</a>
+                            <a class="btn btn-outline-secondary profil-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
+                  
                         {% else %}
                             {% if not is_friend %}
                             <a class="btn  gen-button btn-lg mb-3" href="{{url_for('add_friend', user_1=current_user, user_2=username)}}">Bli vän med {{username}}!</a>
@@ -72,9 +76,11 @@
                             {% if current_user == username %}
                             <a class="btn btn-outline-secondary gen-button btn-lg mb-3" href="{{url_for('write_bio')}}">Skriv en bio!</a>
                             {% endif %}
+                            
                         {% endif %}
-                        <a class="btn btn-success gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
-                    </div>
+                        <p class="p fw-bold">Medlem sedan: </p> 
+                            <p class="p">{{register_date}}</p>
+                          </div>
                     <div id="profile-write" >
                         <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="comment_user" action="{{url_for('write_comment', user_1=current_user, user_2=username)}}" method="post">
                             <p>Skriv något på {{username}}s webbsida!</p>
@@ -91,9 +97,6 @@
                     </div>
                 </div>
 
-                <div class="col-md-2 profile-aside">
-                    <p class="lead fw-bold">Medlem sedan: </p> 
-                    <p class="lead">{{register_date}}</p>
-                </div>
+                
         </div>
     {% endblock %}
