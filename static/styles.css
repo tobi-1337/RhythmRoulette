@@ -647,7 +647,7 @@ margin-bottom:0;
 /* grå färg #7272729a */
 #search_value {
     background: -webkit-linear-gradient(#cc9da9, #e5e5b9)!important;
-    color: #000000;
+    color: #373636f3;
     font-family: 'antonio';
 }
 
@@ -664,7 +664,7 @@ input[type="range"] {
     -webkit-appearance: none;
     width: 100%;
     height: 15px;
-    background: #000000; /* Bakgrundsfärg för slidebaren */ 
+    background: #373636f3; /* Bakgrundsfärg för slidebaren */ 
     outline: none;
     opacity: 0.7; /* Opacitet för slidebaren */
     -webkit-transition: .2s;
@@ -692,8 +692,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .search-text-grey {
-    color: #373636ca;
-    font-family: 'antonio'; 
+    color: #373636f3;
+    font-family: 'helvetica'; 
 }
 
 #searches {
@@ -701,7 +701,7 @@ input[type="range"]::-webkit-slider-thumb {
     box-shadow: 2px 4px 20px 4px rgba(176, 236, 235, 0.39);
     font-family: 'alexandria';
     border-radius: 20px; 
-    color:#000000; 
+    color: #373636f3; 
     margin-top: 60px;
     margin-bottom: 60px;
 }
