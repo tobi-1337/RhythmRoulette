@@ -1,58 +1,63 @@
-    {% extends "base.html" %}
-    {% block title %}Get playlist{% endblock %}
+{% extends "base.html" %}
+{% block title %}Get playlist{% endblock %}
 
-    {% block content %}
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for msg in messages %}
-            <div class="text-center">
-                <p class="fw-bold text-white">{{msg}}</p>
-            </div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for msg in messages %}
+<div class="text-center">
+    <p class="fw-bold text-white">{{msg}}</p>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
 
-    <main id="pl-main">
+<main id="pl-main" class="container">
     <div class="position-relative overflow-hidden text-center" id="show-playlist">
-        <div class="col-md-6 p-lg-5 mx-auto my-5">
+        <div class="p-lg-5 mx-auto my-3">
 
             {% if playlist %}
 
             <h1 class="display-3 fw-bold h1-playlist">{{ username }}s spellistor</h1>
-            
-             <a href="{{url_for('generate_playlist')}}" class="h5 link-body-emphasis d-inline-flex text-decoration-none rounded fw-normal text-muted mb-3" >Upptäck nya drömmiga spellistor <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
-                <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
-              </svg></a>
+
+            <a href="{{url_for('generate_playlist')}}"
+                class="h5 link-body-emphasis d-inline-flex text-decoration-none rounded fw-normal text-muted mb-3">Upptäck
+                nya drömmiga spellistor <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                    fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                    <path
+                        d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753" />
+                </svg></a>
             <div class="d-flex gap-3 justify-content-center lead fw-normal">
                 {% else %}
                 <div class="d-flex gap-3 justify-content-center lead fw-normal">
-                <h1 class="display-3 fw-bold h1-playlist">Du har inga spellistor än!</h1>
+                    <h1 class="display-3 fw-bold h1-playlist">Du har inga spellistor än!</h1>
                 </div>
                 <a class="icon-link track-link" href="{{url_for('generate_playlist')}}">
                     <button type="button" class="btn btn-outline-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
-        <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
-      </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-caret-right" viewBox="0 0 16 16">
+                            <path
+                                d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753" />
+                        </svg>
                         <span class="visually-hidden">Button</span>
-                      </button> Skapa din första spellista!</a>
-                
+                    </button> Skapa din första spellista!</a>
+
                 {% endif %}
             </div>
         </div>
     </div>
-        <div class="pl-container">
-            {% for name, id in playlists %}
-    
-                    <ol class="playlist_container"> 
-                        <li class="playlist_list m-3 rounded text-center">
-                            <a class=" playlist_link lead display-6" href="{{ url_for('playlist_page', pl_id=id) }}">{{ name }}</a>
-                        </li>
-                    </ol>
-            
-            {% endfor %}  
-        </div>
+    <div class="pl-container">
+        {% for name, id in playlists %}
+
+        <ol class="list-group playlist_container">
+            <li class="list-group playlist_list">
+                <a class="playlist_link text-muted m-2 lead display-6" href="{{ url_for('playlist_page', pl_id=id) }}">{{ name }}</a>
+            </li>
+        </ol>
+
+        {% endfor %}
     </div>
-    </main>           
+</main>
 
 
-        {% endblock %}
+{% endblock %}
