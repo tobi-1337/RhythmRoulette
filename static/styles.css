@@ -309,6 +309,14 @@ margin-bottom:0;
     background-color: #00755e;
 }
 
+.profil-button {
+    color: white;
+    background: #dceae5!important;
+    border-color: whitesmoke;
+}
+.profil-button:hover {
+    background: -webkit-linear-gradient(#286250,#0a825c);
+  }
 
 /* styling for logged in */
 #user_image {
@@ -596,7 +604,7 @@ margin-bottom:0;
 
 .gen-button {
     color: white;
-    background: #014b33;
+    background: #dceae5;
     border-color: whitesmoke;
 }
 .gen-button:hover {
