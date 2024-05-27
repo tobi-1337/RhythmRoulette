@@ -668,6 +668,10 @@ margin-bottom:0;
     
 }
 
+.w-100.btn.btn-lg.btn-light.btn-outline-secondary.gen-button{
+    color: #6B737D;
+}
+
 .form-check-input {
     background-color:#00755e!important;
     border-color: whitesmoke!important;
@@ -724,7 +728,6 @@ margin-bottom:0;
     transition: 0.5;
 }
 
-
 .box {
     --mask:
       radial-gradient(4.47rem at 50% calc(100% - 6rem),#000 99%,#0000 101%) calc(50% - 4rem) 0/8rem 100%,
@@ -734,8 +737,6 @@ margin-bottom:0;
            
         }
   
-
-
  .top-artist{
     background: -webkit-linear-gradient(#ffffff,#90d4be);
  }
