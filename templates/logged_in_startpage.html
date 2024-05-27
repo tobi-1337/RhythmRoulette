@@ -37,6 +37,8 @@
                             <li><a href="{{url_for('users')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sök på användare</a></li>
                             <li><a href="{{url_for('profile_page')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Min profil</a></li>
                             <li><a href="{{url_for('get_top_artists')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mina toppartister</a></li>
+                            <li><a href="{{url_for('get_top_tracks')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina senaste topplåtar</a></li>
+				                    <li><a href="{{url_for('get_top_tracks_months')}}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Dina topplåtar sen 6 månader</a></li>
                             <li><a href="{{ url_for('get_playlist', username=current_user) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mina spellistor</a></li>
                           </ul>
                         </div>
