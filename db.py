@@ -127,7 +127,7 @@ def add_playlist(pl_id,pl_url,user_id):
     )
     conn.commit()
 
-def generated_playlist_info(pl_id, pl_name, nr_songs, date_created ):
+def generated_playlist_info(playlist_id, playlist_name, nr_songs, created_date):
     '''
     Inserting information about a playlist generated
         Parameters: 
@@ -137,11 +137,13 @@ def generated_playlist_info(pl_id, pl_name, nr_songs, date_created ):
         - nr_songs (int): The number of songs in the playlist.
         - date_created (date): The date when the playlist was created.
 	'''
+
     cur.execute(
 				'''
-				INSERT INTO about_generated_playlist(pl_id)
+				INSERT INTO about_generated_playlist(pl_id, playlist_name, playlist_length, last_updated_datetime)
 				VALUES (%s, %s, %s, %s)
-				''', (pl_id, pl_name, nr_songs, date_created))
+				''', (playlist_id, playlist_name, nr_songs, created_date)
+    )
 
     conn.commit()
 

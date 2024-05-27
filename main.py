@@ -5,6 +5,8 @@ from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
 import db
 import random
+import datetime
+from datetime import datetime
 
 
 # This variable is used to run the program
@@ -128,6 +130,8 @@ def recommend_playlist():
         available_genres = sp.recommendation_genre_seeds()['genres']
         random_genre = random.choice(available_genres)
         recommendations = sp.recommendations(seed_genres=[random_genre], limit=5,  market='SE')
+
+        save_playlist_info(playlist_id, playlist_name, nr_songs, created_date)
         
         recommended_tracks = [{'genre': random_genre}]
         for track in recommendations['tracks']:
@@ -412,19 +416,30 @@ def generate_playlist():
         
         playlist_name = request.form['playlist_name']
         playlist_description = request.form['playlist_description']
+
         if len(playlist_name) > 0:
             playlist = sp.user_playlist_create(current_user, playlist_name, public=True, collaborative=False, description=playlist_description)
         else:
             flash(f'Du måste ange ett namn på spellistan!')
             return render_template('generate_playlist.html')
+        
         playlist_id = playlist['id']
         playlist_uri = playlist['uri']
         playlist_named = playlist['name']
+        #hur hämtar vi upp tracks innan det kan läggas i generate_playlist_info?
+        playlist_tracks = playlist['tracks']
+
+
         generate_method = request.form['generate-method']
         db.add_playlist(playlist_id, playlist_uri, current_user)
-        session['playlist_uri'] = playlist_uri  
         session['playlist_id'] = playlist_id
+        session['playlist_uri'] = playlist_uri  
         session['playlist_named'] = playlist_named
+        session['playlist_tracks'] = playlist_tracks 
+
+        playlist_tracks = len(playlist_tracks)
+        created_date = datetime.now()
+
 
         if generate_method == 'genres':
             return redirect(url_for('recommendations'))
@@ -472,6 +487,22 @@ def get_playlist(username):
         return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
     return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
 
+def save_generated_playlist(playlist_id):
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+
+    playlist = sp.playlist(playlist_id)
+    playlist_tracks = sp.playlist_tracks(playlist_id)
+    playlist_items = playlist_tracks['items'] 
+    track_list = []
+    for i in playlist_items:
+        track_list.append(i['track'])
+
+    playlist_name = playlist['name']
+    nr_songs = len(track_list)
+    created_date = datetime.now()
+                           
+    db.generated_playlist_info(playlist_id, playlist_name, nr_songs, created_date)
 
 @app.route('/playlist/<pl_id>')
 def playlist_page(pl_id):
@@ -553,17 +584,18 @@ def recommendations():
         if 'playlist_id' in session:
             playlist_id = session['playlist_id']
             track_list = []
-            
+    
             for track in reccos['tracks']:
                 song_uri = track['uri']
                 track_list.append(song_uri)
             sp.playlist_add_items(playlist_id, track_list, position=None)
+            save_generated_playlist(playlist_id)
         return jsonify({"message": "Spellista skapad!"}), 200
     
     else:
         current_user = session['user_id']
         return render_template('recommendations.html', recco_list=recco_list, current_user=current_user)
-    
+
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -603,6 +635,7 @@ def search():
                             track_list.append(track['uri'])
 
             sp.playlist_add_items(playlist_id, track_list, position=None)
+            save_generated_playlist(playlist_id)
         return jsonify({"message": "Spellista skapad!"}), 200
     
     else:
