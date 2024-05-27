@@ -355,7 +355,38 @@ def get_top_artists():
     artists = top_artists['items']
     current_user = session['user_id']
     return render_template('top-artists.html', artists=artists, current_user=current_user)
+
+
+@app.route('/top-tracks')
+def get_top_tracks():
+    '''
+    If the user is authorized they will se their top tracks (short term) written out on the page.
+    If not, they will be redirected to the Spotify authorization page.
+    '''
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
     
+    top_tracks = sp.current_user_top_tracks(limit=20, offset=0, time_range='short_term')
+    tracks = top_tracks['items']
+    current_user = session['user_id']
+    nr = 0
+    return render_template('top-tracks.html', tracks=tracks, nr=nr, current_user=current_user)
+
+@app.route('/top-tracks-months')
+def get_top_tracks_months():
+    '''
+    If the user is authorized they will se their top tracks (medium term) written out on the page.
+    If not, they will be redirected to the Spotify authorization page.
+    '''
+
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    top_tracks_months = sp.current_user_top_tracks(limit=20, offset=0, time_range='medium_term')
+    tracks = top_tracks_months['items']
+    current_user = session['user_id']
+    nr = 0
+    return render_template('top-tracks-months.html', tracks=tracks, nr=nr, current_user=current_user)
 
 
 @app.route('/generate-playlist', methods=['GET', 'POST'])
