@@ -76,7 +76,7 @@
                         <a class="btn btn-success gen-button btn-lg mb-3" href="{{url_for('get_playlist', username=username)}}">Se {{username}}s spellistor!</a>
                     </div>
                     <div id="profile-write" >
-                        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="comment_user" action="#" method="post">
+                        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="comment_user" action="{{url_for('write_comment', user_1=current_user, user_2=username)}}" method="post">
                             <p>Skriv något på {{username}}s webbsida!</p>
                             <input type="text" id="comment" name="comment">
                             <button class="btn btn-secondary" type="submit" name="write-comment" value="submit">Skicka</button>
@@ -85,10 +85,9 @@
                     <div id="profile-comments">
                         {% if user_comments %}
                         {% for comment in user_comments %}
-                        <p>{{comment}}</p>
+                        <p>{{comment[0]}}: {{comment[2]}} {{comment[3]}}</p>
                         {% endfor %}
                         {% endif %}
-                        <h1>*kommentarer här*</h1>
                     </div>
                 </div>
 
