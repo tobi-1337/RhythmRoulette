@@ -139,6 +139,8 @@ body {
 #header {
     box-shadow:0px 4px 6px rgba(0, 0, 0, 0.1) ;
     background-color: #f6fcfb;
+    position: relative;
+    z-index:1;
 }
 
 #custom-cards {
@@ -317,6 +319,7 @@ margin-bottom:0;
 .profil-button:hover {
     background: -webkit-linear-gradient(#286250,#0a825c);
   }
+
 
 /* styling for logged in */
 #user_image {
