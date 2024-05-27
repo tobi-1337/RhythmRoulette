@@ -46,12 +46,12 @@ body {
 .landing-page p {
     font-family: 'allura';
     font-size: 3rem;
-    color: #8dc6a5;
+    color: #5B7C6B;
 }
 
 .h1-landing-page {
     font-family: 'antonio';
-    color: #cc9da9;
+    color: #8F6E76;
 }
 
 /* här börjar 'navbar' */
@@ -211,7 +211,7 @@ body {
 
 #reg-button {
     color:white;
-    background-color: #c48dc6;
+    background-color: #825C82;
     border-color: whitesmoke;
 } 
 
@@ -409,7 +409,7 @@ margin-bottom:0;
 
 #modal-button-ja {
     color: white;
-    background-color: #b8f98f;
+    background-color: #5E8049;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -419,7 +419,7 @@ margin-bottom:0;
 
 #modal-button-nej {
     color: white;
-    background-color: #ee7550;
+    background-color:  #9E4E36;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -460,12 +460,16 @@ margin-bottom:0;
 
 /*Playlist styling*/
 #pl-main {
-    background-image: linear-gradient(to bottom, rgb(255, 255, 255), rgb(249, 199, 240));
+    background-image: linear-gradient(to bottom, rgb(255, 255, 255), #f9c7f0);
     padding-bottom: 120px;
 }
 
 .hidden-form {
     display: inline;
+}
+
+.icon-link.track-link{
+    color: #5C5C5C;
 }
 
 .playlist_link {
@@ -474,7 +478,6 @@ margin-bottom:0;
     transition: 0.3s;
     color: rgb(197, 196, 196);
     font-size: large;
-    
 }
 
 .playlist_link:hover {
@@ -494,11 +497,11 @@ margin-bottom:0;
     display: flex;
     flex-direction: column;
     border-style: solid;
-    border-color: #aaced951;
+    border-color: #426266;
     border-radius: 8px;
-    background-color: rgba(245, 245, 245, 0.426);
-
+    background-color: #426266;
 }
+
 .playlist_container {
     list-style-type: none;
     padding: 2%;
@@ -515,7 +518,7 @@ margin-bottom:0;
 }
 
 .h1-playlist {
-    color: #AACED9;
+    color: #426266;
     font-family: 'Allura';
     font-size: 300%;
 }
@@ -604,10 +607,7 @@ margin-bottom:0;
     background-image:url(https://images.pexels.com/photos/1047442/pexels-photo-1047442.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
 }
 
-
-
-
-  #down {
+#down {
     color:rgb(97, 2, 78);
 }
 
@@ -637,7 +637,6 @@ margin-bottom:0;
 .track-link:hover {
     color: rgb(153, 212, 153);
 }
-
 
 
 /* styling for modal ends #show-playlist {
@@ -708,9 +707,6 @@ margin-bottom:0;
 .card-body a {
   font-family:"antonio"
 }
-
-
-
 
 .card-body:hover {
     background-color: #8dc6a5;
