@@ -460,6 +460,16 @@ def playlist_page(pl_id):
     return render_template('playlist_page.html', playlist_uri=playlist_uri, playlist_name=playlist_name, playlist_items=playlist_items, pl_id=pl_id, current_user=username, display_name=display_name, delete_button=delete_button)
 
 
+@app.route('/redirect-playlist')
+def redirect_playlist():
+    ''' Redirects the user to their profile page. '''
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        return redirect(url_for('error'))
+    
+    username = session['user_id']
+    return redirect(url_for('get_playlist', username=username))
+
+
 @app.route('/delete-playlist/<pl_id>')
 def delete_playlist(pl_id):
     '''
