@@ -617,7 +617,7 @@ margin-bottom:0;
     border-color: whitesmoke;
 }
 .gen-button:hover {
-    background: -webkit-linear-gradient(#286250,#0a825c);
+    background: -webkit-linear-gradient(#eea76a,#eddccc);
   }
 
   #generate_playlist {
