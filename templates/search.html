@@ -2,32 +2,38 @@
 {% block title %}Recommendations{% endblock %}
 {% block content %}
 
-<div class="container d-flex reccos">
+<div class="container d-flex reccos" id="search">
     <div class="col-md-10 mx-auto col-lg-5 ">
         <form class="p-4 p-md-5 border rounded-3 " id="searches" action="#" method="post">
             <div class="form-floating mb-3">
-                <p class="lead text-white fw-bold text-center">Välj Årtal!</p>
+                <p class="lead fw-bold text-center search-text-grey">Välj Årtionden!</p>
                 <div>
-                    <h1 class="display-5 text-center text-white">Generera en spellista!</h1>
-                    <p class="lead text-white">Kryssa i de årtal du vill ha i din spellista:</p>
-
-                    {% for decade in decades %}
-                    <div class="form-check form-switch">
-                        <input type="checkbox" class="form-check-input mb-3 search-checkbox proanalysecheck"
-                            id="{{ decade }}" name="decades" value="{{ decade }}">
-                        <label for="{{ decade }}" class="lead fw-bold mb-2">{{ decade }}</label><br>
+                    <h1 class="display-5 text-center search-text">Generera en spellista!</h1>
+                    <p class="lead search-text-grey">Kryssa i de årtionden du vill ha i din spellista, du kan max välja 3 st:</p>
+                    <div class="row">
+                        {% for decade in decades %}
+                        <div class="col-md-4">
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input form-check-input-search mb-3 search-checkbox proanalysecheck"
+                                    id="{{ decade }}" name="decades" value="{{ decade }}">
+                                <label for="{{ decade }}" class="lead fw-bold mb-2">{{ decade }}</label><br>
+                            </div>
+                        </div>
+                        {% if loop.index % 3 == 0 %}
                     </div>
-                    {% endfor %}
-
+                    <div class="row">
+                        {% endif %}
+                        {% endfor %}
+                    </div>
                     <div>
-                        <p class="display-7">Hur många låtar vill du generera?</p>
+                        <p class="display-7 search-text-grey">Hur många låtar vill du generera?</p>
                         <input type="range" name="search_limit" id="search_limit" value="24" min="1" max="50"
                             oninput="this.nextElementSibling.value = this.value">
                         <output>24</output>
                     </div>
                 </div>
             </div>
-            <button class="w-100 btn btn-lg text-white" id="search_value" type="submit" value="submit">Skapa!</button>
+            <button class="w-100 btn btn-lg" id="search_value" type="submit" value="submit">Skapa!</button>
             <hr class="my-4">
         </form>
     </div>
