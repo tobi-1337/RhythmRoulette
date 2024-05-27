@@ -238,7 +238,7 @@ def comment_user(user_1, user_2, comment_text):
 def get_user_comments(user_id):
             cur.execute(
                 '''
-                SELECT user_one, user_two, u_comment, c_date
+                SELECT user_one, user_two, u_comment, TO_CHAR(c_date, 'YYYY-MM-DD HH24:MI') as formatted_date
                 FROM comment_user
                 WHERE user_two = %s
                 ''', (user_id,)
