@@ -5,6 +5,8 @@ from spotipy.cache_handler import FlaskSessionCacheHandler
 from config import client_id, client_secret, redirect_uri
 import db
 import random
+import datetime
+from datetime import datetime
 
 
 # This variable is used to run the program
@@ -327,19 +329,31 @@ def generate_playlist():
         
         playlist_name = request.form['playlist_name']
         playlist_description = request.form['playlist_description']
+
         if len(playlist_name) > 0:
             playlist = sp.user_playlist_create(current_user, playlist_name, public=True, collaborative=False, description=playlist_description)
         else:
             flash(f'Du måste ange ett namn på spellistan!')
             return render_template('generate_playlist.html')
+        
         playlist_id = playlist['id']
         playlist_uri = playlist['uri']
         playlist_named = playlist['name']
+        #hur hämtar vi upp tracks innan det kan läggas i generate_playlist_info?
+        playlist_tracks = playlist['tracks']
+
+
         generate_method = request.form['generate-method']
         db.add_playlist(playlist_id, playlist_uri, current_user)
-        session['playlist_uri'] = playlist_uri  
         session['playlist_id'] = playlist_id
+        session['playlist_uri'] = playlist_uri  
         session['playlist_named'] = playlist_named
+        session['playlist_tracks'] = playlist_tracks 
+
+        playlist_tracks = len(playlist_tracks)
+        created_date = datetime.now()
+
+        db.generated_playlist_info(playlist_id, playlist_name, playlist_tracks, created_date)
 
         if generate_method == 'genres':
             return redirect(url_for('recommendations'))
