@@ -178,7 +178,12 @@ def profile_page():
     ''' Redirects the user to their profile page. '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
-    
+    tracks = sp.playlist_tracks("4ZvJxrLxlmTxfMENidJcM4")
+    items = tracks['items']
+    track_list = []
+    for i in items:
+        track_list.append(i['track']['name'])
+    print(len(track_list))
     username = session['user_id']
     return redirect(url_for('user_profile', username=username))
 
@@ -573,8 +578,8 @@ def search():
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
-    decades_ranges = {'50s': '1950-1959', '60s': '1960-1969', '70s': '1970-1979', '80s': '1980-1989',
-                    '90s': '1990-1999', '00s': '2000-2009', '10s': '2010-2020'}  
+    decades_ranges = {'1920s': '1920-1929', '1930s': '1930-1939' ,'1940s': '1940-1949', '1950s': '1950-1959', '1960s': '1960-1969', '1970s': '1970-1979', '1980s': '1980-1989',
+                    '1990s': '1990-1999', '2000s': '2000-2009', '2010s': '2010-2020', '2020s': '2020-2024'}  
     if request.method == 'POST':
         if request.is_json:
             data = request.json
@@ -583,6 +588,7 @@ def search():
         else:
             decades = request.form.getlist('decades')
             search_limit = request.form.get('search_limit')
+
         if 'playlist_id' in session:
             playlist_id = session['playlist_id']
             track_list = []  
@@ -591,7 +597,10 @@ def search():
                 searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
 
                 for track in searches['tracks']['items']:
-                    track_list.append(track['uri'])
+                    audio_features = sp.audio_features(track['uri'])[0]
+                    if audio_features['speechiness'] < 0.7:
+                        if len(track_list) < int(search_limit):
+                            track_list.append(track['uri'])
 
             sp.playlist_add_items(playlist_id, track_list, position=None)
         return jsonify({"message": "Spellista skapad!"}), 200
