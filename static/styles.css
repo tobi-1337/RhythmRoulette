@@ -502,7 +502,7 @@ margin-bottom:0;
 
 /*Playlist styling*/
 #pl-main {
-    background-image: url(/static/Pictures/jason-leung-6rGJQry0_WI-unsplash.jpeg) !important;
+    background: -webkit-linear-gradient(#e294a8, #e5e5b9) !important;
     padding-bottom: 120px;
     margin-top: 70px;
     margin-bottom: 40px;
