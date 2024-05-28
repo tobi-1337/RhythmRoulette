@@ -73,7 +73,7 @@ $(document).ready(function () {
                 data: JSON.stringify({ genres: selectedGenres, recco_limit: $('#recco_limit').val() }),
                 success: function (response) {
                     alert(response.message);
-                    window.location.href = '/';
+                    window.location.href = '/redirect-playlist';
                 },
                 error: function (xhr, status, error) {
                     // Handle error
@@ -87,7 +87,7 @@ $(document).ready(function () {
                 data: JSON.stringify({ decades: searchedGenres, search_limit: $('#search_limit').val() }),
                 success: function (searchResponse) {
                     alert(searchResponse.message);
-                    window.location.href = '/';
+                    window.location.href = '/redirect-playlist';
                 },
                 error: function (xhr, status, error) {
                     // Handle error
