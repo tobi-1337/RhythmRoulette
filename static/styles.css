@@ -1050,3 +1050,10 @@ height: 720px;
     background:#8F6E76;
     border-color:none;
 }
+
+.about {
+    background-image: url(https://images.pexels.com/photos/167092/pexels-photo-167092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+    background-size: cover;
+    background-position: center;
+    height:100%;
+}
