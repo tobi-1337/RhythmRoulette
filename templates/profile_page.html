@@ -3,8 +3,9 @@
 
     {% block content %}
         <div class="container-fluid text-center" id="profile_page">
-            <div class="row py-4 my-4">
+            <div class="d-flex-abt row py-4 my-4">
                 <div class="col-md-2 py-4 profile-aside">
+                    <div class="col-md-10">
                     <img src="{{ user_image_url }}" id="user_image" alt="User Image">
                     <p class="p">{{username}}</p>
                     <p class="p">Namn: </p>
@@ -54,11 +55,11 @@
                             </div>
                         {% endif %}
                         {% endif %}
-                            
+                         </div>   
                         </div>
                         
                 </div>
-                <div class="profile-middle col-md-8 py-5">
+                <div class="profile-middle col-md-8 py-3">
                     <div id="profile-about" class="mb-5">
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
@@ -81,21 +82,25 @@
                         {% endif %}
                         
                           </div>
-                    <div id="profile-write" >
-                        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="comment_user" action="{{url_for('write_comment', user_1=current_user, user_2=username)}}" method="post">
-                            <p class="p">Skriv något på {{username}}s webbsida!</p>
-                            <input type="text" id="comment" name="comment">
-                            <button class="btn btn-secondary" type="submit" name="write-comment" value="submit" id="comment-button">Skicka</button>
-                        </form>
-                    </div>
-                    <div id="profile-comments">
-                        {% if user_comments %}
-                        {% for comment in user_comments %}
-                        <p>{{comment[0]}}: {{comment[2]}} {{comment[3]}}</p>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
+                          <div class="mt-4 p-4 border rounded-3 bg-body-tertiary" id="profile-write">
+                            <form class="p-4 p-md-5 bg-body-tertiary" id="comment_user" action="{{url_for('write_comment', user_1=current_user, user_2=username)}}" method="post">
+                                <p class="p">Skriv något på {{username}}s webbsida!</p>
+                                <input type="text" class="form-control mb-3" id="comment" name="comment" placeholder="Skriv en kommentar...">
+                                <button class="btn btn-secondary" type="submit" name="write-comment" value="submit" id="comment-button">Skicka</button>
+                            </form>
+                        </div>
+                        <div id="profile-comments" class="mt-4 p-4 border rounded-3 bg-body-tertiary">
+                            {% if user_comments %}
+                                <div class="comments-container">
+                                    {% for comment in user_comments %}
+                                        <p><strong>{{comment[0]}}</strong>: {{comment[2]}} <small>{{comment[3]}}</small></p>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p>Inga kommentarer ännu.</p>
+                            {% endif %}
+                        </div>
+                        
 
                 
         </div>
