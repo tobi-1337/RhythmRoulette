@@ -4,17 +4,15 @@
 {% block content %}
 <div class=" container d-flex  my-5 reccos">
     <div class="col-md-10 mx-auto col-lg-5 p-5">
-        
         <form class="p-4 p-md-5" id="recco-box" action="#" method="post">
             <hr class="my-1" style="width: 100%;">
             <div class="dropdown py-5">
                 <p class="p">Välj upp till 5 genres</p>
-                <input type="text" class="rounded-3" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-                <button type="button" onclick="searchFunction()" class="dropbtn rounded-3">Genres     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+                <button type="button" onclick="searchFunction()" class="dropbtn rounded-3">Genres<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
-                  </svg></button>
+                </svg></button>
                 <div id="genreSearch" class="dropdown-content rounded-3">
-                    
+                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
                     {% for recco in recco_list['genres'] %}
                     <div class="genre-item form-check form-switch switch form-switch-color">
                         <input type="checkbox" class="form-check-input ms-4 mb-3 genre-checkbox proanalysecheck" id="{{ recco }}" name="genres" value="{{ recco }}">
@@ -30,7 +28,7 @@
                     <output id="rangeValue">24</output>
                 </div>
             </div>
-            <button class="w-100 btn btn-lg text-white" id="search_value_genre" type="submit" value="submit">Skapa!</button>
+            <button class="w-100 btn btn-lg text-white" id="search_value" type="submit" value="submit">Skapa!</button>
             <hr class="my-4" style="width: 100%;">
         </form>
     </div>
@@ -40,3 +38,4 @@
     </div>
 </div>
 {% endblock %}
+

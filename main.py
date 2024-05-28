@@ -568,12 +568,14 @@ def recommendations():
     '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
+    
     recco_list = sp.recommendation_genre_seeds()
     if request.method == 'POST':
         if request.is_json:
             data = request.json
             genre_seeds = data.get('genres')
             recco_limit = data.get('recco_limit')
+            print(genre_seeds)
         else:
             genre_seeds = request.form['genres']
             recco_limit = request.form['recco_limit']
