@@ -726,7 +726,7 @@ margin-bottom:0;
 }
 
 #search_value_genre {
-    background: -webkit-linear-gradient(#206456, #19613d)!important;
+    background: -webkit-linear-gradient(#206456, #367053)!important;
     color: #373636f3;
     font-family: 'antonio';
 }
@@ -1051,9 +1051,22 @@ height: 720px;
     border-color:none;
 }
 
+/*Styling for about page*/
 .about {
-    background-image: url(https://images.pexels.com/photos/167092/pexels-photo-167092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-    background-size: cover;
-    background-position: center;
+    background-image: linear-gradient(to bottom right,#55a591, #f7faf7 );
     height:100%;
+    padding:30%;
+}
+
+.about-nav-item {
+    padding:20px;
+}
+
+#about-h1 {
+    font-family: "Neonderthaw";
+}
+
+#about-p {
+    font-family: 'antonio';
+    padding-top:5%;
 }

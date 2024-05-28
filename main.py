@@ -671,7 +671,7 @@ def about():
     '''
     If the user clicks on the 'about' in the footer they will get redirected to an about page.
     '''
-    print('hej!')
+    
     return render_template('about.html')
 
 ''' Makes sure that the program is run from this file and not from anywhere else. '''
