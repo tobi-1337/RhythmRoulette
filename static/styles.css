@@ -1039,11 +1039,14 @@ input[type="range"]::-webkit-slider-thumb {
     width:65%;
 }
 
+.btn.btn-success{
+    z-index: -0 !important;
+}
+
 .users {
     background-image: url(https://images.pexels.com/photos/1222949/pexels-photo-1222949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
 background-size: cover;
 height: 720px;
-
 }
 
 #alert{
