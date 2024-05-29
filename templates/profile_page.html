@@ -72,7 +72,7 @@
                         {% endwith %}
                         <h1 class="h1"> Om {{ username }}:</h1>
                         {% if user_bio %}
-                            <p class="profil-bio">{{user_bio}}</p>
+                            <p class="profil-bio border-rounded">{{user_bio}}</p>
                         {% else %}
                             <p class="p">Oj, här var det tomt!</p>
                             {% if current_user == username %}

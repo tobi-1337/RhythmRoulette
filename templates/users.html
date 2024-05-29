@@ -2,17 +2,20 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
-
+<div class=" container-fluid text-center py-5 user-result">
     {% if search_name == False %}
         <h1>Det finns inga användare som heter {{username}}, har du stavat rätt?</h1>
         <a href="users" class="btn btn-primary">Gör ett nytt försök</a>
     {% else %}
-        <h1>Sökresultat:</h1>
+    <div class="usr">
+        <h1 class="h2">Sökresultat:</h1>
         {% for name in search_name %}
             <ul>
-                <li><a href="profile-page/{{name[0]}}" class="lead">{{name[0]}}</a></li>
+                <li class="p"><a href="profile-page/{{name[0]}}" class="lead">{{name[0]}}</a></li>
             </ul>
+        
         {% endfor %}
     {% endif %}
-
+    </div>
+</div>
 {% endblock %}
