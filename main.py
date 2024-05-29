@@ -99,7 +99,6 @@ def home():
     Home page for the website.
     Also shows a list of 5 random tracks for inspiration.
     '''
-
     if 'user_id' in session: 
         if not sp_oauth.validate_token(cache_handler.get_cached_token()):
             auth_url = sp_oauth.get_authorize_url()
@@ -124,15 +123,11 @@ def recommend_playlist():
         '''
         5 tracks selected is shown as inspiration at the landingpage.
         First a random genre is seleced, and then 5 tracks from that genre.
-
         '''
-        
         available_genres = sp.recommendation_genre_seeds()['genres']
         random_genre = random.choice(available_genres)
         recommendations = sp.recommendations(seed_genres=[random_genre], limit=5,  market='SE')
 
-       
-        
         recommended_tracks = [{'genre': random_genre}]
         for track in recommendations['tracks']:
             track_uri = track ['uri']
@@ -248,10 +243,8 @@ def user_profile(username):
     user_bio = db.get_user_bio(username)
     user_comments = db.get_user_comments(username)
     return render_template('profile_page.html', username=username, display_name=display_name, user_image_url=user_image_url,current_user=current_user, user_bio = user_bio, is_friend=is_friend, register_date=register_date, user_comments=user_comments)
-    
-    
 
-    
+
 @app.route('/profile-settings')
 def profile_settings():
     ''' Retrieves the current user's display name, username, and profile image URL. '''
@@ -263,9 +256,21 @@ def profile_settings():
     user_image_url = get_user_info('img')
     return render_template('profile_settings.html', display_name=display_name, current_user=username, user_image_url=user_image_url)
 
+
 @app.route('/become-friends/<user_1>/<user_2>')
 def add_friend(user_1, user_2):
+    '''
+    Establishes a friendship between two users if they are not already friends.
 
+    Args:
+        - user_1(str): the username of the first user.
+        - user_2(str): the username of the second user.
+
+    Returns:
+        - A redirection to an error page if the token is invalid.
+        - A redirection to the second users profile page with a succsess message if the users become friends.
+        - A redirection to the second users profile page with a failure message if the users are already friends. 
+    '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
@@ -280,6 +285,19 @@ def add_friend(user_1, user_2):
 
 @app.route('/remove-friend/<user_1>/<user_2>', methods = ['GET', 'POST'])
 def remove_friend(user_1, user_2):
+    '''
+    Removes the friendship between two users if they currently are friends.
+
+    Args:
+        - user_1(str): the username of the first user.
+        - user_2(str): the username of the second user.
+    
+    Returns:
+        - A redirection to an error page if the request method is 'GET'.
+        - A redirection to an error page if the token is invalid.
+        - A redirection to the second users profile page with a succsess message if the users are no loger friends.
+        - A redirection to the second users profile page with a failure message if the users are not friends.
+    '''
     if request.method == 'GET':
         return redirect(url_for('error'))
     
@@ -298,6 +316,17 @@ def remove_friend(user_1, user_2):
 
 @app.route('/comment-user/<user_1>/<user_2>', methods = ['GET', 'POST'])
 def write_comment(user_1, user_2):
+    '''
+    Allows an user to write a comments on another user's profile.
+
+    Args:
+        - user_1(str): the username of the user writing a comment.
+        - user_2(str): the user who recieves the comment.
+
+    Returns:
+        - A redirection to an error page if the request method is 'GET' or if the token is invalid.
+        - A redirection to the second user's profile page with the comment if the comment text is not empty.
+    '''
     if request.method == 'GET' or not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
@@ -305,7 +334,6 @@ def write_comment(user_1, user_2):
     if len(comment_text) > 0:
         db.comment_user(user_1, user_2, comment_text)
         return redirect(url_for('user_profile', username = user_2, comment_text = comment_text))
-
 
 
 @app.route('/delete-profile', methods=['GET', 'POST'])
@@ -344,12 +372,9 @@ def write_bio():
         bio_text = request.form['bio']
         db.save_user_bio(user_id, bio_text)
         return redirect(url_for('user_profile', username=user_id))
-        
     else: 
         return render_template('bio_page.html', current_user=user_id)
     
-
-
 
 @app.route('/top-artists')
 def get_top_artists():
@@ -381,13 +406,13 @@ def get_top_tracks():
     nr = 0
     return render_template('top-tracks.html', tracks=tracks, nr=nr, current_user=current_user)
 
+
 @app.route('/top-tracks-months')
 def get_top_tracks_months():
     '''
     If the user is authorized they will se their top tracks (medium term) written out on the page.
     If not, they will be redirected to the Spotify authorization page.
     '''
-
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
     
@@ -407,7 +432,6 @@ def generate_playlist():
     used, which it will be granted the form was filled, it will return the url for 
     recommendations.
     '''
-    
     current_user = session['user_id']
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
@@ -426,9 +450,7 @@ def generate_playlist():
         playlist_id = playlist['id']
         playlist_uri = playlist['uri']
         playlist_named = playlist['name']
-        #hur hämtar vi upp tracks innan det kan läggas i generate_playlist_info?
         playlist_tracks = playlist['tracks']
-
 
         generate_method = request.form['generate-method']
         db.add_playlist(playlist_id, playlist_uri, current_user)
@@ -439,7 +461,6 @@ def generate_playlist():
 
         playlist_tracks = len(playlist_tracks)
         created_date = datetime.now()
-
 
         if generate_method == 'genres':
             return redirect(url_for('recommendations'))
@@ -487,7 +508,19 @@ def get_playlist(username):
         return render_template('playlist.html', playlist=True, playlists=zipped_playlists, username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
     return render_template('playlist.html', username=username, display_name=display_name, user_image_url=user_image_url, current_user=current_user)
 
+
 def save_generated_playlist(playlist_id):
+    '''
+    Saves information about a generated playlist to the database.
+    The function retrieves the playlist information and its tracks using the Spotify API, 
+    then saves the playlist's name, number of songs, and the date it was created to the database.
+
+    Args:
+        - playlist_id(str): the ID of the playlist to be saved.
+    
+    Returns:
+        - A redirection to an error page if the token is invalid.
+    '''
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         return redirect(url_for('error'))
 
@@ -501,8 +534,8 @@ def save_generated_playlist(playlist_id):
     playlist_name = playlist['name']
     nr_songs = len(track_list)
     created_date = datetime.now()
-                           
     db.generated_playlist_info(playlist_id, playlist_name, nr_songs, created_date)
+
 
 @app.route('/playlist/<pl_id>')
 def playlist_page(pl_id):
@@ -580,8 +613,7 @@ def recommendations():
             genre_seeds = request.form['genres']
             recco_limit = request.form['recco_limit']
 
-        reccos = sp.recommendations(seed_genres=genre_seeds, 
-                                    limit=recco_limit, market='SE')
+        reccos = sp.recommendations(seed_genres=genre_seeds, limit=recco_limit, market='SE')
 
         if 'playlist_id' in session:
             playlist_id = session['playlist_id']
@@ -629,7 +661,6 @@ def search():
 
             for decade in decades:
                 searches = sp.search(q=f'year:{decades_ranges[decade]}', type='track', limit=search_limit, market='SE')
-
                 for track in searches['tracks']['items']:
                     audio_features = sp.audio_features(track['uri'])[0]
                     if audio_features['speechiness'] < 0.7:
