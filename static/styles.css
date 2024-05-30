@@ -1053,3 +1053,12 @@ height: 720px;
     background:rgb(116 185 167);
     border-color:none;
 }
+
+.error {
+    
+    margin:auto;
+}
+
+#error-h1 {
+    font-family: 'antonio';
+}

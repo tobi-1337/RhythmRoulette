@@ -665,6 +665,13 @@ def error():
     flash(f"Du måste logga in!")
     return redirect(url_for('home'))
 
+@app.route('/error')
+def error_page():
+    '''
+    SKRIVA
+    '''
+    
+    return render_template('error.html')
 
 ''' Makes sure that the program is run from this file and not from anywhere else. '''
 if __name__ == '__main__':
