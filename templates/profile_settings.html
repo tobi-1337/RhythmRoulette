@@ -4,10 +4,14 @@
 {% block content %}
 
 <div class="container-fluid text-center mt-5 mb-5">
-<h1 class="h1"> Snälla, stanna! Vi tycker om dig.</h1>
-<img src="https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+	<div id="pls-stay">
+		<h1 class="h1"> Inställningar</h1>
+		<img src="https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" id="cat-delete" alt="cute cat">
+		<p class="p">Här kan du välja att radera ditt konto om du önskar. Du är alltid välkommen tillbaka!</p>
+		<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteBackdrop">Radera kontot</button>
 
-<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteBackdrop">Radera kontot</button>
+
+	</div>
 
 <div id="modal-div">
 	<div class="modal fade" id="deleteBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

@@ -1121,3 +1121,16 @@ height: 720px;
     font-family: 'antonio';
     padding-top:5%;
 }
+
+#pls-stay {
+height:100%;
+background-color: rgb(242, 209, 147);
+padding:10%;
+margin:0;
+}
+
+#cat-delete {
+    border-radius: 50%;
+    height:250px;
+
+}
