@@ -1050,8 +1050,9 @@ height: 720px;
 }
 
 #alert{
-    background:rgb(116 185 167);
-    border-color:none;
+    background:#5B7C6B;
+    border:none;
+    margin:0;
 }
 
 .error {

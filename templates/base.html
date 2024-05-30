@@ -43,7 +43,7 @@
               <a class="btn nav-link" href="{{url_for('users')}}"><span class="material-symbols-outlined">search</span></a>
             </li>
             <div class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Dina spellistor">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Mina spellistor">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-music-note-list" viewBox="0 0 16 16">
                     <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2"/>
                     <path fill-rule="evenodd" d="M12 3v10h-1V3z"/>
@@ -51,7 +51,7 @@
                     <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5"/>
                   </svg></a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                    <li><a class="dropdown-item" href="{{ url_for('get_playlist', username=current_user) }}">Dina spellistor!</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('get_playlist', username=current_user) }}">Mina spellistor!</a></li>
                     <li><a class="dropdown-item" href="{{url_for('generate_playlist')}}">Skapa ny spellista</a></li>
                   </ul>
             </div>
@@ -63,10 +63,10 @@
                 </svg>
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                <li><a class="dropdown-item" href="{{url_for('profile_page')}}">Din profil</a></li>
-                <li><a class="dropdown-item" href="{{url_for('get_top_artists')}}">Dina toppartister</a></li>
-				<li><a class="dropdown-item" href="{{url_for('get_top_tracks')}}">Dina senaste topplåtar</a></li>
-				<li><a class="dropdown-item" href="{{url_for('get_top_tracks_months')}}">Dina topplåtar sen 6 månader</a></li>
+                <li><a class="dropdown-item" href="{{url_for('profile_page')}}">Min profil</a></li>
+                <li><a class="dropdown-item" href="{{url_for('get_top_artists')}}">Mina toppartister</a></li>
+				<li><a class="dropdown-item" href="{{url_for('get_top_tracks')}}">Mina senaste topplåtar</a></li>
+				<li><a class="dropdown-item" href="{{url_for('get_top_tracks_months')}}">Mina topplåtar sen 6 månader</a></li>
                 <li><a class="dropdown-item" href="{{url_for('users')}}">Sök efter användare!</a></li>
               </ul>
             </div>
