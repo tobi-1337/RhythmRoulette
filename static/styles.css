@@ -1114,3 +1114,7 @@ height: 720px;
 #error-h1 {
     font-family: 'antonio';
 }
+
+.about {
+    background-image: -webkit-linear-gradient(#439d7e,#AAD9CD);
+}
