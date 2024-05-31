@@ -40,7 +40,7 @@ body {
 
 .p {
     font-family: 'antonio';
-    color: #0f1312;  
+    color: #1f2523;  
     font-size: 20px;
 }
 .landing-page p {
@@ -524,7 +524,7 @@ margin-bottom:0;
 
 /*Playlist styling*/
 #pl-main {
-    background-image: url(/static/Pictures/jason-leung-6rGJQry0_WI-unsplash.jpeg) !important;
+    background: -webkit-linear-gradient(#e294a8, #e5e5b9) !important;
     padding-bottom: 120px;
     margin-top: 70px;
     margin-bottom: 40px;
@@ -1061,11 +1061,14 @@ input[type="range"]::-webkit-slider-thumb {
     width:65%;
 }
 
+.btn.btn-success{
+    z-index: -0 !important;
+}
+
 .users {
     background-image: url(https://images.pexels.com/photos/1222949/pexels-photo-1222949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
 background-size: cover;
 height: 720px;
-
 }
 
 .user-result{
@@ -1098,39 +1101,16 @@ height: 720px;
 }
 
 #alert{
-    background:#8F6E76;
+    background:#5B7C6B;
     border:none;
+    margin:0;
 }
 
-/*Styling for about page*/
-.about {
-    background-image: linear-gradient(to bottom right,#55a591, #f7faf7 );
-    height:100%;
-    padding:30%;
+.error {
+    
+    margin:auto;
 }
 
-.about-nav-item {
-    padding:20px;
-}
-
-#about-h1 {
-    font-family: "Neonderthaw";
-}
-
-#about-p {
+#error-h1 {
     font-family: 'antonio';
-    padding-top:5%;
-}
-
-#pls-stay {
-height:100%;
-background-color: rgb(242, 209, 147);
-padding:10%;
-margin:0;
-}
-
-#cat-delete {
-    border-radius: 50%;
-    height:250px;
-
 }

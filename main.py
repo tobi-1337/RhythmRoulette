@@ -696,6 +696,13 @@ def error():
     flash(f"Du måste logga in!")
     return redirect(url_for('home'))
 
+@app.route('/error')
+def error_page():
+    '''
+    SKRIVA
+    '''
+    
+    return render_template('error.html')
 
 @app.route('/about')
 def about():
