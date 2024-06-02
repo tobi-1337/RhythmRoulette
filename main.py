@@ -307,7 +307,7 @@ def remove_friend(user_1, user_2):
     if db.check_if_friends(user_1, user_2):
         flash(f"Du är nu inte längre vän med {user_2}")
         db.remove_friend(user_1, user_2)
-        return redirect(url_for('profile_page'))
+        return redirect(url_for('user_profile', username=user_2))
     
     else:
         flash(f"Du är inte vän med {user_2}")
