@@ -34,6 +34,11 @@ sp_oauth = SpotifyOAuth (
 # This variable lets us connect to the authorized Spotify user
 sp = Spotify(auth_manager=sp_oauth) 
 
+def ensure_valid_token():
+    token_info = sp_oauth.get_cached_token()  # Hämta det nuvarande cached token
+    if not sp_oauth.validate_token(token_info):  # Om token inte är giltigt
+        token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])  # Förnya access token
+        session['token_info'] = token_info  # Uppdatera sessionen med den nya token
 
 def user_info(user):
     ''' 
@@ -100,9 +105,7 @@ def home():
     Also shows a list of 5 random tracks for inspiration.
     '''
     if 'user_id' in session: 
-        if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-            auth_url = sp_oauth.get_authorize_url()
-            return redirect(auth_url)
+        ensure_valid_token()
         
         user_id = session['user_id']
 
@@ -175,8 +178,7 @@ def callback():
 @app.route('/profile-page')
 def profile_page():
     ''' Redirects the user to their profile page. '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     tracks = sp.playlist_tracks("4ZvJxrLxlmTxfMENidJcM4")
     items = tracks['items']
     track_list = []
@@ -198,8 +200,7 @@ def users():
         - Renders the 'users.html' template with search results if found, 
         or with an indication of no results if not found.
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     if request.method == 'POST':
         username = request.form['search_user']
@@ -225,8 +226,7 @@ def user_profile(username):
     Returns:
         - The profile page template with the user's information.
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     search_name = db.check_user_in_db(username)
     if not search_name:
@@ -248,8 +248,7 @@ def user_profile(username):
 @app.route('/profile-settings')
 def profile_settings():
     ''' Retrieves the current user's display name, username, and profile image URL. '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     display_name = session['display_name']
     username = session['user_id']
@@ -271,8 +270,7 @@ def add_friend(user_1, user_2):
         - A redirection to the second users profile page with a succsess message if the users become friends.
         - A redirection to the second users profile page with a failure message if the users are already friends. 
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     if not db.check_if_friends(user_1, user_2):
         db.become_friends(user_1, user_2)
@@ -301,8 +299,7 @@ def remove_friend(user_1, user_2):
     if request.method == 'GET':
         return redirect(url_for('error'))
     
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     if db.check_if_friends(user_1, user_2):
         flash(f"Du är nu inte längre vän med {user_2}")
@@ -363,8 +360,7 @@ def write_bio():
     Let's the user write their own biography and save it to 
     the database using user_id and bio_text
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     user_id = session['user_id']
 
@@ -382,8 +378,7 @@ def get_top_artists():
     If the user is authorized they will see their top artists written out on the page.
     If not, they will be redirected to the Spotify authorization page.
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     top_artists = sp.current_user_top_artists()
     artists = top_artists['items']
@@ -397,8 +392,7 @@ def get_top_tracks():
     If the user is authorized they will se their top tracks (short term) written out on the page.
     If not, they will be redirected to the Spotify authorization page.
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     top_tracks = sp.current_user_top_tracks(limit=20, offset=0, time_range='short_term')
     tracks = top_tracks['items']
@@ -413,8 +407,7 @@ def get_top_tracks_months():
     If the user is authorized they will se their top tracks (medium term) written out on the page.
     If not, they will be redirected to the Spotify authorization page.
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     top_tracks_months = sp.current_user_top_tracks(limit=20, offset=0, time_range='medium_term')
     tracks = top_tracks_months['items']
@@ -433,8 +426,7 @@ def generate_playlist():
     recommendations.
     '''
     current_user = session['user_id']
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
 
     if request.method == 'POST':
         
@@ -477,8 +469,7 @@ def get_playlist(username):
     and renders the playlist page template with this information.
     If a playlist doesn't exist on Spotify it will be deleted from the database.
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     current_user = session['user_id']
     display_name = session['display_name']
@@ -521,8 +512,7 @@ def save_generated_playlist(playlist_id):
     Returns:
         - A redirection to an error page if the token is invalid.
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
 
     playlist = sp.playlist(playlist_id)
     playlist_tracks = sp.playlist_tracks(playlist_id)
@@ -543,8 +533,7 @@ def playlist_page(pl_id):
     This function tries to open a page showing the contents of a playlist.
     If a playlist is empty or doesn't exist, it will be deleted from the database.
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     delete_button = False
     username = session['user_id']
@@ -563,8 +552,7 @@ def playlist_page(pl_id):
 @app.route('/redirect-playlist')
 def redirect_playlist():
     ''' Redirects the user to their profile page. '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     username = session['user_id']
     return redirect(url_for('get_playlist', username=username))
@@ -579,8 +567,7 @@ def delete_playlist(pl_id):
     Parameter: 
         - pl_id (str) - The id of the playlist to delete
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     username = session['user_id']
     sp.current_user_unfollow_playlist(pl_id)
@@ -599,8 +586,7 @@ def recommendations():
     a pop up notifying them that their playlist was made, then redirected to the home page.
     For the POST method the function is using JavaScript for storing the genres chosen and handling the redirection.
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     recco_list = sp.recommendation_genre_seeds()
     if request.method == 'POST':
@@ -641,8 +627,7 @@ def search():
     a pop up notifying them that their playlist was made, then redirected to the home page.
     For the POST method the function is using JavaScript for storing the decades chosen and handling the redirection.
     '''
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        return redirect(url_for('error'))
+    ensure_valid_token()
     
     decades_ranges = {'1920s': '1920-1929', '1930s': '1930-1939' ,'1940s': '1940-1949', '1950s': '1950-1959', '1960s': '1960-1969', '1970s': '1970-1979', '1980s': '1980-1989',
                     '1990s': '1990-1999', '2000s': '2000-2009', '2010s': '2010-2020', '2020s': '2020-2024'}  
