@@ -108,25 +108,27 @@ def home():
         ensure_valid_token()
         
         user_id = session['user_id']
-
+        '''
         if 'recommended_tracks' not in session:
 
             recommended_tracks = recommend_playlist()
             session['recommended_tracks'] = recommended_tracks
         else:
             recommended_tracks = session['recommended_tracks']
+        '''
         
-        return render_template('logged_in_startpage.html', recommended_tracks=recommended_tracks, current_user=user_id)
+        
+        return render_template('logged_in_startpage.html', current_user=user_id)
 
     else:
         return render_template('index.html')
     
-        
+'''
 def recommend_playlist():
-        '''
+        
         5 tracks selected is shown as inspiration at the landingpage.
         First a random genre is seleced, and then 5 tracks from that genre.
-        '''
+        
         available_genres = sp.recommendation_genre_seeds()['genres']
         random_genre = random.choice(available_genres)
         recommendations = sp.recommendations(seed_genres=[random_genre], limit=5,  market='SE')
@@ -138,6 +140,8 @@ def recommend_playlist():
             
             recommended_tracks.append({'info': track_info, 'uri': track_uri})
         return recommended_tracks
+
+'''
 
 
 @app.route('/login')
