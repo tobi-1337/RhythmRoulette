@@ -15,8 +15,19 @@
         "name": "Arissa Rakluea"
       }
     ],
-    "diagrams": [],
-    "diagramTop": 0,
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "Rhythm Roulette DFD",
+        "diagramType": "STRIDE",
+        "placeholder": "New STRIDE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.3.0",
+        "cells": [],
+        "description": "DFD"
+      }
+    ],
+    "diagramTop": 1,
     "reviewer": "Kayode Sakariyah Adewole",
     "threatTop": 0
   }
