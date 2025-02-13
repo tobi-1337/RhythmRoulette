@@ -1,0 +1,23 @@
+{
+  "version": "2.3.0",
+  "summary": {
+    "title": "Rhythm Roulette Threat Model ",
+    "owner": "Tobias Björklund, Arissa Rakluea",
+    "description": "Rhythm Roulette is a web application that uses the Spotify API paired with a database to provide a service which generates Spotify playlists based on chosen categories, such as genres or decades. While generating Spotify playlists is the main purpose of the website, there are also social features present, such as making a profile and showcasing the playlists to other users. Each user can send friend requests and comment on each other's profiles. The web application then saves the playlist and displays them on their profile. ",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Tobias Björklund"
+      },
+      {
+        "name": "Arissa Rakluea"
+      }
+    ],
+    "diagrams": [],
+    "diagramTop": 0,
+    "reviewer": "Kayode Sakariyah Adewole",
+    "threatTop": 0
+  }
+}
