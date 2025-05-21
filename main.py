@@ -2,17 +2,23 @@ from flask import Flask, render_template, url_for, session, redirect, request, f
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth, SpotifyOauthError 
 from spotipy.cache_handler import FlaskSessionCacheHandler
-from config import client_id, client_secret, redirect_uri
+import os
+from dotenv import load_dotenv
 import db
 import random
 import datetime
 from datetime import datetime
 
+load_dotenv()
+client_id = os.environ.get("client_id")
+client_secret = os.environ.get("client_secret")
+redirect_uri = os.environ.get("redirect_uri")
+
 
 # This variable is used to run the program
 app = Flask(__name__) 
 # Secret key is needed when you use sessions in Flask
-app.config['SECRET_KEY'] = "hello" 
+app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY")
 # The scope defines which information from the Spotify account we get access to
 scope = 'user-top-read playlist-modify-public playlist-modify-private'
 # cache_handler allows us to store the Spotify Token in Flask session
@@ -24,9 +30,9 @@ sp_oauth is used to authorize the Spotify user. They get prompted to accept or d
 the terms of service defined in our scope. 
 '''
 sp_oauth = SpotifyOAuth (
-    client_id=client_id, 
-    client_secret=client_secret, 
-    redirect_uri=redirect_uri, 
+    client_id=client_id,
+    client_secret=client_secret,
+    redirect_uri=redirect_uri,
     cache_handler=cache_handler,
     scope=scope,
     show_dialog = True

@@ -1,12 +1,14 @@
 import psycopg2
-from config import password, host, database, user, port
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-host = host
-database = database
-user = user
-password = password
-port = port
+host = os.environ.get("host")
+database = os.environ.get("database")
+user = os.environ.get("user")
+password = os.environ.get("password")
+port = os.environ.get("port")
 
 
 def check_user_in_db(user_id):
